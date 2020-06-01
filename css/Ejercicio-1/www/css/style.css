@@ -1,0 +1,138 @@
+@import url("https://fonts.googleapis.com/css2?family=Pragati+Narrow:wght@700&family=Roboto:wght@300;700&display=swap");
+
+html {
+  --dark: rgb(20, 20, 20);
+  --gray: rgb(180, 180, 180);
+  --white: rgb(255, 255, 255);
+
+  --title-font: "Pragati Narrow", sans-serif;
+  --body-font: Roboto, sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  max-width: 100%;
+}
+
+body {
+  font-family: var(--body-font);
+  color: var(--dark);
+  font-weight: 300;
+  background-image: url("/img/fondo.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100vh;
+}
+
+main {
+  max-width: 900px;
+  position: relative;
+  margin: 0 auto;
+  background-color: var(--white);
+}
+
+/* Header */
+
+header {
+  background-color: var(--dark);
+  color: var(--white);
+  padding: 3rem 0;
+  text-align: center;
+}
+
+header h1 {
+  font-family: var(--title-font);
+  text-decoration: underline;
+  font-size: 2.5rem;
+}
+
+header p {
+  margin-bottom: 1rem;
+}
+
+header nav a {
+  background-color: var(--white);
+  color: var(--dark);
+  text-decoration: none;
+  display: inline-block;
+  padding: 0.25rem 2rem;
+  font-size: 0.75rem;
+}
+
+header nav a strong {
+  display: block;
+  font-size: 1.25rem;
+}
+
+/* Section principal */
+
+section#content {
+  padding: 1rem;
+}
+
+section#content aside {
+  background-color: var(--gray);
+  text-align: center;
+  padding: 1rem 0;
+  text-decoration: underline;
+}
+
+section#content aside h2 {
+  margin-bottom: 1rem;
+}
+
+section#content p.highlight {
+  text-align: center;
+  font-weight: 700;
+  color: var(--gray);
+  margin: 2rem 0;
+  font-size: 1.2rem;
+}
+
+section#content p:not(.highlight) img {
+  margin-bottom: 1rem;
+}
+
+/* Footer */
+
+footer {
+  text-align: center;
+  background-color: var(--gray);
+  margin-top: 2rem;
+  padding: 2rem;
+}
+
+footer p {
+  text-decoration: underline;
+}
+
+@media (min-width: 500px) {
+  section#content > p:not(.highlight) {
+    columns: 2;
+  }
+}
+
+@media (min-width: 700px) {
+  html {
+    font-size: 18px;
+  }
+
+  section#content aside {
+    position: absolute;
+    right: 0;
+    top: 4rem;
+    font-size: 0.5rem;
+    width: 5rem;
+    padding: 1rem;
+  }
+}
+
+@media (min-width: 1000px) {
+  html {
+    font-size: 22px;
+  }
+}

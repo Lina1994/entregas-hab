@@ -1,0 +1,19 @@
+p::first-letter {
+  font-size: 40px;
+  background: black;
+  color: white;
+}
+
+p::first-line {
+  background: lightgray;
+}
+
+p::selection {
+  background-color: lightpink;
+}
+
+a::after {
+  content: attr(data-explicacion);
+  color: red;
+  margin-left: 10px;
+}

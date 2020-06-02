@@ -1,0 +1,45 @@
+/* Pseudoclasses estado enlaces */
+a {
+  background: lightgray;
+}
+
+a:link {
+  color: green;
+}
+
+a:active {
+  text-transform: uppercase;
+}
+
+a:visited {
+  color: limegreen;
+  background: red;
+}
+
+a.importante:hover {
+  border: 1px solid black;
+}
+
+/* Pseudoclasses de posición */
+
+p:first-child {
+  border-bottom: 2px solid red;
+}
+
+p:last-child {
+  border-bottom: 2px solid green;
+}
+
+p:nth-child(even) {
+  background-color: lightpink;
+}
+
+/* Otras pseudoclasses */
+
+p:not(.importante) {
+  color: green;
+}
+
+p:only-child {
+  background: black;
+}

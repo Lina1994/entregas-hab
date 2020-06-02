@@ -1,0 +1,51 @@
+body {
+  font-family: sans-serif;
+}
+
+p {
+  color: darkolivegreen;
+}
+
+/* 2 */
+header h1 {
+  text-align: center;
+  font-size: 50px;
+  color: darkred;
+}
+
+/* 1 */
+article {
+  background: lightgray;
+  padding: 1rem;
+  margin: 1rem;
+}
+
+/* 3 */
+article header h1 {
+  font-size: 30px;
+  color: darkblue;
+}
+
+/* 11  */
+article:first-child {
+  background: greenyellow;
+}
+
+article:first-child p {
+  font-size: 20px;
+}
+
+/* 102 */
+main > article#principal {
+  background: lightsalmon;
+}
+
+/* 11 */
+article:last-child {
+  background: lightpink;
+}
+
+/* 11 */
+article.cierre {
+  background: lightskyblue;
+}

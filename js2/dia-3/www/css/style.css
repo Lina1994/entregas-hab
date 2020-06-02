@@ -1,0 +1,23 @@
+p {
+  font-size: 1.5rem;
+}
+
+p.important {
+  color: green;
+}
+
+p.inicio {
+  color: lightcoral;
+}
+
+p.medio {
+  color: green;
+}
+
+p.abajo {
+  color: steelblue;
+}
+
+figure {
+  text-align: center;
+}

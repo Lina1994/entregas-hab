@@ -1,0 +1,53 @@
+html {
+  font-size: 16px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  box-sizing: border-box;
+  background: purple;
+  color: gold;
+  padding: 1rem;
+
+  /* height: 70vh;
+  width: 70vw; */
+}
+
+header input {
+  width: 100%;
+}
+
+header h1 {
+  font-size: 2rem;
+  background: black;
+  color: white;
+}
+
+header p {
+  font-size: 1rem;
+  margin: 0.5rem;
+  line-height: 2;
+}
+
+/* Media queries */
+@media (min-width: 400px) {
+  html {
+    font-size: 20px;
+  }
+}
+
+@media (min-width: 700px) {
+  html {
+    font-size: 30px;
+  }
+}
+
+@media (min-width: 1000px) {
+  html {
+    font-size: 40px;
+  }
+}

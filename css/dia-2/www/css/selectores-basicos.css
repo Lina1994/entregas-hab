@@ -1,0 +1,38 @@
+body {
+  background: rebeccapurple;
+  color: gold;
+}
+
+.guai {
+  font-size: 30px;
+}
+
+.muy-guai {
+  text-transform: uppercase;
+}
+
+#principal {
+  text-decoration: underline;
+  color: white;
+}
+
+[lang] {
+  background: white;
+  color: black;
+}
+
+[lang="gl"] {
+  color: steelblue;
+}
+
+[lang="es"] {
+  color: red;
+}
+
+[data-color] {
+  border: 2px solid black;
+}
+
+[data-color="red"] {
+  background-color: red;
+}

@@ -1,0 +1,15 @@
+h1 {
+  /* border-top-width: 10px;
+  border-top-style: dotted;
+  border-top-color: red;
+  border-bottom-width: 10px;
+  border-bottom-style: dashed;
+  border-bottom-color: green; */
+
+  /* border-top: 10px solid green;
+  border-bottom: 10px dashed gold; */
+
+  border: 5px solid green;
+  border-radius: 50px 0 50px 20px;
+  padding: 1rem;
+}

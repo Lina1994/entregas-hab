@@ -1,0 +1,46 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  font-family: sans-serif;
+  background-color: lightcoral;
+}
+
+main ul {
+  background-color: lightblue;
+  list-style: none;
+}
+
+main ul li {
+  padding: 1rem;
+  background-color: rebeccapurple;
+  color: gold;
+}
+
+main section {
+  padding: 1rem;
+}
+
+main section button {
+  background: rebeccapurple;
+  color: gold;
+  border: none;
+  padding: 0.5rem 1rem;
+  margin-top: 2rem;
+}
+
+main {
+  display: grid;
+  min-height: 100vh;
+  grid-template-columns: 200px 1fr;
+
+  transform: translate(-200px, 0);
+  transition: transform 1s;
+}
+
+main.menuopen {
+  transform: translate(0, 0);
+}

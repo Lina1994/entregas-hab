@@ -1,0 +1,169 @@
+/* Importar tipografía */
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;900&display=swap");
+
+/* RESETEO DEL HTML */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* DEFINIR COLORES A USAR */
+html {
+  --dark: #222222;
+  --bright: #ffffff;
+  --action: #1a71a3;
+  --font: "Source Sans Pro", sans-serif;
+}
+
+/* AJUSTAR ANCHO MAXIMO IMAGENES AL ANCHO DE LA PANTALLA */
+/* EVITA SCROLL HORIZONTAL POR LA IMAGEN */
+img {
+  max-width: 100%;
+}
+
+body {
+  font-family: var(--font);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Clases comunes */
+
+/* a (enlace) .button (clase) */
+a.button {
+  background-color: var(--action);
+  color: var(--bright);
+  text-decoration: none;
+  padding: 0.25rem 2rem;
+  display: inline-block;
+}
+
+/* Header */
+
+body > header {
+  margin: 1rem 0;
+  text-align: center;
+}
+
+/*********************/
+img#second {
+    border-radius: 50% 50% 50% 50%;
+}
+/**********************/
+body > header img {
+  border: 8px solid var(--dark);
+  border-radius: 65% 40% 60% 40%;
+  max-width: 9rem;
+}
+
+
+body > header h1 {
+  margin: 1rem 0 0.5rem 0;
+}
+
+body > header a {
+  color: var(--dark);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* Section(s) */
+
+body > section {
+  margin: 1rem;
+}
+
+body > section p,
+body > section figure {
+  margin-bottom: 1rem;
+}
+
+body > section figure img {
+  width: 100%;
+}
+
+body > section#experience h2 {
+  margin-bottom: 1rem;
+}
+
+body > section#experience ul {
+  padding-left: 2rem;
+}
+
+/* Footer */
+/* -1 reordena posicion footer */
+body > footer {
+  order: -1;
+  background-color: var(--dark);
+}
+
+body > footer ul {
+  list-style: none;
+  display: flex;
+  justify-content: flex-end;
+}
+
+body > footer ul li a {
+  color: var(--bright);
+  text-decoration: none;
+  display: block;
+  padding: 0.5rem;
+}
+/* DEFINE COMPORTAMIENTO PARA ANCHO MAYOR QUE 700px */
+@media (min-width: 700px) {
+  body {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  body > footer {
+    width: 100%;
+  }
+
+  body > header {
+    width: 100%;
+  }
+
+  body > header h1 {
+    font-size: 4rem;
+    margin-top: 0;
+    line-height: 4rem;
+  }
+
+  body > header h2 {
+    font-size: 3rem;
+    margin-top: 0;
+    line-height: 3rem;
+  }
+
+  body > section {
+    width: calc(50% - 2rem);
+  }
+
+  body#interior > header {
+    width: 30%;
+  }
+
+  body#interior > section {
+    width: calc(70% - 4rem);
+  }
+}
+
+/* DEFINE COMPORTAMIENTO PARA ANCHO MAYOR QUE 1000px */
+@media (min-width: 1000px) {
+  html {
+    font-size: 20px;
+  }
+
+  body > header {
+    text-align: right;
+    margin: 1rem;
+  }
+
+  body > header,
+  body > section {
+    width: calc(33.33% - 2rem);
+  }
+}

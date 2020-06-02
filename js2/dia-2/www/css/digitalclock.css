@@ -1,0 +1,51 @@
+@font-face {
+  font-family: "Clock";
+  src: url("/fonts/clock.woff2"), url("/fonts/clock.woff");
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  --color: #0ccfe9;
+}
+
+body {
+  background-color: black;
+  color: var(--color);
+  font-family: Clock, sans-serif;
+  min-height: 100vh;
+
+  display: grid;
+  place-content: center;
+}
+
+header {
+  text-align: center;
+  padding: 0.3rem 2rem 1rem 2rem;
+  border: 0.5rem dotted var(--color);
+}
+
+header h1 {
+  font-size: 5rem;
+  padding: 1.5rem;;
+  font-weight: normal;
+}
+
+header h2 {
+  font-weight: normal;
+}
+
+@media (min-width: 700px) {
+  html {
+    font-size: 25px;
+  }
+}
+
+@media (min-width: 1000px) {
+  html {
+    font-size: 45px;
+  }
+}

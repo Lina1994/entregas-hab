@@ -1,0 +1,18 @@
+@font-face {
+  font-family: "Marela";
+  src: url("/fonts/marela.ttf");
+}
+
+@font-face {
+  font-family: "Michella";
+  src: url("/fonts/michella.woff2"), url("/fonts/michella.woff");
+}
+
+h1 {
+  font-family: Marela;
+}
+
+p {
+  font-family: Michella;
+  font-size: 3rem;
+}

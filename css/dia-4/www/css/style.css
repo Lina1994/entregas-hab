@@ -1,0 +1,51 @@
+header {
+  background: black;
+  color: white;
+  position: fixed;
+  top: 0;
+  z-index: 2;
+  width: 100%;
+}
+
+ul {
+  background: lightblue;
+  list-style: none;
+  margin: 0;
+  padding: 1rem 0;
+  position: relative;
+  height: 2000px;
+}
+
+li {
+  padding: 1rem;
+  margin: 1rem;
+  /* position: static; */
+}
+
+li:nth-child(1) {
+  background-color: lightgreen;
+  position: relative;
+  /* top: -20px;
+  left: -40px; */
+  bottom: 10px;
+  right: 20px;
+}
+
+li:nth-child(2) {
+  background-color: lightpink;
+}
+
+li:nth-child(3) {
+  margin: 0;
+  background-color: lightsalmon;
+  position: absolute;
+  bottom: 100px;
+  right: 50px;
+}
+
+li:nth-child(4) {
+  background-color: lightyellow;
+  position: fixed;
+  right: 100px;
+  top: 50px;
+}

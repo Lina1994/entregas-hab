@@ -1,0 +1,27 @@
+h1 {
+  width: 100%;
+  margin: 2rem auto;
+  text-align: center;
+  padding: 2rem;
+  height: 400px;
+  color: white;
+  background-color: rgb(72, 180, 121);
+  background-image: url("/img/pika.png"), url("/img/char.gif");
+  background-repeat: no-repeat;
+  background-position: left center, right bottom;
+  /* background-size: cover; */
+}
+
+p {
+  height: 500px;
+  width: 300px;
+  background-image: linear-gradient(
+    30deg,
+    rebeccapurple,
+    green,
+    red,
+    blue,
+    gold
+  );
+  box-shadow: 20px 50px 10px rgba(0, 0, 0, 0.5);
+}

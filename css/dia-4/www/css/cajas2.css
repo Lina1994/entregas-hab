@@ -1,0 +1,29 @@
+html,
+body {
+  height: 100vh;
+}
+
+main {
+  width: 75%;
+  margin: 2rem auto;
+  background: lightpink;
+  max-width: 800px;
+  min-width: 600px;
+  padding: 2rem;
+}
+
+p strong {
+  display: inline-block;
+  background: lightskyblue;
+  width: 100px;
+  height: 200px;
+  padding: 2rem;
+  margin: 2rem;
+  border: 2px solid red;
+}
+
+a {
+  color: goldenrod;
+  padding: 2rem;
+  display: inline-block;
+}

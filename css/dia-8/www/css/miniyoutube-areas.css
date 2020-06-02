@@ -1,0 +1,94 @@
+body {
+  margin: 0;
+  font-family: sans-serif;
+}
+
+video {
+  max-width: 100%;
+}
+
+/* Header */
+
+body > header {
+  background-color: lightgray;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+body > header ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+body > header ul li {
+  margin: 0.25rem;
+}
+
+body > header h1 {
+  margin: 0;
+}
+
+/* Main */
+
+main {
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 1rem;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 3fr 1fr;
+  grid-template-rows: repeat(3, auto);
+
+  grid-template-areas:
+    "video video"
+    "info info"
+    "datos datos";
+}
+
+main dl dt {
+  border-bottom: 1px solid lightgray;
+  font-weight: bold;
+}
+
+main dl dd {
+  margin: 0.5rem 0 1rem 0;
+}
+
+/* Main: header */
+
+main > header {
+  grid-area: info;
+}
+
+/* Main: video */
+
+main > video {
+  grid-area: video;
+}
+
+/* Main: section */
+main > section {
+  grid-area: datos;
+}
+
+@media (min-width: 700px) {
+  main {
+    grid-template-areas:
+      "video video"
+      "info datos"
+      "info datos";
+  }
+}
+
+@media (min-width: 1000px) {
+  main {
+    grid-template-areas:
+      "video datos"
+      "info ."
+      "info .";
+  }
+}

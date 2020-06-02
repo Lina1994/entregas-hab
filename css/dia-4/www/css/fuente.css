@@ -1,0 +1,25 @@
+@import url("https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Montserrat:wght@300;700&display=swap");
+
+@font-face {
+  font-family: Fran;
+  src: url("/fonts/Franchise-Regular.woff2"),
+    url("/fonts/Franchise-Regular.woff");
+}
+
+h1 {
+  font-family: Garamond, serif;
+  font-family: "Alfa Slab One", sans-serif;
+}
+
+p {
+  font-family: Montserrat, sans-serif;
+  font-weight: 300;
+}
+
+p strong {
+  font-weight: 700;
+}
+
+h2 {
+  font-family: Fran;
+}

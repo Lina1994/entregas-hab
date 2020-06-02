@@ -1,0 +1,52 @@
+/* Selectores por etiqueta  */
+
+h1 {
+  background: steelblue;
+  color: gold;
+  border-bottom: 10px solid saddlebrown;
+  margin-bottom: 1rem;
+}
+
+p {
+  font-family: sans-serif;
+  font-style: italic;
+  margin-bottom: 0.5rem;
+}
+
+* {
+  margin: 0;
+}
+
+/* Selectores por id */
+
+#principal {
+  padding: 1rem;
+  background: black;
+  color: white;
+}
+
+/* Selectores por class */
+
+.destacado {
+  font-size: 1.2rem;
+}
+
+p.inicial {
+  font-weight: bold;
+  color: slategray;
+}
+
+h1#titular.destacado.inicial {
+  background: limegreen;
+  color: yellow;
+}
+
+/* Selectores por atributo */
+
+[lang="gl"] {
+  border: 4px solid red;
+}
+
+[class="destacado"] {
+  font-family: fantasy;
+}

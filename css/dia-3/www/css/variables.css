@@ -1,0 +1,21 @@
+body {
+  font-family: sans-serif;
+  margin: 60px;
+  --texto: darkgoldenrod;
+  --fondo: lightgray;
+}
+
+h1 {
+  color: var(--texto);
+  background: var(--fondo);
+}
+
+p {
+  color: var(--texto);
+  background: var(--fondo);
+}
+
+article:last-child {
+  --texto: white;
+  --fondo: black;
+}

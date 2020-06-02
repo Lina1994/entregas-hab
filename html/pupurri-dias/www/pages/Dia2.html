@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<HTML>
+    <head>
+    <!-- Lo de abajo es para caracteres especiales -->
+    <meta charset="UTF-8" />
+    <!-- Lo de abajo es para que css funcione -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dia2 PHTML1</title>
+    </head>
+    <!--  HEAD^^^^   BODY VVVVV-->
+    <body>
+<!--NAVEGADOR HORIZONTAL-->
+        <nav>
+            <span>
+              <a href="../index.html">Inicio</a>
+            </span>
+            <span>
+                <a href="contact.html">Contacto</a>
+            </span>
+            <span>
+                <a href="blog.html">Blog</a>
+            </span>
+            <span><b><i><mark><ins><sup>Día 2</sup></ins></mark></i></b></span>
+            <span>
+                <a href="Dia3.html">Día 3</a>
+            </span>
+            <span>
+                <a href="Dia4.html">Día 4</a>
+            </span>
+            </nav>
+
+<!--LISTAS-->
+<h1>Titular importante, por tanto, un h1</h1>
+<!--Desordenadas-->
+<p>Lista desordenada (ul)(il)</p>
+<ul>
+<li>algo</li>
+<li>otra cosa</li>
+<li>un gato</li>
+</ul>
+<!--Ordenadas-->
+<p>Lista ordenada (ol)(il)</p>
+<ol>
+    <li>ol</li>
+    <li>li</li>
+    <li>lo que queramo ordenar</li>
+</ol>
+<!--Desordenadas y con link-->
+<h2>Lista de enlaces para indexar (h2)</h2>
+<p>(ul)(il)(a href)</p>
+<ul><a href="../index.html">Inicio</a></ul>
+<ul><a href="contact.html">Contacto</a></ul>
+<ul><a href="blog.html">Blog</a></ul>
+<ul><a href="Dia2.html">Día 2</a></ul>
+<!--  Imágenes/vídeos/audios  -->
+<h2>Imágenes/vídeos/audios</h2>
+<h3>Imágenes</h3>
+<p>Siempre van dento de "figure".</p>
+<p>Usan la etiqueta "imf src=" y funciona como los enlaces.</p>
+<p>Con los parámetros width y height se puede controlar el tamaño en pixeles (px) o en porcentage (%).</p>
+<p>El usuario verá el contenido de la etiqueta "alt" si la imagen no aparece.</p>
+<p>La etiqueta "figcaption" añade un título o una descripción a la imagen. Esta descripción es la que leeran los programas de ayuda.</p>
+<p>La etiqueta "title" añade un comentario cuando estamos encima de la imagen.</p>
+<figure>
+    <img title="Cepillo" 
+    alt="si la imagen no aparece, aparece esto" 
+    width="200px"
+    height="200px"
+    src="../images/cepillo.png">
+    <!--Descripción/titulo   v-->
+    <figcaption>Descripción/título imagen.</figcaption>
+</figure>
+<figure>
+    <img title="Judias" 
+    alt="si la imagen no aparece, aparece esto" 
+    width="20%"
+    src="../images/tinte.png">
+    <!--Descripción/titulo   v-->
+    <figcaption>Bote de tinte.</figcaption>
+</figure>
+<!--  Video VVVV-->
+<h3>Vídeo y audio</h3>
+<!-- Comando "controls"añade controles
+     comando autoplay, auto play
+     para autoplay en chrome añadir mute-->
+<video controls width="50%" autoplay muted>
+    <source title="Judias" 
+    alt="si la imagen no aparece, aparece esto" 
+    src="../images/RECURSOS_Dia2_Video y audio_video.mp4"
+    type="video/webm">
+    Mensage si no aparece
+</video>
+<audio controls>
+    <source src="../images/RECURSOS_Dia2_Video y audio_sonido.mp3" type="audio/mpeg">
+        Mensage si no aparece
+</audio>
+    </body>
+</HTML>

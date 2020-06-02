@@ -1,0 +1,240 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@500;900&display=swap");
+
+html {
+  --accent: #f2994a;
+  --dark: #222222;
+  --medium: #c4c4c4;
+  --bright: #ffffff;
+  --shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
+
+  --font: Roboto, sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+img {
+  max-width: 100%;
+}
+
+body {
+  font-family: var(--font);
+}
+
+body > header,
+body > main {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* Clases genéricas */
+
+.title {
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--bright);
+}
+
+.title-inverse {
+  color: var(--accent);
+}
+
+.action {
+  background-color: var(--dark);
+  color: var(--bright);
+  text-decoration: none;
+  padding: 0.25rem 1rem;
+  border: 0;
+}
+
+/* Header */
+
+body > header {
+  padding: 1rem;
+
+  background-image: url("/img/vaca-header.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+
+  min-height: 15rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+body > header h1 {
+  text-shadow: var(--shadow);
+}
+
+body > header nav {
+  flex-grow: 1;
+}
+
+body > header nav ul {
+  list-style: none;
+  display: flex;
+}
+
+body > header nav ul li {
+  margin: 0 0.5rem;
+}
+
+body > header nav ul li a {
+  color: var(--dark);
+  text-decoration: none;
+}
+
+/* Main sections */
+
+main > section {
+  padding: 2rem 1rem;
+  background-color: var(--accent);
+}
+
+main > section > h1 {
+  margin-bottom: 1rem;
+}
+
+/* Cow list */
+
+section#cows ul {
+  list-style: none;
+}
+
+section#cows ul li {
+  margin-bottom: 1rem;
+}
+
+section#cows ul li article figure img {
+  height: 20rem;
+  width: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+section#cows ul li article section {
+  background-color: var(--dark);
+  padding: 1rem;
+  color: var(--bright);
+}
+
+section#cows ul li article section h1 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+section#cows ul li article a {
+  background-color: var(--medium);
+  display: block;
+  padding: 1rem;
+  text-align: center;
+  color: var(--dark);
+  text-decoration: none;
+}
+
+/* Form */
+
+section#form {
+  background-color: var(--bright);
+  margin-bottom: 5rem;
+}
+
+section#form form fieldset {
+  border: 0;
+  margin-bottom: 0.5rem;
+}
+
+section#form form fieldset label {
+  display: block;
+  font-size: 0.8rem;
+  margin-bottom: 0.25rem;
+}
+
+section#form form input,
+section#form form textarea,
+section#form form select {
+  width: 100%;
+  border: 2px solid var(--dark);
+  padding: 0.25rem;
+  background-color: var(--accent);
+  color: var(--bright);
+}
+
+section#form form textarea {
+  min-height: 5rem;
+}
+
+section#form form fieldset.inline label {
+  display: inline;
+}
+
+section#form form fieldset.inline input {
+  width: auto;
+}
+
+@media (min-width: 700px) {
+  html {
+    font-size: 18px;
+  }
+
+  .title {
+    font-size: 2.5rem;
+  }
+
+  body > header {
+    min-height: 25rem;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+
+  body > header nav {
+    flex-grow: 0;
+    order: -1;
+  }
+
+  section#intro p {
+    columns: 2;
+  }
+
+  section#cows ul {
+    display: flex;
+  }
+
+  section#cows ul li:nth-child(2) {
+    margin: 0 1rem;
+  }
+
+  section#cows ul li article figure img {
+    height: 16rem;
+  }
+
+  section#form form {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  section#form form input,
+  section#form form textarea,
+  section#form form select {
+    padding: 0.5rem;
+  }
+
+  section#form fieldset {
+    width: 50%;
+    padding: 0.5rem;
+  }
+
+  section#form fieldset.wide {
+    width: 100%;
+  }
+
+  section#form button {
+    margin: 0 0.5rem;
+  }
+}

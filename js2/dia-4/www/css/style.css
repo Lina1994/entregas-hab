@@ -1,0 +1,44 @@
+#deleteme {
+  font-size: 1.5rem;
+  color: darkred;
+}
+
+.contador {
+  list-style: none;
+  padding: 0;
+}
+
+.contador li {
+  padding: 1rem;
+  background-color: rebeccapurple;
+  color: gold;
+  margin: 1rem 0;
+  cursor: pointer;
+}
+
+ul.pokemon {
+  list-style: none;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+ul.pokemon li h1 {
+  background-color: rebeccapurple;
+  color: gold;
+  margin: 0;
+  padding: 1rem;
+  border-bottom: 2px solid gold;
+  cursor: help;
+  font-size: 1.5rem;
+}
+
+ul.pokemon li p {
+  box-sizing: border-box;
+  background-color: gold;
+  color: rebeccapurple;
+  margin: 0;
+  padding: 0;
+  height: 0px;
+  overflow: hidden;
+  transition: height 500ms;
+}

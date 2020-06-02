@@ -1,0 +1,43 @@
+body {
+  font-family: sans-serif;
+}
+
+ul {
+  background-color: rebeccapurple;
+  padding: 1rem 0;
+  list-style: none;
+  display: flex;
+  height: 80vh;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+li {
+  margin: 1rem;
+  padding: 1rem;
+  background: gold;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  color: black;
+  width: 400px;
+}
+
+li:nth-child(1) {
+  background-color: seagreen;
+  order: 1;
+  flex-grow: 2;
+  flex-shrink: 2;
+}
+
+li:nth-child(5) {
+  background-color: sienna;
+  order: -1;
+  align-self: center;
+}
+
+li:nth-child(3) {
+  background-color: steelblue;
+  flex-grow: 1;
+  flex-shrink: 2;
+}

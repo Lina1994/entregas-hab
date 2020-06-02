@@ -1,0 +1,26 @@
+body {
+  font-family: sans-serif;
+}
+
+p.transform {
+  background-image: url("https://source.unsplash.com/1000x1000");
+  background-size: 500px 500px;
+  background-position: center;
+  color: white;
+  margin: 0;
+  padding: 1rem;
+  width: 200px;
+  height: 200px;
+  /* transition-property: all;
+  transition-duration: 2s;
+  transition-delay: 200ms;
+  transition-timing-function: ease-out; */
+  transition: all 1s;
+}
+
+p.transform:hover {
+  background-size: 1000px 1000px;
+  font-size: 2rem;
+  /* width: 400px; */
+  /* transform: translate(20px, 50px) scale(1.5) rotate(90deg); */
+}

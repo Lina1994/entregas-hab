@@ -1,0 +1,11 @@
+header {
+  background-color: rebeccapurple;
+  color: gold;
+  width: 300px;
+}
+
+@media (min-width: 700px) {
+  header {
+    background-color: green;
+  }
+}

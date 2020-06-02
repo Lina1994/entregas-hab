@@ -1,0 +1,28 @@
+/* Lista de selectores */
+h1,
+h2 {
+  color: green;
+}
+
+/* Descendientes */
+
+header p {
+  font-weight: bold;
+}
+
+/* Descendientes directos */
+
+header > h1 {
+  background: lightblue;
+}
+
+/* Adyacentes */
+
+header > p + strong {
+  background: red;
+}
+
+/* No consecutivos */
+p ~ blockquote {
+  background: lightsalmon;
+}

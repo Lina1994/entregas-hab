@@ -13,6 +13,7 @@ html {
   --dark: #222222;
   --bright: #ffffff;
   --action: #1a71a3;
+  --nickname: #4d2280;
   --font: "Source Sans Pro", sans-serif;
 }
 
@@ -30,7 +31,7 @@ body {
 
 /* Clases comunes */
 .nickname {
-  color: rgb(94, 83, 83);
+  color: var(--nickname);
 }
 
 /* a (enlace) .button (clase) */

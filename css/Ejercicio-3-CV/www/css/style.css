@@ -29,6 +29,9 @@ body {
 }
 
 /* Clases comunes */
+.nickname {
+  color: rgb(94, 83, 83);
+}
 
 /* a (enlace) .button (clase) */
 a.button {

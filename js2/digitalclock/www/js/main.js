@@ -89,3 +89,21 @@ updateClock();
 
 // Creamos el intervalo
 const interval = setInterval(updateClock, 1000);
+
+/////////////
+
+
+const headerButton = document.querySelector(".content button");
+const navButton = document.querySelector("nav button");
+const nav = document.querySelector("nav");
+
+const handleHeaderButtonClick = () => {
+  nav.classList.toggle("visible");
+};
+
+const handleNavButtonClick = () => {
+  nav.classList.toggle("visible");
+};
+
+headerButton.addEventListener("click", handleHeaderButtonClick);
+navButton.addEventListener("click", handleNavButtonClick);

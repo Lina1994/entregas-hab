@@ -4,7 +4,7 @@
 }
 
 html {
-  --color: #424b4d;
+  --color: #758083;
   --header-bg: rgba(0, 0, 0, 0.25);
 }
 
@@ -27,15 +27,15 @@ body {
 }
 
 body.morning {
-  background-image: url("../img/morning.jpg");
+  background-image: url("../img/descarga.jpeg");
 }
 
 body.afternoon {
-  background-image: url("../img/afternoon.jpg");
+  background-image: url("../img/afternoon-at-phuong-luu-lake-hai-phong-viet-nam.jpg");
 }
 
 body.night {
-  background-image: url("../img/night.jpg");
+  background-image: url("../img/starry_sky_night_trees_night_landscape_118760_3840x2160-scaled.jpg");
 }
 
 header {
@@ -69,4 +69,36 @@ header h2 {
   html {
     font-size: 50px;
   }
+}
+//////////////
+
+button {
+  background-color: black;
+  color: rgb(114, 23, 102);
+  padding: 0.5rem 1rem;
+  border: none;
+}
+nav {
+  background-color: rgb(2, 36, 48);
+  position: fixed;
+  right: -300px;
+  min-height: 100vh;
+  box-shadow: -5px 0 5px rgba(0, 0, 0, 0.5);
+  transition: right 1s;
+}
+
+nav.visible {
+  right: 0;
+}
+
+nav button {
+}
+
+nav ul {
+  list-style: none;
+  margin-top: 1rem;
+}
+
+nav ul li {
+  padding: 0.5rem 2rem;
 }

@@ -1,0 +1,10 @@
+verde
+negro
+rebeccapurple
+gold
+azul
+azul
+verde
+verde
+negro
+margin-top

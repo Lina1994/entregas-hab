@@ -1,0 +1,3 @@
+  PID TTY           TIME CMD
+18467 ttys000    0:00.03 /Applications/iTerm.app/Contents/MacOS/iTerm2 --server login -fp berto
+18469 ttys000    0:01.44 -zsh

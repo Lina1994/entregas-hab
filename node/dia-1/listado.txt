@@ -1,0 +1,4 @@
+count.js
+dir1
+fichero-grande.txt
+listado.txt

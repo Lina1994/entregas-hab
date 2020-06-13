@@ -1,0 +1,30 @@
+{
+  "name": "dia-4",
+  "version": "1.0.0",
+  "description": "Código del día 4",
+  "main": "index.js",
+  "scripts": {
+    "listar": "ls -lah",
+    "memorialibre": "free -mh",
+    "saludovaca": "cowsay ola amigas",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [
+    "classroom",
+    "test",
+    "learning"
+  ],
+  "author": "Berto Yáñez",
+  "license": "ISC",
+  "dependencies": {
+    "cowsay": "^1.4.0",
+    "dotenv": "^8.2.0",
+    "lodash": "^4.17.15",
+    "minimist": "^1.2.5",
+    "sharp": "^0.25.3"
+  },
+  "devDependencies": {
+    "eslint": "^7.2.0",
+    "nodemon": "^2.0.4"
+  }
+}

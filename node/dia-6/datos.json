@@ -1,0 +1,13 @@
+{
+  "name": "Berto",
+  "stats": {
+    "age": 43,
+    "webdeveloper": true,
+    "birthplace": "O Vicedo"
+  },
+  "devices": [
+    "PC",
+    "Macbook",
+    "Smartphone"
+  ]
+}

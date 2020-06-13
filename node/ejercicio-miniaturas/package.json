@@ -1,0 +1,22 @@
+{
+  "name": "ejercicio-miniaturas",
+  "version": "1.0.0",
+  "description": "",
+  "main": "miniaturizer.js",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "minimist": "^1.2.5",
+    "nodemon": "^2.0.4",
+    "sharp": "^0.25.4",
+    "uuid": "^8.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.2.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

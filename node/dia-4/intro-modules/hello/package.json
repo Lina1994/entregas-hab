@@ -1,0 +1,7 @@
+{
+  "name": "hello",
+  "version": "0.1",
+  "description": "Small node package that says hello",
+  "license": "MIT",
+  "main": "hello.js"
+}

@@ -1,0 +1,54 @@
+{
+    "pokedex": [
+        {
+            "name": "Wartortle",
+            "type": "Agua",
+            "seen": "2020-06-16T17:49:38.598Z"
+        },
+        {
+            "name": "Squirtle",
+            "type": "Agua",
+            "seen": "2020-06-16T17:47:41.933Z"
+        },
+        {
+            "name": "Celebi",
+            "type": "Aire",
+            "seen": "2020-06-16T17:46:04.776Z"
+        },
+        {
+            "name": "Charizard",
+            "type": "Fuego",
+            "seen": "2020-06-16T17:43:21.950Z"
+        },
+        {
+            "name": "lolailo",
+            "type": "Agua",
+            "seen": "2020-06-16T17:42:12.077Z"
+        },
+        {
+            "name": "Charmander",
+            "type": "Fuego",
+            "seen": "2020-06-16T17:41:29.211Z"
+        },
+        {
+            "name": "Magikarp",
+            "type": "Agua",
+            "seen": "2020-06-15T19:07:30.074Z"
+        },
+        {
+            "name": "Pikachu",
+            "type": "Electricidad",
+            "seen": "2020-06-15T18:07:30.074Z"
+        },
+        {
+            "name": "Bulbasaur",
+            "type": "Tierra",
+            "seen": "2020-06-15T17:07:30.074Z"
+        },
+        {
+            "name": "Metwo",
+            "type": "Aire",
+            "seen": "2020-06-15T15:07:30.074Z"
+        }
+    ]
+}

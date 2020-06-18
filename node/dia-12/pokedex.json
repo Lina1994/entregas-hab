@@ -1,0 +1,22 @@
+[
+    {
+        "name": "Charizard",
+        "type": "Fuego",
+        "id": "403425d6-bf00-4515-b0cf-dfbd847c7715"
+    },
+    {
+        "name": "Magikarp",
+        "type": "Agua",
+        "id": "a5f79707-0f93-41ad-8630-07edc5399f4a"
+    },
+    {
+        "id": "0031fc6f-90e8-4c90-97a0-78df256d6954",
+        "name": "Pikachu",
+        "type": "Electricidad"
+    },
+    {
+        "id": "c68a818d-1296-49ac-94b9-1132c2226c5e",
+        "name": "Squirtle",
+        "type": "Agua"
+    }
+]

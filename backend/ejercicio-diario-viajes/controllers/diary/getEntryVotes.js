@@ -1,6 +1,6 @@
 const { getConnection } = require("../../db");
 
-async function getEntry(req, res, next) {
+async function getEntryVotes(req, res, next) {
   let connection;
 
   try {
@@ -8,21 +8,22 @@ async function getEntry(req, res, next) {
 
     const { id } = req.params;
 
-    const [result] = await connection.query(
+    // Ejecutar query para sacar lista de votos
+    const [votes] = await connection.query(
       `
-      SELECT diary.*, AVG(diary_votes.vote) AS voteAverage
-      FROM diary
-      LEFT JOIN diary_votes
-      ON diary.id = diary_votes.entry_id
-      WHERE diary.id=?
+      SELECT vote, date, ip
+      FROM diary_votes
+      WHERE entry_id=?
     `,
       [id]
     );
 
     res.send({
       status: "ok",
-      data: result[0],
+      data: votes,
     });
+
+    // devolver la lista en la respuesta
   } catch (error) {
     next(error);
   } finally {
@@ -30,4 +31,4 @@ async function getEntry(req, res, next) {
   }
 }
 
-module.exports = getEntry;
+module.exports = getEntryVotes;

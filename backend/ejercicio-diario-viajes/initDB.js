@@ -1,6 +1,5 @@
 require("dotenv").config();
 
-const bcrypt = require("bcrypt");
 const faker = require("faker/locale/es");
 const { getConnection } = require("./db");
 const { formatDateToDB } = require("./helpers");
@@ -31,7 +30,11 @@ async function main() {
         role ENUM("normal", "admin") DEFAULT "normal" NOT NULL,
         name TINYTEXT,
         image TINYTEXT,
-        lastUpdate DATETIME NOT NULL
+        active BOOLEAN DEFAULT false,
+        registrationCode TINYTEXT,
+        passwordUpdateCode TINYTEXT,
+        lastUpdate DATETIME NOT NULL,
+        lastAuthUpdate DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
       );
     `);
 
@@ -42,6 +45,7 @@ async function main() {
         description TEXT,
         place VARCHAR(200) UNIQUE NOT NULL,
         image TINYTEXT,
+        user_id INTEGER NOT NULL,
         lastUpdate DATETIME NOT NULL
       );
     `);
@@ -52,7 +56,7 @@ async function main() {
         entry_id INTEGER NOT NULL,
         vote TINYINT NOT NULL,
         date DATETIME NOT NULL,
-        ip TINYTEXT NOT NULL,
+        user_id INTEGER NOT NULL,
         lastUpdate DATETIME NOT NULL
       )
     `);
@@ -61,12 +65,10 @@ async function main() {
 
     console.log("Creando usuario administrador");
 
-    const password = await bcrypt.hash(process.env.DEFAULT_ADMIN_PASSWORD, 10);
-
     await connection.query(
       `
-      INSERT INTO users(registrationDate, email, password, role, name, lastUpdate)
-      VALUES(NOW(), "berto@ber.to", "${password}", "admin", "Berto Yáñez", NOW())
+      INSERT INTO users(registrationDate, email, password, role, name, active, lastUpdate)
+      VALUES(UTC_TIMESTAMP(), "berto@ber.to", SHA2("${process.env.DEFAULT_ADMIN_PASSWORD}", 512), "admin", "Berto Yáñez", true, UTC_TIMESTAMP())
     `
     );
 
@@ -75,13 +77,12 @@ async function main() {
 
     for (let index = 0; index < users; index++) {
       const email = faker.internet.email();
-      const password = await bcrypt.hash(faker.internet.password(), 10);
       const name = faker.name.findName();
 
       await connection.query(
         `
         INSERT INTO users(registrationDate, email, password, role, name, lastUpdate)
-        VALUES(NOW(), "${email}", "${password}", "normal", "${name}", NOW())
+        VALUES(UTC_TIMESTAMP(), "${email}", SHA2("${faker.internet.password()}", 512), "normal", "${name}", UTC_TIMESTAMP())
       `
       );
     }
@@ -94,8 +95,13 @@ async function main() {
       const date = formatDateToDB(faker.date.recent());
 
       await connection.query(`
-        INSERT INTO diary(date, description, place, lastUpdate)
-        VALUES("${date}", "${faker.lorem.paragraph()}", "${faker.address.city()}", NOW())
+        INSERT INTO diary(date, description, place, lastUpdate, user_id)
+        VALUES(
+          "${date}", 
+          "${faker.lorem.paragraph()}", 
+          "${faker.address.city()}", 
+          UTC_TIMESTAMP(), 
+          "${random(2, users + 1)}")
       `);
     }
 
@@ -108,13 +114,13 @@ async function main() {
       const date = formatDateToDB(faker.date.recent());
 
       await connection.query(`
-        INSERT INTO diary_votes(entry_id, vote, date, ip, lastUpdate)
+        INSERT INTO diary_votes(entry_id, vote, date, user_id, lastUpdate)
         VALUES (
           "${random(1, diaryEntries)}", 
           "${random(1, 5)}", 
           "${date}", 
-          "${faker.internet.ip()}", 
-          NOW())
+          "${random(2, users + 1)}", 
+          UTC_TIMESTAMP())
       `);
     }
   } catch (error) {

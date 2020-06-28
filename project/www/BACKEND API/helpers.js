@@ -15,6 +15,10 @@ function formatDateToDB(date) {
   return format(new Date(date), "yyyy-MM-dd HH:mm:ss");
 }
 
+function formatDateToDBDay(date) {
+  return format(new Date(date), "yyyy-MM-dd");
+}
+
 async function processAndSaveImage(uploadedImage) {
   // Creamos el directorio (con recursive: true por si hay subdirectorios y así no da error)
   await fs.mkdir(imageUploadPath, { recursive: true });
@@ -70,6 +74,7 @@ async function sendMail({ email, title, content }) {
 
 module.exports = {
   formatDateToDB,
+  formatDateToDBDay,
   processAndSaveImage,
   deleteUpload,
   randomString,

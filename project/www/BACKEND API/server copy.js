@@ -1,3 +1,4 @@
+/*
 require("dotenv").config();
 
 const express = require("express");
@@ -7,14 +8,10 @@ const fileUpload = require("express-fileupload");
 
 const entryExists = require("./middlewares/entryExists");
 const isUser = require("./middlewares/isUser");
-//const isAdmin = require("./middlewares/isAdmin");
+const isAdmin = require("./middlewares/isAdmin");
 
 // my content controllers
 const listEntries = require("./controllers/toys/listEntries");
-const getEntry = require("./controllers/toys/getEntry");
-const newEntry = require("./controllers/toys/newEntry");
-const editEntry = require("./controllers/toys/editEntry");
-const deleteEntry = require("./controllers/toys/deleteEntry");
 /*
 // Content controllers
 const listEntries = require("./controllers/diary/listEntries");
@@ -29,14 +26,13 @@ const getEntryVotes = require("./controllers/diary/getEntryVotes");
 // User controllers
 const newUser = require("./controllers/users/newUser");
 const validateUser = require("./controllers/users/validateUser");
-//const loginUser = require("./controllers/users/loginUser");
-//const getUser = require("./controllers/users/getUser");
-//const editUser = require("./controllers/users/editUser");
-//const deleteUser = require("./controllers/users/deleteUser");
-//const editUserPassword = require("./controllers/users/editUserPassword");
-//const recoverUserPassword = require("./controllers/users/recoverUserPassword");
-//const resetUserPassword = require("./controllers/users/resetUserPassword");
-
+const loginUser = require("./controllers/users/loginUser");
+const getUser = require("./controllers/users/getUser");
+const editUser = require("./controllers/users/editUser");
+const deleteUser = require("./controllers/users/deleteUser");
+const editUserPassword = require("./controllers/users/editUserPassword");
+const recoverUserPassword = require("./controllers/users/recoverUserPassword");
+const resetUserPassword = require("./controllers/users/resetUserPassword");
 
 const app = express();
 
@@ -83,12 +79,12 @@ app.delete("/entries/:id", isUser, entryExists, deleteEntry);
 // Votar una entrada
 // POST - /entries/:id/votes ✅
 // Sólo usuarios registrados
-//app.post("/entries/:id/votes", isUser, entryExists, voteEntry);
+app.post("/entries/:id/votes", isUser, entryExists, voteEntry);
 
 // Ver votos de una entrada
 // GET - /entries/:id/votes ✅
 // Público
-//app.get("/entries/:id/votes", entryExists, getEntryVotes);
+app.get("/entries/:id/votes", entryExists, getEntryVotes);
 
 /*
   ENDPOINTS DE USUARIO
@@ -107,38 +103,38 @@ app.get("/users/validate/:code", validateUser);
 // Login de usuarios
 // POST - /users/login ✅
 // Público
-//app.post("/users/login", loginUser);
+app.post("/users/login", loginUser);
 
 // Ver información de un usuario
 // GET - /users/:id ✅
 // Sólo para usuarios registrados
 // Pero si el usuario es el mismo o admin debería mostrar toda la información
-//app.get("/users/:id", isUser, getUser);
+app.get("/users/:id", isUser, getUser);
 
 // Editar datos de usuario: email, name, avatar
 // PUT - /users/:id ✅
 // Sólo el propio usuario o el usuario admin
-//app.put("/users/:id", isUser, editUser);
+app.put("/users/:id", isUser, editUser);
 
 // Borrar un usuario
 // DELETE- /users/:id ✅
 // Sólo el usuario admin
-//app.delete("/users/:id", isUser, isAdmin, deleteUser);
+app.delete("/users/:id", isUser, isAdmin, deleteUser);
 
 // Editar password de usuario
 // POST - /users/:id/password
 // Sólo el propio usuario
-//app.post("/users/:id/password", isUser, editUserPassword);
+app.post("/users/:id/password", isUser, editUserPassword);
 
 // Enviar código de reset de password
 // POST - /users/recover-password
 // Público
-//app.post("/users/recover-password", recoverUserPassword);
+app.post("/users/recover-password", recoverUserPassword);
 
 // Resetear password de usuario
 // POST - /users/reset-password
 // Público
-//app.post("/users/reset-password", resetUserPassword);
+app.post("/users/reset-password", resetUserPassword);
 
 // Middlewares finales
 

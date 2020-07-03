@@ -1,3 +1,4 @@
+/*
 const { getConnection } = require("../../db");
 
 async function voteEntry(req, res, next) {

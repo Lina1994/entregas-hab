@@ -1,4 +1,3 @@
-/*
 const { getConnection } = require("../../db");
 const { processAndSaveImage } = require("../../helpers");
 
@@ -8,22 +7,22 @@ async function newEntry(req, res, next) {
     connection = await getConnection();
 
     // Sacar de req.body los datos que necesitio
-    const { place, description } = req.body;
+    const { toy_name, description } = req.body;
 
     // Comprobar que están todos los datos necesarios
-    if (!place) {
+    if (!toy_name) {
       const error = new Error(
-        "Faltan datos en la petición. El campo place es obligatorio"
+        "Faltan datos en la petición. El campo toy_name es obligatorio"
       );
       error.httpStatus = 400;
       throw error;
     }
-
+   /*
     // Comprobar que no no existe una entrada con el mismo place
     const [existingEntry] = await connection.query(
       `
       SELECT id 
-      FROM diary
+      FROM toys
       WHERE place=?
     `,
       [place]
@@ -36,7 +35,7 @@ async function newEntry(req, res, next) {
       error.httpStatus = 409;
       throw error;
     }
-
+    */
     let savedImageFileName;
 
     // Procesar la imagen si está en el body
@@ -56,10 +55,10 @@ async function newEntry(req, res, next) {
     // Ejecutar la query
     const [result] = await connection.query(
       `
-      INSERT INTO diary(date, place, description, image, lastUpdate, user_id)
-      VALUES(UTC_TIMESTAMP(),?,?,?,UTC_TIMESTAMP(), ?)
+      INSERT INTO toys(image, description, locality, recomended_age, category, toy_name, date, lastUpdate, id_user)
+      VALUES(?,?,?,?,?,?,UTC_TIMESTAMP(),UTC_TIMESTAMP(), ?)
       `,
-      [place, description, savedImageFileName, req.auth.id]
+      [savedImageFileName, description, locality, recomended_age, category, toy_name, req.auth.id]
     );
 
     // Devolver el resultado
@@ -68,8 +67,11 @@ async function newEntry(req, res, next) {
       status: "ok",
       data: {
         id: result.insertId,
-        place,
+        toy_name,
         description,
+        locality,
+        recomended_age,
+        category,
         image: savedImageFileName,
       },
     });

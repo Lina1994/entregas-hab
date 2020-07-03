@@ -1,4 +1,3 @@
-/*
 const { getConnection } = require("../../db");
 const { deleteUpload } = require("../../helpers");
 
@@ -13,7 +12,7 @@ async function deleteEntry(req, res, next) {
     const [current] = await connection.query(
       `
       SELECT user_id, image
-      FROM diary
+      FROM toys
       WHERE id=?
     `,
       [id]
@@ -33,12 +32,12 @@ async function deleteEntry(req, res, next) {
     // Borrar la entrada de la tabla
     await connection.query(
       `
-      DELETE FROM diary
+      DELETE FROM toys
       WHERE id=?
     `,
       [id]
     );
-
+         /*
     // Borrar votos asociados a esa entrda en la tabla diary_votes
     await connection.query(
       `
@@ -47,10 +46,10 @@ async function deleteEntry(req, res, next) {
       `,
       [id]
     );
-
+       */
     res.send({
       status: "ok",
-      message: `La entrada ${id} de la tabla diary fue borrada y también sus votos`,
+      message: `La entrada ${id} de la tabla toys fue borrada y también sus votos`,
     });
   } catch (error) {
     next(error);

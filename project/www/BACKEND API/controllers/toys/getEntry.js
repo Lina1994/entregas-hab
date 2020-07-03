@@ -1,5 +1,5 @@
-/*
 const { getConnection } = require("../../db");
+const { differenceInCalendarYears } = require("date-fns");
 
 async function getEntry(req, res, next) {
   let connection;
@@ -11,11 +11,9 @@ async function getEntry(req, res, next) {
 
     const [result] = await connection.query(
       `
-      SELECT diary.*, AVG(diary_votes.vote) AS voteAverage
-      FROM diary
-      LEFT JOIN diary_votes
-      ON diary.id = diary_votes.entry_id
-      WHERE diary.id=?
+      SELECT *
+      FROM toys
+      WHERE id=?
     `,
       [id]
     );
@@ -32,3 +30,4 @@ async function getEntry(req, res, next) {
 }
 
 module.exports = getEntry;
+ 

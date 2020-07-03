@@ -1,4 +1,3 @@
-/*
 const { getConnection } = require("../../db");
 const {
   processAndSaveImage,
@@ -13,14 +12,14 @@ async function editEntry(req, res, next) {
     connection = await getConnection();
 
     // Sacamos los datos
-    const { date, description, place } = req.body;
+    const { description, locality, recomended_age, category, toy_name, date } = req.body;
     const { id } = req.params;
 
     // Seleccionar datos actuales de la entrada
     const [current] = await connection.query(
       `
-    SELECT id, date, description, place, image, user_id
-    FROM diary
+    SELECT id, image, description, locality, recomended_age, category, toy_name, date, lastUpdate, id_user
+    FROM toys
     WHERE id=?
   `,
       [id]
@@ -57,10 +56,10 @@ async function editEntry(req, res, next) {
     // Ejecutar la query de edición de la entrada
     await connection.query(
       `
-      UPDATE diary SET date=?, place=?, description=?, image=?, lastUpdate=UTC_TIMESTAMP()
+      UPDATE toys SET image=?, description=?, locality=?, recomended_age=?, category=?, toy_name=?, date=?, lastUpdate=UTC_TIMESTAMP()
       WHERE id=?
     `,
-      [formatDateToDB(date), place, description, savedImageFileName, id]
+      [savedImageFileName, description, locality, recomended_age, category, toy_name, formatDateToDB(date), id]
     );
 
     // Devolver resultados
@@ -68,9 +67,13 @@ async function editEntry(req, res, next) {
       status: "ok",
       data: {
         id,
-        date,
-        place,
+        image,
         description,
+        locality,
+        recomended_age,
+        category,
+        toy_name,
+        date,
       },
     });
   } catch (error) {

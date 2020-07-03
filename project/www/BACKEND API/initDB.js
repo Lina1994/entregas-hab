@@ -26,6 +26,7 @@ async function main() {
     await connection.query(`
       CREATE TABLE users (
         id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+        registrationDate DATETIME NOT NULL,
         user_name VARCHAR(50) NOT NULL,
         surname VARCHAR(50) NOT NULL,
         direction VARCHAR(50) NOT NULL,
@@ -47,7 +48,7 @@ async function main() {
     await connection.query(`
       CREATE TABLE toys (
         id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-        photo VARCHAR(350),
+        image VARCHAR(350),
         description VARCHAR(500),
         locality VARCHAR(50),
         recomended_age INT,
@@ -110,7 +111,7 @@ async function main() {
       const user_name = faker.name.firstName();
       const surname = faker.name.lastName();
       const direction = faker.address.streetAddress();
-      const birth_date = formatDateToDB(faker.date.recent());
+      const birth_date = formatDateToDB(faker.date.past(1980));
       const phone = faker.phone.phoneNumber();
 
       await connection.query(
@@ -127,7 +128,7 @@ async function main() {
     
     for (let index = 0; index < toysEntries; index++) {
       const recomended_age = faker.random.number(18);
-      const date = formatDateToDB(faker.date.recent());
+      const date = formatDateToDB(faker.date.past());
       const toy_name = faker.commerce.productName();
       const category = faker.random.objectElement(["electronica", "peluche", "lego", "barbie", "videojuego"]);
 
@@ -144,7 +145,7 @@ async function main() {
           "${random(2, users + 1)}")
       `);
     }
-
+   /*
    /////////////// deliverys_points ///////////////
     console.log("Metiendo datos de prueba en los puntos de entrega");
 
@@ -189,7 +190,7 @@ async function main() {
         "${random(1, deliverys_points)}")
       `);
     }
-
+   */
   } catch (error) {
     console.error(error);
   } finally {

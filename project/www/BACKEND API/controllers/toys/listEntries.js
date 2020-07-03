@@ -1,4 +1,3 @@
-/*
 const { getConnection } = require("../../db");
 
 async function listEntries(req, res, next) {
@@ -19,11 +18,11 @@ async function listEntries(req, res, next) {
     // Proceso el campo de orden
     let orderBy;
     switch (order) {
-      case "voteAverage":
-        orderBy = "voteAverage";
+      case "toy_name":
+        orderBy = "toy_name";
         break;
-      case "place":
-        orderBy = "place";
+      case "recomended_age":
+        orderBy = "recomended_age";
         break;
       default:
         orderBy = "date";
@@ -34,10 +33,9 @@ async function listEntries(req, res, next) {
     if (search) {
       queryResults = await connection.query(
         `
-        SELECT diary.id, diary.date, diary.place, diary.user_id,
-        (SELECT AVG(vote) FROM diary_votes WHERE entry_id=diary.id) AS voteAverage
-        FROM diary 
-        WHERE place LIKE ? OR description LIKE ?
+        SELECT id, toy_name, id_user, date, photo, recomended_age
+        FROM toys 
+        WHERE toy_name LIKE ? OR recomended_age LIKE ?
         ORDER BY ${orderBy} ${orderDirection}
         `,
         [`%${search}%`, `%${search}%`]
@@ -45,9 +43,8 @@ async function listEntries(req, res, next) {
     } else {
       queryResults = await connection.query(
         `
-        SELECT diary.id, diary.date, diary.place, diary.user_id,
-        (SELECT AVG(vote) FROM diary_votes WHERE entry_id=diary.id) AS voteAverage
-        FROM diary 
+        SELECT id, toy_name, id_user, date, photo, recomended_age
+        FROM toys  
         ORDER BY ${orderBy} ${orderDirection}`
       );
     }

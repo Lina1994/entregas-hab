@@ -12,7 +12,7 @@ async function entryExists(req, res, next) {
     const [current] = await connection.query(
       `
     SELECT id
-    FROM diary
+    FROM toys
     WHERE id=?
   `,
       [id]

@@ -7,13 +7,13 @@ async function newUser(req, res, next) {
   try {
     connection = await getConnection();
 
-    const { email, password } = req.body;
+    const { user_name, surname, direction, email, password } = req.body;
 
     // comprobar que se reciben todos los datos necesarios
 
-    if (!email || !password) {
+    if (!email || !password || !user_name || !surname || !direction) {
       const error = new Error(
-        "Faltan datos, es necesario especificar un email y una password"
+        "Faltan datos, es necesario especificar un nombre, apellido, dirección, email y una password"
       );
       error.httpStatus = 400;
       throw error;
@@ -48,8 +48,8 @@ async function newUser(req, res, next) {
     try {
       await sendMail({
         email,
-        title: "Valida tu cuenta de usuario en la app diario de viajes",
-        content: `Para validar tu cuenta de usuario en la app diario de viajes haz click aquí: ${validationURL}`,
+        title: "Valida tu cuenta de usuario en la web playtime",
+        content: `Para validar tu cuenta de usuario en la web playtime haz click aquí: ${validationURL}`,
       });
     } catch (error) {
       const emailError = new Error("Error en el envío de mail");
@@ -62,7 +62,7 @@ async function newUser(req, res, next) {
       INSERT INTO users(registrationDate, user_name, surname, direction, email, password, registrationCode, lastUpdate)
       VALUES(UTC_TIMESTAMP(), ?, ?, ?, ?, SHA2(?, 512), ?, UTC_TIMESTAMP())
     `,
-      [user_name, surname, direction,email, password, registrationCode]
+      [user_name, surname, direction, email, password, registrationCode]
     );
 
     res.send({

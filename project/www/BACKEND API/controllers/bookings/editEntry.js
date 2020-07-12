@@ -12,14 +12,14 @@ async function editEntry(req, res, next) {
     connection = await getConnection();
 
     // Sacamos los datos
-    const { description, locality, recomended_age, category, toy_name, date } = req.body;
+    const { vote, booking_code, state, date } = req.body;
     const { id } = req.params;
 
     // Seleccionar datos actuales de la entrada
     const [current] = await connection.query(
       `
-    SELECT id, image, description, locality, recomended_age, category, toy_name, date, lastUpdate, id_user
-    FROM toys
+    SELECT id, vote, booking_code, state, date, lastUpdate, id_user
+    FROM bookings
     WHERE id=?
   `,
       [id]
@@ -33,33 +33,13 @@ async function editEntry(req, res, next) {
       throw error;
     }
 
-    let savedImageFileName;
-
-    // Procesar la imagen si existe
-    if (req.files && req.files.image) {
-      try {
-        // Procesar y guardar imagen
-        savedImageFileName = await processAndSaveImage(req.files.image);
-
-        if (currentEntry.image) await deleteUpload(currentEntry.image);
-      } catch (error) {
-        const imageError = new Error(
-          "No se pudo procesar la imagen. Inténtalo de nuevo"
-        );
-        imageError.httpStatus = 400;
-        throw imageError;
-      }
-    } else {
-      savedImageFileName = currentEntry.image;
-    }
-
     // Ejecutar la query de edición de la entrada
     await connection.query(
       `
-      UPDATE toys SET image=?, description=?, locality=?, recomended_age=?, category=?, toy_name=?, date=?, lastUpdate=UTC_TIMESTAMP()
+      UPDATE bookings SET vote=?, booking_code=?, state=?, date=?, lastUpdate=UTC_TIMESTAMP()
       WHERE id=?
     `,
-      [savedImageFileName, description, locality, recomended_age, category, toy_name, formatDateToDB(date), id]
+      [vote, booking_code, state, formatDateToDB(date), id]
     );
 
     // Devolver resultados
@@ -67,12 +47,9 @@ async function editEntry(req, res, next) {
       status: "ok",
       data: {
         id,
-        image,
-        description,
-        locality,
-        recomended_age,
-        category,
-        toy_name,
+        vote,
+        booking_code,
+        state,
         date,
       },
     });

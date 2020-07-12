@@ -18,11 +18,11 @@ async function listEntries(req, res, next) {
     // Proceso el campo de orden
     let orderBy;
     switch (order) {
-      case "toy_name":
-        orderBy = "toy_name";
+      case "booking_code":
+        orderBy = "booking_code";
         break;
-      case "recomended_age":
-        orderBy = "recomended_age";
+      case "state":
+        orderBy = "state";
         break;
       default:
         orderBy = "date";
@@ -33,9 +33,9 @@ async function listEntries(req, res, next) {
     if (search) {
       queryResults = await connection.query(
         `
-        SELECT id, toy_name, id_user, date, photo, recomended_age
-        FROM toys 
-        WHERE toy_name LIKE ? OR recomended_age LIKE ?
+        SELECT id, vote, id_user, date, booking_code, state, id_toy
+        FROM bookings 
+        WHERE booking_code LIKE ? OR state LIKE ?
         ORDER BY ${orderBy} ${orderDirection}
         `,
         [`%${search}%`, `%${search}%`]
@@ -43,8 +43,8 @@ async function listEntries(req, res, next) {
     } else {
       queryResults = await connection.query(
         `
-        SELECT id, toy_name, id_user, date, photo, recomended_age
-        FROM toys  
+        SELECT id, vote, id_user, date, booking_code, state, id_toy
+        FROM bookings  
         ORDER BY ${orderBy} ${orderDirection}`
       );
     }

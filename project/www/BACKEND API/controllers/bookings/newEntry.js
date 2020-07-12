@@ -7,58 +7,33 @@ async function newEntry(req, res, next) {
     connection = await getConnection();
 
     // Sacar de req.body los datos que necesitio
-    const { toy_name, description, locality, recomended_age, category} = req.body;
-
-    // Comprobar que están todos los datos necesarios
-    if (!toy_name) {
-      const error = new Error(
-        "Faltan datos en la petición. El campo toy_name es obligatorio"
-      );
-      error.httpStatus = 400;
-      throw error;
-    }
-   /*
-    // Comprobar que no no existe una entrada con el mismo place
+    const { vote, booking_code, state } = req.body;
+   
+    // Comprobar que no no existe una entrada con el mismo id_toy
     const [existingEntry] = await connection.query(
       `
       SELECT id 
-      FROM toys
-      WHERE place=?
+      FROM bookings
+      WHERE id_toy=?
     `,
-      [place]
+      [id_toy]
     );
 
     if (existingEntry.length > 0) {
       const error = new Error(
-        "Ya existe una entrada en la base de datos con ese campo place"
+        "Ya existe una entrada en la base de datos con ese campo id_toy"
       );
       error.httpStatus = 409;
       throw error;
     }
-    */
-    let savedImageFileName;
-
-    // Procesar la imagen si está en el body
-    if (req.files && req.files.image) {
-      try {
-        // Procesar y guardar imagen
-        savedImageFileName = await processAndSaveImage(req.files.image);
-      } catch (error) {
-        const imageError = new Error(
-          "No se pudo procesar la imagen. Inténtalo de nuevo"
-        );
-        imageError.httpStatus = 400;
-        throw imageError;
-      }
-    }
-
+    
     // Ejecutar la query
     const [result] = await connection.query(
       `
-      INSERT INTO toys(image, description, locality, recomended_age, category, toy_name, date, lastUpdate, id_user)
-      VALUES(?,?,?,?,?,?,UTC_TIMESTAMP(),UTC_TIMESTAMP(), ?)
+      INSERT INTO bookings(vote, booking_code, state, date, lastUpdate, id_user, id_toy, id_delivery_point)
+      VALUES(?,?,?, UTC_TIMESTAMP(),UTC_TIMESTAMP(), ?, ?, ?)
       `,
-      [savedImageFileName, description, locality, recomended_age, category, toy_name, req.auth.id]
+      [vote, booking_code, state, req.auth.id, id_toy, id_delivery_point]
     );
 
     // Devolver el resultado
@@ -67,12 +42,11 @@ async function newEntry(req, res, next) {
       status: "ok",
       data: {
         id: result.insertId,
-        toy_name,
-        description,
-        locality,
-        recomended_age,
-        category,
-        image: savedImageFileName,
+        vote,
+        booking_code,
+        state,
+        id_toy,
+        id_delivery_point,
       },
     });
   } catch (error) {

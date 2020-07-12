@@ -12,7 +12,7 @@ async function getEntry(req, res, next) {
     const [result] = await connection.query(
       `
       SELECT *
-      FROM toys
+      FROM bookings
       WHERE id=?
     `,
       [id]

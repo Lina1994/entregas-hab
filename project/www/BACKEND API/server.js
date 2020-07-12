@@ -5,6 +5,7 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const fileUpload = require("express-fileupload");
 
+const entryPointsExists = require("./middlewares/entryPointsExists");
 const entryBookingExists = require("./middlewares/entryBookingExists");
 const entryExists = require("./middlewares/entryExists");
 const isUser = require("./middlewares/isUser");
@@ -29,7 +30,7 @@ const listDeliveringPointEntries = require("./controllers/deliverys_points/listE
 const getDeliveringPointEntry = require("./controllers/deliverys_points/getEntry");
 const newDeliveringPointEntry = require("./controllers/deliverys_points/newEntry");
 const editDeliveringPointEntry = require("./controllers/deliverys_points/editEntry");
-const deleteDeliveringPointEntry = require("./controllers/deliverys_points/deleteEntry");
+const deleteDeliveringPointEntry = require("./controllers/deliverys_points/deleteDeliveringPointEntry");
 /*
 // Content controllers
 const voteEntry = require("./controllers/diary/voteEntry");
@@ -96,29 +97,29 @@ app.delete("/entries/:id", isUser, entryExists, deleteEntry);
 */
 
 // Listar multiples entradas del diario de viajas
-// GET - /entries 
+// GET - /DeliveringPoint 
 // Público
-app.get("/entries", listDeliveringPointEntries);
+app.get("/DeliveringPoint", listDeliveringPointEntries);
 
 // Mostrar una sola entrada del diario
-// GET - /entries/:id 
+// GET - /DeliveringPoint/:id 
 // Público
-app.get("/entries/:id", entryExists, getDeliveringPointEntry);
+app.get("/DeliveringPoint/:id", entryPointsExists, getDeliveringPointEntry);
 
 // Crear una nueva entrada del diario
-// POST - /entries 
+// POST - /DeliveringPoint 
 // Sólo usuarios registrados
-app.post("/entries", isUser, newDeliveringPointEntry);
+app.post("/DeliveringPoint", isUser, newDeliveringPointEntry);
 
 // Editar una entrada del diario
-// PUT - /entries/:id 
+// PUT - /DeliveringPoint/:id 
 // Sólo usuario que creara esta entrada o admin
-app.put("/entries/:id", isUser, entryExists, editDeliveringPointEntry);
+app.put("/DeliveringPoint/:id", isUser, entryPointsExists, editDeliveringPointEntry);
 
 // Borrar una entrada del diario
-// DELETE - /entries/:id 
+// DELETE - /DeliveringPoint/:id 
 // Sólo usuario que creara esta entrada o admin
-app.delete("/entries/:id", isUser, entryExists, deleteDeliveringPointEntry);
+app.delete("/DeliveringPoint/:id", isUser, entryPointsExists, deleteDeliveringPointEntry);
 
 /*
   ////// ENDPOINTS DE BOOKING /////////////////////////////////////

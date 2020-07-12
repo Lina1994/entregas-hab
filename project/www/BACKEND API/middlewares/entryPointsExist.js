@@ -1,12 +1,12 @@
 const { getConnection } = require("../db");
 
-async function entryExists(req, res, next) {
+async function entryPointsExists(req, res, next) {
   let connection;
   try {
     connection = await getConnection();
     const { id } = req.params;
 
-    console.log("comprobando que en la tabla de toys hay una entrada id", id);
+    console.log("comprobando que en la tabla de deliverys_points hay una entrada id", id);
 
     // Comprobar que la entrada que queremos editar exista en la base de datos
     const [current] = await connection.query(
@@ -34,4 +34,4 @@ async function entryExists(req, res, next) {
   }
 }
 
-module.exports = entryExists;
+module.exports = entryPointsExists;

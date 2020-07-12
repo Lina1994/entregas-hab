@@ -6,7 +6,7 @@ async function entryBookingExists(req, res, next) {
     connection = await getConnection();
     const { id } = req.params;
 
-    console.log("comprobando que en la tabla de diary hay una entrada id", id);
+    console.log("comprobando que en la tabla de bookings hay una entrada id", id);
 
     // Comprobar que la entrada que queremos editar exista en la base de datos
     const [current] = await connection.query(

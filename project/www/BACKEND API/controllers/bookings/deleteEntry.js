@@ -12,7 +12,7 @@ async function deleteEntry(req, res, next) {
     const [current] = await connection.query(
       `
       SELECT user_id, image
-      FROM toys
+      FROM bookings
       WHERE id=?
     `,
       [id]
@@ -32,7 +32,7 @@ async function deleteEntry(req, res, next) {
     // Borrar la entrada de la tabla
     await connection.query(
       `
-      DELETE FROM toys
+      DELETE FROM bookings
       WHERE id=?
     `,
       [id]
@@ -41,8 +41,8 @@ async function deleteEntry(req, res, next) {
     // Borrar votos asociados a esa entrda en la tabla diary_votes
     await connection.query(
       `
-      DELETE FROM diary_votes
-      WHERE entry_id=?
+      DELETE FROM bookings
+      WHERE bookings_id=?
       `,
       [id]
     );

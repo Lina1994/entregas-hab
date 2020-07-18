@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf8">
+        <title>V-CLICK</title>
+    </head>
+    <body>
+
+        <!-- Div donde Vue se renderiza 👇 (fuera de aquí no funciona) -->
+        <div id="app">
+            <!-- La directiva V-CLICK lanza un evento de ratón -->
+
+            <div v-show="login">
+                <p>
+                    Login
+                </p>
+                <input type="text" placeholder="Escribe tu usuario">
+                <input type="password" placeholder="Escribe tu contraseña">
+                <button v-on:click="login =! login, register =! register">
+                    Registro
+                </button>
+            </div>
+
+            <div v-show="register">
+                <p>
+                    Registro
+                </p>
+                <input type="text" placeholder="Escribe tu usuario">
+                <input type="password" placeholder="Escribe tu contraseña">
+                <button @click="login =! login, register =! register">
+                    Registro
+                </button>
+            </div>
+
+        </div>
+
+        <!-- Importando Vuejs 👇 -->
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+        <!-- El objeto Vue 👇 -->
+        <script>
+            const app = new Vue ({
+                el: '#app', // Indico dónde Vue se renderiza en el HTML
+                data() { // En Data se guardan las variables 
+                    return {
+                        login: true,
+                        register: false
+                    }
+                }
+            })
+        </script>
+
+    </body>
+</html>

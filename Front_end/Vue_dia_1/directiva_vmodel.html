@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf8">
+        <title>V-MODEL</title>
+    </head>
+    <body>
+
+        <!-- Div donde Vue se renderiza 👇 (fuera de aquí no funciona) -->
+        <div id="app">
+            <!-- La directiva V-MODEL enlaza el valor de un elemento HTML con el
+            de una variable. -->
+            <h1>
+                ¡Bienvenido/a, {{ username }}!
+            </h1>
+            <input v-model="username"/>
+        </div>
+
+        <!-- Importando Vuejs 👇 -->
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+        <!-- El objeto Vue 👇 -->
+        <script>
+            const app = new Vue ({
+                el: '#app', // Indico dónde Vue se renderiza en el HTML
+                data() { // En Data se guardan las variables 
+                    return {
+                        username: ''
+                    }
+                }
+            })
+        </script>
+
+    </body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf8">
+        <title>Clases dinámicas 2</title>
+        <style>
+            .red {
+                color: brown;
+            }
+            .green {
+                color: yellowgreen;
+            }
+        </style>
+    </head>
+    <body>
+
+        <!-- Div donde Vue se renderiza 👇 (fuera de aquí no funciona) -->
+        <div id="app">
+             <ul>
+                 <li v-for="nota in notas" :key="nota.id"
+                 :class="{green: nota >= notaMinima, red: nota < notaMinima}">
+                     {{ nota }}
+                 </li>
+             </ul>
+        </div>
+
+        <!-- Importando Vuejs 👇 -->
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+        <!-- El objeto Vue 👇 -->
+        <script>
+            const app = new Vue ({
+                el: '#app', // Indico dónde Vue se renderiza en el HTML
+                data() { // En Data se guardan las variables 
+                return {
+                 notaMinima: 5,
+                 notas: [2, 3, 5, 7, 4, 10, 9, 1, 6]
+                }
+            }
+         })
+        </script>
+
+    </body>
+</html>

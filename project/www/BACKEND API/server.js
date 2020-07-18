@@ -30,12 +30,7 @@ const listDeliveringPointEntries = require("./controllers/deliverys_points/listE
 const getDeliveringPointEntry = require("./controllers/deliverys_points/getEntry");
 const newDeliveringPointEntry = require("./controllers/deliverys_points/newEntry");
 const editDeliveringPointEntry = require("./controllers/deliverys_points/editEntry");
-const deleteDeliveringPointEntry = require("./controllers/deliverys_points/deleteDeliveringPointEntry");
-/*
-// Content controllers
-const voteEntry = require("./controllers/diary/voteEntry");
-const getEntryVotes = require("./controllers/diary/getEntryVotes");
-*/
+const deleteDeliveringPointEntry = require("./controllers/deliverys_points/deleteEntry");
 
 // User controllers
 const newUser = require("./controllers/users/newUser");

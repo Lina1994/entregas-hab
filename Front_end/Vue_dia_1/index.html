@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf8">
+        <title>Prueba Vue 1</title>
+    </head>
+    <body>
+
+        <!-- Div donde Vue se renderiza 👇 (fuera de aquí no funciona) -->
+        <div id="app">
+
+            <p>
+                ¡Hola, yo soy {{ nombre }}, encantada! 😊
+            </p>
+            <p>
+                Tengo {{ edad }} años. 👋
+            </p>
+
+            <!-- EXPRESIÓN NUMÉRICA -->
+            {{ 2 + 2 + 2 }}
+            <br>
+            <!-- EXPRESIONES DE TEXTO -->
+            {{ 'Desire' + 'Marron' }}
+            <br>
+            {{ 'Desire' + ' ' + 'Marron' }}
+            <br>
+            <!-- EXPRESIONES CON OPERACIONES SIMPLES -->
+            {{ 'desire'.toUpperCase() }}
+            <br>
+            {{ 'DESIRE'.toLowerCase() }}
+            <br>
+            <!-- EXPRESIÓN TERNARIA -->
+            {{ butaca ? 'Butaca vacía' : 'Butaca ocupada' }}
+        </div>
+
+        <!-- Importando Vuejs 👇 -->
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+        <!-- El objeto Vue 👇 -->
+        <script>
+            const app = new Vue ({
+                el: '#app', // Indico dónde Vue se renderiza en el HTML
+                data() { // En Data se guardan las variables 
+                    return {
+                        nombre: 'Desire',
+                        edad: '23',
+                        butaca: false
+                    }
+                }
+            })
+        </script>
+
+    </body>
+</html>

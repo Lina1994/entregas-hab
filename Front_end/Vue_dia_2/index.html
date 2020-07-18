@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf8">
+        <title>Día 2</title>
+    </head>
+    <body>
+
+        <!-- Div donde Vue se renderiza 👇 (fuera de aquí no funciona) -->
+        <div id="app">
+            <h2>
+                Mi horario
+            </h2>
+            <p v-for="horario in schedule" :key="horario.id">
+                Tengo clase el día {{ horario.day }} a las {{ horario.hora }} horas.
+            </p>
+
+        </div>
+
+        <!-- Importando Vuejs 👇 -->
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+        <!-- El objeto Vue 👇 -->
+        <script>
+            const app = new Vue ({
+                el: '#app', // Indico dónde Vue se renderiza en el HTML
+                data() { // En Data se guardan las variables 
+                    return {
+                        schedule: [
+                           {day: 'Lunes', hora:'18' },
+                           {day: 'Miércoles', hora:'18' },
+                           {day: 'Jueves', hora:'18' }
+                        ]
+                    }
+                }
+            })
+        </script>
+
+    </body>
+</html>

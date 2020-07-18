@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf8">
+        <title>V-SHOW</title>
+    </head>
+    <body>
+
+        <!-- Div donde Vue se renderiza 👇 (fuera de aquí no funciona) -->
+        <div id="app">
+            <!-- La directiva V-SHOW muestra u oculta algo dependiendo del valor
+            de una variable. -->
+            <h1 v-show="ver">
+                ¡Hola, directiva v-show! 👋
+            </h1>
+        </div>
+
+        <!-- Importando Vuejs 👇 -->
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+        <!-- El objeto Vue 👇 -->
+        <script>
+            const app = new Vue ({
+                el: '#app', // Indico dónde Vue se renderiza en el HTML
+                data() { // En Data se guardan las variables 
+                    return {
+                        // Variable que controla el v-show
+                        ver: false
+                    }
+                }
+            })
+        </script>
+
+    </body>
+</html>

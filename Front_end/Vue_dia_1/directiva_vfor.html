@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf8">
+        <title>V-FOR</title>
+    </head>
+    <body>
+
+        <!-- Div donde Vue se renderiza 👇 (fuera de aquí no funciona) -->
+        <div id="app">
+            <!-- La directiva V-FOR sirve para recorrer arrays y objetos. -->
+            <p v-for="(fruta, index) in frutas" :key="fruta.id">
+                índice: {{ index }} {{ fruta }}
+            </p>
+        </div>
+
+        <!-- Importando Vuejs 👇 -->
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+        <!-- El objeto Vue 👇 -->
+        <script>
+            const app = new Vue ({
+                el: '#app', // Indico dónde Vue se renderiza en el HTML
+                data() { // En Data se guardan las variables 
+                    return {
+                        frutas: ['manzana🍎', 'pera🍐', 'banana🍌']
+                    }
+                }
+            })
+        </script>
+
+    </body>
+</html>

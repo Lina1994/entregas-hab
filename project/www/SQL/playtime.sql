@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS toys (
     FOREIGN KEY (id_user) REFERENCES users (id)
 );
 
-CREATE TABLE IF NOT EXISTS deliverys_points (
+CREATE TABLE IF NOT EXISTS usersdeliverys_points (
 	id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
 	timetable VARCHAR(50),
 	place varchar(50),

@@ -146,3 +146,21 @@ app.delete('/notas/delete/:id', (req, res) => {
 
     //res.send('Nota eliminada')
 })
+
+//RECOGER TODOS LOS CLIENTES DE La BBDD clientes
+app.get('/clientes', (req, res)=> {
+
+    // SECUENCIA SQL
+    const sql = 'SELECT * FROM lista_clientes'
+
+    //CONEXION A LA BBDD
+    connection.query( sql, (error,results) => {
+        if(error) throw error
+        if(results.length > 0) {
+            res.json(results)
+        } else {
+            console.log('NO HAY CLIENTES :(')
+        }
+    } )
+
+} )

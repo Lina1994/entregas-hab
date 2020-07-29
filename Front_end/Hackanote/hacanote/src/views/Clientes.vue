@@ -27,7 +27,7 @@ export default {
     getClients(){
       var self = this;
       // LLAMADA DE AXIOS A API
-      axios.get('http://localhost:3010/clientes')
+      axios.get('http://localhost:3050/clientes')
       .then( function(response) {
         console.log(response)
         self.clientes = response.data

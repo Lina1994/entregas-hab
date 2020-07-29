@@ -1,9 +1,11 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link :to="{ name: 'Home'} ">Home</router-link> |
+      <!--<router-link :to="{ name: 'Home'} ">Home</router-link> |
       <router-link :to="{ name: 'About'} ">About</router-link> |
-      <router-link :to="{ name: 'AddClients'} ">Formulario</router-link>
+      <router-link :to="{ name: 'Products'} ">Productos</router-link> |
+      <router-link :to="{ name: 'Clients'} ">Clientes</router-link> |
+      <router-link :to="{ name: 'Registrar'} ">Registrar</router-link>-->
     </div>
     <router-view/>
   </div>
@@ -17,7 +19,7 @@
   text-align: center;
   color: #2c3e50;
 }
-
+/*
 #nav {
   padding: 30px;
 }
@@ -29,5 +31,5 @@
 
 #nav a.router-link-exact-active {
   color: #42b983;
-}
+}*/
 </style>

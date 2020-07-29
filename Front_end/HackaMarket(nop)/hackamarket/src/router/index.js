@@ -11,6 +11,11 @@ Vue.use(VueRouter)
     component: Home
   },
   {
+    path: '*',
+    name: 'Error',
+    component: () => import('../views/Error.vue')
+  },
+  {
     path: '/about',
     name: 'About',
     // route level code-splitting
@@ -19,9 +24,19 @@ Vue.use(VueRouter)
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
   {
-    path: '/clientes',
-    name: 'Clientes',
-    component: () => import('../views/Clientes.vue')
+    path: '/Products',
+    name: 'Products',
+    component: () => import('../views/Products.vue')
+  },
+  {
+    path: '/Clients',
+    name: 'Clients',
+    component: () => import('../views/Clients.vue')
+  },
+  {
+    path: '/Registrar',
+    name: 'Registrar',
+    component: () => import('../views/Registrar.vue')
   }
 ]
 

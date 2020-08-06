@@ -16,16 +16,19 @@
   },
   "dependencies": {
     "@sendgrid/mail": "^7.2.0",
+    "axios": "^0.19.2",
     "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "date-fns": "^2.14.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-fileupload": "^1.1.7-alpha.3",
     "faker": "^4.1.0",
     "jsonwebtoken": "^8.5.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "morgan": "^1.10.0",
     "mysql2": "^2.1.0",
+    "node-localstorage": "^2.1.6",
     "sharp": "^0.25.4",
     "uuid": "^8.1.0"
   }

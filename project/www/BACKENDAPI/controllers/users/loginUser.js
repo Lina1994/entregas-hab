@@ -1,5 +1,7 @@
 const { getConnection } = require("../../db");
 const jsonwebtoken = require("jsonwebtoken");
+const axios = require("axios")
+
 
 async function loginUser(req, res, next) {
   let connection;
@@ -48,6 +50,17 @@ async function loginUser(req, res, next) {
     const token = jsonwebtoken.sign(tokenInfo, process.env.SECRET, {
       expiresIn: "30d",
     });
+    ///// FUNCION PARA GUARDAR LOCALSTORAGE TOKEN ////
+    /*
+    if (typeof localStorage === "undefined" || localStorage === null) {
+      const LocalStorage = require('node-localstorage').LocalStorage;
+      localStorage = new LocalStorage('./scratch');
+   }
+    function saveToken(){
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+      localStorage.setItem('AUTH_TOKEN_KEY', token)
+    }
+    saveToken(token);*/
 
     // Devolver el token
     res.send({
@@ -56,6 +69,9 @@ async function loginUser(req, res, next) {
         token,
       },
     });
+    //console.log(token)
+
+    
   } catch (error) {
     next(error);
   } finally {

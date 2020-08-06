@@ -71,8 +71,9 @@ ul {
     border: 1px solid black;
     border-radius: 20px;
     width: 70%;
+    max-width: 500px;
     margin: 2% auto;
-    background: rgb(131, 130, 155);
+    background: rgba(131, 130, 155, .4);
     padding: 0;
     transition: all .4s;
 }
@@ -97,6 +98,6 @@ button:hover {
 }
 ul:hover {
     cursor: pointer;
-    transform: scale(1.1);
+    transform: scale(1.08);
 }
 </style>

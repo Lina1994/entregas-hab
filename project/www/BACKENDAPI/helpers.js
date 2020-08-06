@@ -1,6 +1,6 @@
 const fs = require("fs").promises;
 const path = require("path");
-const sharp = require("sharp");
+//const sharp = require("sharp");
 const uuid = require("uuid");
 const crypto = require("crypto");
 
@@ -24,7 +24,7 @@ async function processAndSaveImage(uploadedImage) {
   await fs.mkdir(imageUploadPath, { recursive: true });
 
   // Leer la imagen que se subio
-  const image = sharp(uploadedImage.data);
+  const image = /*sharp(*/uploadedImage.data;
 
   // Saco información de la imagen
   const imageInfo = await image.metadata();

@@ -33,7 +33,7 @@ async function listEntries(req, res, next) {
     if (search) {
       queryResults = await connection.query(
         `
-        SELECT id, toy_name, id_user, date, photo, recomended_age
+        SELECT id, toy_name, id_user, date, image, recomended_age
         FROM toys 
         WHERE toy_name LIKE ? OR recomended_age LIKE ?
         ORDER BY ${orderBy} ${orderDirection}
@@ -43,7 +43,7 @@ async function listEntries(req, res, next) {
     } else {
       queryResults = await connection.query(
         `
-        SELECT id, toy_name, id_user, date, photo, recomended_age
+        SELECT id, toy_name, id_user, date, image, recomended_age
         FROM toys  
         ORDER BY ${orderBy} ${orderDirection}`
       );

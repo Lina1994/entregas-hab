@@ -10,6 +10,7 @@
       <button>
           Registrarse
       </button>
+      <router-link :to="{ name: 'Loging'} ">¿Ya eres parte de la familia?</router-link> 
   </div>
 </template>
 
@@ -19,6 +20,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style scopede>
+h1 {
+    margin-top: 10rem;
+}
 </style>

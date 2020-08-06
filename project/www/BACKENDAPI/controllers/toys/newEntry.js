@@ -1,5 +1,5 @@
 const { getConnection } = require("../../db");
-const { processAndSaveImage } = require("../../helpers");
+//const { processAndSaveImage } = require("../../helpers");
 
 async function newEntry(req, res, next) {
   let connection;
@@ -7,7 +7,7 @@ async function newEntry(req, res, next) {
     connection = await getConnection();
 
     // Sacar de req.body los datos que necesitio
-    const { toy_name, description, locality, recomended_age, category} = req.body;
+    const { image, toy_name, description, locality, recomended_age, category} = req.body;
 
     // Comprobar que están todos los datos necesarios
     if (!toy_name) {
@@ -42,7 +42,7 @@ async function newEntry(req, res, next) {
     if (req.files && req.files.image) {
       try {
         // Procesar y guardar imagen
-        savedImageFileName = await processAndSaveImage(req.files.image);
+        //savedImageFileName = await processAndSaveImage(req.files.image);
       } catch (error) {
         const imageError = new Error(
           "No se pudo procesar la imagen. Inténtalo de nuevo"
@@ -58,7 +58,8 @@ async function newEntry(req, res, next) {
       INSERT INTO toys(image, description, locality, recomended_age, category, toy_name, date, lastUpdate, id_user)
       VALUES(?,?,?,?,?,?,UTC_TIMESTAMP(),UTC_TIMESTAMP(), ?)
       `,
-      [savedImageFileName, description, locality, recomended_age, category, toy_name, req.auth.id]
+      //[savedImageFileName, description, locality, recomended_age, category, toy_name, req.auth.id]
+      [image, description, locality, recomended_age, category, toy_name, req.auth.id]
     );
 
     // Devolver el resultado
@@ -72,7 +73,8 @@ async function newEntry(req, res, next) {
         locality,
         recomended_age,
         category,
-        image: savedImageFileName,
+        image,
+        //image: savedImageFileName,
       },
     });
   } catch (error) {

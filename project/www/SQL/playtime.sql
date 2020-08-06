@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS users (
 
 CREATE TABLE IF NOT EXISTS toys (
 	id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-	photo VARCHAR(350),
+	image VARCHAR(350),
     description VARCHAR(350),
     locality VARCHAR(50),
     recomended_age INT,

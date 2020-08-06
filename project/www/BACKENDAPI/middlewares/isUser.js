@@ -9,6 +9,10 @@ async function isUser(req, res, next) {
 
     // Extraer token de los headers de la petición
     const { authorization } = req.headers;
+    //console.log(req.body.headers)
+    //const { authorization } = req.body.headers;
+    //const authorization = req.body.headers;
+    //const { authorization } = localStorage.getItem('AUTH_TOKEN_KEY');
 
     if (!authorization) {
       const error = new Error("Falta la cabecera de autorización");

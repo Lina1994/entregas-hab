@@ -134,13 +134,25 @@ app.post('/auth', (req, res) => {
             const payload = {
                 check: true
             }
+            ///GUARDANDO SI ES ADMIN O NO
+            let admin = null
+            if(results[0].isAdmin === 1) {
+                admin = true
+            } else {
+                admin = false
+            }
+            // GUARDADNDO NOMBRE
+            let user = ''
+            user = results[0].user
             // TOKEN
             const token = jwt.sign(payload, app.get('llave'),{
                 expiresIn: '2 days'
             } )
             res.json({
                 mensaje: 'Autenticacion completada con éxito',
-                token: token
+                token: token, 
+                admin: admin,
+                user: user
             } )
             console.log('Datos encontrados')
         } else {

@@ -5,8 +5,10 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const fileUpload = require("express-fileupload");
 
-const entryPointsExists = require("./middlewares/entryPointsExists");
-const entryBookingExists = require("./middlewares/entryBookingExists");
+const cors = require('cors')
+
+const entryPointsExists = require("./middlewares/entryPointsExist");
+const entryBookingExists = require("./middlewares/entryBookingExist");
 const entryExists = require("./middlewares/entryExists");
 const isUser = require("./middlewares/isUser");
 const isAdmin = require("./middlewares/isAdmin");
@@ -42,6 +44,7 @@ const deleteUser = require("./controllers/users/deleteUser");
 const editUserPassword = require("./controllers/users/editUserPassword");
 const recoverUserPassword = require("./controllers/users/recoverUserPassword");
 const resetUserPassword = require("./controllers/users/resetUserPassword");
+const { toUpper } = require("lodash");
 
 
 const app = express();
@@ -56,6 +59,9 @@ app.use(bodyParser.json());
 
 // Procesado de body tipo form-data
 app.use(fileUpload());
+app.use(cors())
+
+// imagen uploads app.use(express())
 
 
 /*

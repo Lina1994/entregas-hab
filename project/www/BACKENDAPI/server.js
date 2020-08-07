@@ -19,6 +19,7 @@ const getEntry = require("./controllers/toys/getEntry");
 const newEntry = require("./controllers/toys/newEntry");
 const editEntry = require("./controllers/toys/editEntry");
 const deleteEntry = require("./controllers/toys/deleteEntry");
+const getMyToys = require("./controllers/toys/getMyToys");
 
 // my bookings controllers
 const listbookingsEntries = require("./controllers/bookings/listEntries");
@@ -77,6 +78,11 @@ app.get("/entries", listEntries);
 // GET - /entries/:id 
 // Público
 app.get("/entries/:id", entryExists, getEntry);
+
+// Mostrar todos los juguetes de un usuario
+// GET - /entries/?:id 
+// Público
+app.get("/myentries/:id", isUser, entryExists, getMyToys);
 
 // Crear una nueva entrada del diario
 // POST - /entries 

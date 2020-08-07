@@ -4,16 +4,11 @@
           <li v-for="(toy, index) in toys" :key="toy.id" 
           @click="enviarIncice(index)">
                   <img :src="toy.image">
+                  <p>
+                      Donaciones:
+                  </p>
               <p>
-                  {{ toy.toy_name }}
-              </p>
-              <p>
-                  Edad recomendada:
-                  {{ toy.recomended_age }}
-              </p>
-              <p>
-                  Fecha:
-                  {{ toy.date }}
+                  {{ toys }}
               </p>
           </li>
       </ul>
@@ -22,7 +17,7 @@
 
 <script>
     export default {
-        name: 'ToysListEntries',
+        name: 'MyUser',
         props:{
             toys: Array
         },

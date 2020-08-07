@@ -46,6 +46,7 @@ async function loginUser(req, res, next) {
       id: dbUser[0].id,
       role: dbUser[0].role,
     };
+    const iduser = dbUser[0].id;
 
     const token = jsonwebtoken.sign(tokenInfo, process.env.SECRET, {
       expiresIn: "30d",
@@ -67,6 +68,7 @@ async function loginUser(req, res, next) {
       status: "ok",
       data: {
         token,
+        iduser,
       },
     });
     //console.log(token)

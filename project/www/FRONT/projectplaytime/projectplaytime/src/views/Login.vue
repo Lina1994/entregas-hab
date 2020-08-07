@@ -54,15 +54,18 @@ export default {
                     console.log('Loging OK');
                     //console.log(response.data.data.token);
                     let authtoken = response.data.data.token;
+                    let userid = response.data.data.iduser;
                     localStorage.setItem('EMAIL', this.email)
                     localStorage.setItem('AUTH_TOKEN_KEY', authtoken)
+                    localStorage.setItem('USER_ID', userid)
                     console.log('Token guardado en localstorage')
                     console.log(response)
+                    console.log(userid)
                 } )
                 setTimeout( () => {
                     this.$router.push('/home')
                     location.reload()
-                }, 500 );
+                }, 250 );
 
                 } 
                  catch (error) {

@@ -57,7 +57,7 @@ Vue.use(VueRouter)
     meta: {
      /* allowAnon: true*/
     },
-  }
+  },
 
 ]
 

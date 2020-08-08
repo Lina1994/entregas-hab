@@ -1,23 +1,18 @@
 const jsonwebtoken = require("jsonwebtoken");
 const { getConnection } = require("../db");
 
-async function isUser(req, res, next) {
+async function isUserForPut(req, res, next) {
   let connection;
 
   try {
     connection = await getConnection();
 
     // Extraer token de los headers de la petición
-    //if (req.headers)
-    let { authorization } = req.headers;
-    //console.log(req.body.headers.Authorization)
-    //console.log(authorization)
-    //let { authorization } = req.body.headers.Authorization;
+    let authorization = req.body.headers.Authorization;
 
     if(!authorization) {
       const error = new Error("Falta la cabecera de autorización");
       error.httpStatus = 401;
-      //console.log(req.body.headers.Authorization)
       throw error;
     }
 
@@ -74,4 +69,4 @@ async function isUser(req, res, next) {
   }
 }
 
-module.exports = isUser;
+module.exports = isUserForPut;

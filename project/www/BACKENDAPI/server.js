@@ -11,6 +11,7 @@ const entryPointsExists = require("./middlewares/entryPointsExist");
 const entryBookingExists = require("./middlewares/entryBookingExist");
 const entryExists = require("./middlewares/entryExists");
 const isUser = require("./middlewares/isUser");
+const isUserForPut = require("./middlewares/isUserForPut");
 const isAdmin = require("./middlewares/isAdmin");
 
 // my content controllers
@@ -92,7 +93,7 @@ app.post("/entries", isUser, newEntry);
 // Editar una entrada del diario
 // PUT - /entries/:id 
 // Sólo usuario que creara esta entrada o admin
-app.put("/entries/:id", isUser, entryExists, editEntry);
+app.put("/entries/:id", isUserForPut, entryExists, editEntry);
 
 // Borrar una entrada del diario
 // DELETE - /entries/:id 
@@ -195,7 +196,7 @@ app.get("/users/:id", isUser, getUser);
 // Editar datos de usuario: email, name, avatar
 // PUT - /users/:id 
 // Sólo el propio usuario o el usuario admin
-app.put("/users/:id", isUser, editUser);
+app.put("/users/:id", isUserForPut, editUser);
 
 // Borrar un usuario
 // DELETE- /users/:id 

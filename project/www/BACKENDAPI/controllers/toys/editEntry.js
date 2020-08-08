@@ -1,7 +1,7 @@
 const { getConnection } = require("../../db");
 const {
   processAndSaveImage,
-  formatDateToDB,
+  /*formatDateToDB,*/
   deleteUpload,
 } = require("../../helpers");
 
@@ -12,7 +12,8 @@ async function editEntry(req, res, next) {
     connection = await getConnection();
 
     // Sacamos los datos
-    const { description, locality, recomended_age, category, toy_name, date } = req.body;
+    //console.log(req.body.data)
+    const { image, description, locality, recomended_age, category, toy_name, date } = req.body.data;
     const { id } = req.params;
 
     // Seleccionar datos actuales de la entrada
@@ -26,13 +27,14 @@ async function editEntry(req, res, next) {
     );
 
     const [currentEntry] = current;
-
+/*
     if (currentEntry.user_id !== req.auth.id && req.auth.role !== "admin") {
       const error = new Error("No tienes permisos para editar esta entrada");
       error.httpStatus = 403;
       throw error;
     }
-
+    */
+/*
     let savedImageFileName;
 
     // Procesar la imagen si existe
@@ -52,15 +54,25 @@ async function editEntry(req, res, next) {
     } else {
       savedImageFileName = currentEntry.image;
     }
-
+*/
+    // Ejecutar la query de edición de la entrada
+    await connection.query(
+      `
+      UPDATE toys SET image=?, description=?, locality=?, recomended_age=?, category=?, toy_name=?, lastUpdate=UTC_TIMESTAMP()
+      WHERE id=?
+    `,
+      [image, description, locality, recomended_age, category, toy_name, id]
+    );
+    /*
     // Ejecutar la query de edición de la entrada
     await connection.query(
       `
       UPDATE toys SET image=?, description=?, locality=?, recomended_age=?, category=?, toy_name=?, date=?, lastUpdate=UTC_TIMESTAMP()
       WHERE id=?
     `,
-      [savedImageFileName, description, locality, recomended_age, category, toy_name, formatDateToDB(date), id]
+      [image, description, locality, recomended_age, category, toy_name, formatDateToDB(date), id]
     );
+    */
 
     // Devolver resultados
     res.send({

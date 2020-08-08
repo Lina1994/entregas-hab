@@ -12,7 +12,8 @@ async function editUser(req, res, next) {
     connection = await getConnection();
 
     const { id } = req.params;
-    const { email, name } = req.body;
+    const { email, user_name, birth_date, direction, image, phone, surname } = req.body.data;
+    //console.log(req.body.data)
 
     // Comprobar que el id de usuario que queremos cambiar es
     // el mismo que firma la petición o bien es admin
@@ -39,7 +40,7 @@ async function editUser(req, res, next) {
     }
 
     // Si mandamos imagen guardar avatar
-
+    /*
     let savedFileName;
 
     if (req.files && req.files.avatar) {
@@ -56,9 +57,11 @@ async function editUser(req, res, next) {
     } else {
       savedFileName = currentUser[0].image;
     }
-
+    */
     // Si el email es diferente al actual comprobar que no existe en la base de datos
+    console.log(email)
     if (email !== currentUser[0].email) {
+      console.log('Cambiando email...')
       const [existingEmail] = await connection.query(
         `
         SELECT id
@@ -96,10 +99,10 @@ async function editUser(req, res, next) {
       await connection.query(
         `
         UPDATE users 
-        SET name=?, email=?, lastUpdate=UTC_TIMESTAMP(), lastAuthUpdate=UTC_TIMESTAMP(), active=false, registrationCode=?, image=?
+        SET surname=?, phone=?, direction=?, birth_date=?, user_name=?, email=?, lastUpdate=UTC_TIMESTAMP(), lastAuthUpdate=UTC_TIMESTAMP(), active=false, registrationCode=?, image=?
         WHERE id=?
       `,
-        [name, email, registrationCode, savedFileName, id]
+        [surname, phone, direction, birth_date, user_name, email, registrationCode, image, id]
       );
 
       // Dar una respuesta
@@ -112,10 +115,10 @@ async function editUser(req, res, next) {
       await connection.query(
         `
       UPDATE users 
-      SET name=?, email=?, image=?, lastUpdate=UTC_TIMESTAMP()
+      SET surname=?, phone=?, direction=?, birth_date=?, user_name=?, email=?, image=?, lastUpdate=UTC_TIMESTAMP()
       WHERE id=?
     `,
-        [name, email, savedFileName, id]
+        [surname, phone, direction, birth_date, user_name, email, image, id]
       );
 
       // Dar una respuesta

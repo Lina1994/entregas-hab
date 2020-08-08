@@ -17,6 +17,7 @@ async function entryExists(req, res, next) {
   `,
       [id]
     );
+    console.log(current.length)
 
     if (current.length === 0) {
       const error = new Error(

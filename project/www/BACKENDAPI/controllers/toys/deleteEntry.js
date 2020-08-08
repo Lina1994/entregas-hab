@@ -3,11 +3,13 @@ const { deleteUpload } = require("../../helpers");
 
 async function deleteEntry(req, res, next) {
   let connection;
-
+console.log('Empezando borrado de datos')
   try {
     connection = await getConnection();
-    const { id } = req.params;
-
+    let id  = Number(req.params.id);
+    //console.log(req.params.id)
+    console.log(id)
+    /*
     // Comprobar que existe esa id y si no dar error404
     const [current] = await connection.query(
       `
@@ -16,8 +18,9 @@ async function deleteEntry(req, res, next) {
       WHERE id=?
     `,
       [id]
-    );
-
+    );*/
+    console.log('Tester 1')
+      /*
     if (current[0].user_id !== req.auth.id && req.auth.role !== "admin") {
       const error = new Error("No tienes permisos para borrar esta entrada");
       error.httpStatus = 403;
@@ -28,7 +31,7 @@ async function deleteEntry(req, res, next) {
     if (current[0].image) {
       await deleteUpload(current[0].image);
     }
-
+    */
     // Borrar la entrada de la tabla
     await connection.query(
       `

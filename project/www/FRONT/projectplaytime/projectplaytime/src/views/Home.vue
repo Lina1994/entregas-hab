@@ -15,7 +15,7 @@
          {{oneLocality}}
        </p>
        <p>
-         {{oneRecomendedAge}}
+         Edad recomendada: {{oneRecomendedAge}}
        </p>
        <p>
          {{oneCategory}}

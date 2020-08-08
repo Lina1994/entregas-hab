@@ -5,6 +5,7 @@
               {{user}}
           </li>
       </ul>-->
+              <img :src="user.image">
               <p>
                   Email: {{user.email}}
               </p>
@@ -15,8 +16,18 @@
                   Apellido: {{user.surname}}
               </p>
               <p>
+                  Dirección: {{user.direction}}
+              </p>
+              <p>
+                  Cumpleaños: {{user.birth_date}}
+              </p>
+              <p>
+                  Teléfono: {{user.phone}}
+              </p>
+              <p>
                   De la familia desde: {{user.registrationDate}}
               </p>
+              
 
   </div>
 </template>
@@ -28,7 +39,6 @@
             user: Object
         },
         methods: {
-            
         }
     }
     

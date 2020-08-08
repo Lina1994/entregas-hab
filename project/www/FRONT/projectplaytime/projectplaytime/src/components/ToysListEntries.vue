@@ -2,7 +2,7 @@
   <div>
       <ul>
           <li v-for="(toy, index) in toys" :key="toy.id" 
-          @click="enviarIncice(index)">
+          @click="sendIndex(index)">
                   <img :src="toy.image">
               <p>
                   {{ toy.toy_name }}
@@ -27,7 +27,7 @@
             toys: Array
         },
         methods: {
-            enviarIncice(index){
+            sendIndex(index){
                 let datosToys = this.toys[index]
                 console.log(datosToys.id)
                 this.$emit('datos', datosToys)

@@ -9,7 +9,10 @@ async function listEntries(req, res, next) {
     //  search: para listar solo las entradas que contengan su valor en place o description
     //  order: para ordernar el listado por voteAverage, place o date
     //  direction: para la dirección de la ordenación desc o asc
-    const { search, order, direction } = req.query;
+    const { search, order, direction } = req.headers;
+    console.log(search)
+    console.log(order)
+    console.log(direction)
 
     // Proceso la dirección de orden
     const orderDirection =
@@ -24,6 +27,12 @@ async function listEntries(req, res, next) {
       case "recomended_age":
         orderBy = "recomended_age";
         break;
+      case "locality":
+        orderBy = "locality";
+        break;
+        case "category":
+          orderBy = "category";
+          break;
       default:
         orderBy = "date";
     }
@@ -33,17 +42,17 @@ async function listEntries(req, res, next) {
     if (search) {
       queryResults = await connection.query(
         `
-        SELECT id, toy_name, id_user, date, image, recomended_age
+        SELECT id, toy_name, id_user, date, image, recomended_age, category, locality
         FROM toys 
-        WHERE toy_name LIKE ? OR recomended_age LIKE ?
+        WHERE toy_name LIKE ? OR recomended_age LIKE ? OR locality LIKE ? OR category LIKE ?
         ORDER BY ${orderBy} ${orderDirection}
         `,
-        [`%${search}%`, `%${search}%`]
+        [`%${search}%`, `%${search}%`, `%${search}%`, `%${search}%`]
       );
     } else {
       queryResults = await connection.query(
         `
-        SELECT id, toy_name, id_user, date, image, recomended_age
+        SELECT id, toy_name, id_user, date, image, recomended_age, category, locality
         FROM toys  
         ORDER BY ${orderBy} ${orderDirection}`
       );

@@ -12,8 +12,12 @@
                   {{ toy.recomended_age }}
               </p>
               <p>
-                  Fecha:
-                  {{ toy.date }}
+                  Categoría:
+                  {{ toy.category }}
+              </p>
+              <p>
+                  Localidad:
+                  {{ toy.locality }}
               </p>
           </li>
       </ul>

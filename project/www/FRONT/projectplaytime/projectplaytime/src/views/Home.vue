@@ -1,6 +1,29 @@
 <template>
   <div class="home">
     <div class="thebody">
+
+
+        <label>Buscar por: </label> 
+        <input list="orderBy" v-model="myorderby"> 
+        <datalist id="orderBy"> 
+            <option value="Nombre" />
+            <option value="Localidad" /> 
+            <option value="Categoría" /> 
+            <option value="Edad recomendada" /> 
+        </datalist> 
+
+<!--
+      <label for="cars">Buscar por: </label>
+      <select id="cars" name="cars">
+        <option value="toy_name">Nombre</option>
+        <option value="locality">Localidad</option>
+        <option value="category">Categoría</option>
+      </select>
+-->
+     <input type="search" placeholder="Buscar" v-model="mysearcher">
+     <button @click="sendSearch()">
+       Buscar
+     </button>
      <toyslistentries v-on:datos="recibirJugete" :toys="toyslist"/>
     </div>
     <div class="oneToy" v-show="isselected">
@@ -52,17 +75,45 @@ export default {
       oneDescription: '',
       oneLocality: '',
       oneRecomendedAge: '',
-      oneCategory: ''
+      oneCategory: '',
+      searcher: '',
+      orderer: '',
+      directioner: '',
+      mysearcher: '',
+      myorderby: ''
     }
   },
   methods:{
+    sendSearch(){
+      this.searcher = this.mysearcher
+      if(this.myorderby === 'Nombre'){
+        this.orderer = 'toy_name'
+      }
+      if(this.myorderby === 'Localidad'){
+        this.orderer = 'locality'
+      }
+      if(this.myorderby === 'Categoría'){
+        this.orderer = 'category'
+      }
+      if(this.myorderby === 'Edad recomendada'){
+        this.orderer = 'recomended_age'
+      }
+      console.log(this.orderer)
+      this.getAllToys()
+    },
     async getAllToys(){
+      let authtoken = localStorage.getItem('AUTH_TOKEN_KEY')
       try {
-        const response = await axios.get('http://localhost:3050/entries')
-      .then((response) => {
+        const response = await axios.get('http://localhost:3050/entries', {
+          headers: {
+            Authorization: authtoken,
+            search: this.searcher,
+            order: this.orderer,
+            direction: this.directioner
+          }
+        })
         this.toyslist = response.data.data
-        //console.log(response)
-      })
+        //console.log(response.data.data)
       } catch (error) {
         console.log(error)
       }

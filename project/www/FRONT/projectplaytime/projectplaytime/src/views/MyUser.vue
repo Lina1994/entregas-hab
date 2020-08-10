@@ -101,6 +101,9 @@
            Editar
          </button>
        </li>
+       <button @click="createDeliPoint()">
+           Nuevo punto de entrega
+         </button>
      </ul>
      
      <!-- // FIN PRINTEAR INFO PUNTOS ENTREGA // -->
@@ -152,6 +155,28 @@
        </button>
      </div>
      <!-- // FIN EDITAR INFO PUNTOS DE ENTREGA // -->
+
+     <!-- // CREAR PUNTOS DE ENTREGA // -->
+     <div v-show="seeModalCreateDeliveries" class="modal">
+       <p> Día: </p>
+       <input type="text" placeholder="Día. Ej: 2020-08-15" v-model="deliveryDateUpdated">
+       <p> Horario: </p>
+       <input type="text" placeholder="Horario. Ej: De 9:00 a 11:00" v-model="deliveryTimetableUpdated">
+       <p> Lugar: </p>
+       <input type="text" placeholder="Lugar" v-model="deliveryPlaceUpdated">
+       <p> Comentario: </p>
+       <input type="text" placeholder="Comentario" v-model="deliveryCommentUpdated">
+       <p>
+         ¿Guardar cambios?
+       </p>
+       <button @click="seeModalCreateDeliveries =! seeModalCreateDeliveries">
+         Cancelar
+       </button>
+       <button @click="validatingData()">
+         Guardar
+       </button>
+     </div>
+     <!-- // FIN CREAR PUNTOS DE ENTREGA // -->
   </div>
 </template>
 
@@ -160,6 +185,7 @@
 import axios from 'axios';
 import { isUser } from '../../../../../BACKENDAPI/middlewares/isUser.js';
 import profileentrie from '@/components/ProfileEntrie.vue';
+//import Swal from 'sweetalert2';
 
 
 
@@ -196,7 +222,8 @@ export default {
       deliveryCommentUpdated: '',
       seeModal: false,
       seeModalEditUser: false,
-      seeModalEditDeliveries: false
+      seeModalEditDeliveries: false,
+      seeModalCreateDeliveries: false
     }
   },
   methods:{
@@ -344,11 +371,6 @@ export default {
         console.log(error)
       }
     },
-    /*recibirJugete(datosToys){
-      //console.log('Desde función ' + datosToys.id)
-      this.getOneToy(datosToys.id);
-      this.isselected = true
-    },*/
     async donationUpdate(){
       let authtoken = localStorage.getItem('AUTH_TOKEN_KEY')
       let iduser = Number(localStorage.getItem('USER_ID'))
@@ -407,6 +429,51 @@ export default {
         console.log(error)
       }
     },
+    createDeliPoint(){
+      this.seeModalCreateDeliveries = true
+    },
+    validatingData(){
+      if(this.deliveryDateUpdated === '' ||
+      this.deliveryTimetableUpdated === '' ||
+      this.deliveryPlaceUpdated === '' ){
+          alert('No puedes dejar campos día lugar y hora vacíos')
+          this.errorMsg = true;
+          this.creatreClient = false;
+          /*Swal({
+            title: "¡ALTO!",
+            text: "Quedan campos por cubrir",
+            icon: "warning",
+          });*/
+      }
+      else {
+          this.deliveryCreate()
+      }
+  },
+    async deliveryCreate(){
+      let authtoken = localStorage.getItem('AUTH_TOKEN_KEY')
+      let iduser = Number(localStorage.getItem('USER_ID'))
+      console.log(authtoken);
+
+      try {
+          const response = await axios.post('http://localhost:3050/DeliveringPoint',
+          {
+            id_user: iduser,
+            date: this.deliveryDateUpdated,
+            timetable: this.deliveryTimetableUpdated,
+            place: this.deliveryPlaceUpdated,
+            comments: this.deliveryCommentUpdated,
+          }, {
+              headers: {
+                  Authorization: authtoken
+              } 
+      })
+      .then((response)=>{
+        console.log(response)
+      })
+      } catch (error) {
+          console.log(error)
+      }
+    }
  },
  created(){
    this.getProfile()

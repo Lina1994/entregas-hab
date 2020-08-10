@@ -4,6 +4,7 @@ const express = require("express");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const fileUpload = require("express-fileupload");
+const Swal = require('sweetalert2');
 
 const cors = require('cors')
 
@@ -63,6 +64,7 @@ app.use(bodyParser.json());
 // Procesado de body tipo form-data
 app.use(fileUpload());
 app.use(cors())
+
 
 // imagen uploads app.use(express())
 

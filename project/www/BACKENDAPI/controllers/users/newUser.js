@@ -51,6 +51,7 @@ async function newUser(req, res, next) {
         title: "Valida tu cuenta de usuario en la web playtime",
         content: `Para validar tu cuenta de usuario en la web playtime haz click aquí: ${validationURL}`,
       });
+      console.log('Correo enviado a ' + email)
     } catch (error) {
       const emailError = new Error("Error en el envío de mail");
       throw emailError;

@@ -53,7 +53,7 @@ function randomString(length = 20) {
 async function sendMail({ email, title, content }) {
   // Configurar api key de sendgrid
   sendgrid.setApiKey(process.env.SENDGRID_KEY);
-
+  console.log('Ejecutando sendMail')
   // Configurar mensaje
   const message = {
     to: email,

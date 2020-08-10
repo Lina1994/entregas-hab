@@ -10,9 +10,7 @@ async function listEntries(req, res, next) {
     //  order: para ordernar el listado por voteAverage, place o date
     //  direction: para la dirección de la ordenación desc o asc
     const { search, order, direction } = req.headers;
-    console.log(search)
-    console.log(order)
-    console.log(direction)
+    
 
     // Proceso la dirección de orden
     const orderDirection =
@@ -52,9 +50,12 @@ async function listEntries(req, res, next) {
     } else {
       queryResults = await connection.query(
         `
-        SELECT id, toy_name, id_user, date, image, recomended_age, category, locality
+        SELECT id, toy_name, id_user, date, image, recomended_age, category, locality, state
         FROM toys  
-        ORDER BY ${orderBy} ${orderDirection}`
+        WHERE state LIKE ?
+        ORDER BY ${orderBy} ${orderDirection}
+        `,
+        ['forsale']
       );
     }
 

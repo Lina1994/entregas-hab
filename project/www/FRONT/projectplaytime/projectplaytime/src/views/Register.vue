@@ -6,6 +6,9 @@
       <p v-show="error">
           * {{ message }} *
       </p>
+      <p v-show="validateMessage">
+          Se te ha enviado un mail de confirmación a tu correo, pincha en el enlace para activar tu cuenat
+      </p>
       <input type="text" v-model="user_name" placeholder="Nombre de usuario">
       <p/>
       <input type="text" v-model="surname" placeholder="Apellido">
@@ -37,7 +40,8 @@ export default {
             password: '',
             users: '',
             message: '',
-            error: false
+            error: false,
+            validateMessage: false
         }
     },
     methods: {
@@ -65,10 +69,11 @@ export default {
                     console.log(this.direction);
                     console.log('Register OK');
                 } )
-                setTimeout( () => {
+                this.validateMessage = true
+                /*setTimeout( () => {
                     this.$router.push('/home')
                     location.reload()
-                }, 500 );
+                }, 500 );*/
                 } 
                  catch (error) {
                      //console.log(this.email, this.password)

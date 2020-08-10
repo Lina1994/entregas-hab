@@ -1,8 +1,6 @@
 <template>
   <div class="home">
     <div class="thebody">
-
-
         <label>Buscar por: </label> 
         <input list="orderBy" v-model="myorderby"> 
         <datalist id="orderBy"> 
@@ -11,15 +9,6 @@
             <option value="Categoría" /> 
             <option value="Edad recomendada" /> 
         </datalist> 
-
-<!--
-      <label for="cars">Buscar por: </label>
-      <select id="cars" name="cars">
-        <option value="toy_name">Nombre</option>
-        <option value="locality">Localidad</option>
-        <option value="category">Categoría</option>
-      </select>
--->
      <input type="search" placeholder="Buscar" v-model="mysearcher">
      <button @click="sendSearch()">
        Buscar
@@ -43,13 +32,52 @@
        <p>
          {{oneCategory}}
        </p>
-       <button>
+       <hr>
+       <img class="avatar" :src="user.image">
+       <p>
+         {{user.user_name}}
+       </p>
+       <p>
+         {{user.phone}}
+       </p>
+       <button @click="willBeToMe()">
          ¡Para mi!
        </button>
        <button @click="notForMe()">
          Salir
        </button>
+    <!-- ITS FOR ME! -->   
     </div>
+    <div class="toMe" v-show="seeModalToMe">
+      <!-- //  PRINTEAR INFO PUNTOS ENTREGA // -->
+        <hr>
+        <div>
+          <p>
+       Puntos de entrega:
+          </p>
+          <ul v-for="(delipoints, index) in delipoints" :key="delipoints.id">
+            <li @click="itIsForMe(index)">
+              <p>
+              {{ delipoints.date }}
+              </p>
+              <p>
+              {{ delipoints.timetable }}
+              </p>
+              <p>
+              {{ delipoints.place }}
+              </p>
+              <p>
+              {{ delipoints.comments }}
+              </p>
+            </li>
+          </ul>
+          <button @click="notForMe()">
+            Cancelar
+          </button>
+        </div>
+     <!-- // FIN PRINTEAR INFO PUNTOS ENTREGA // -->
+    </div>
+    <!-- /FIN ITS FOR ME! --> 
   </div>
 </template>
 
@@ -68,14 +96,19 @@ export default {
   data(){
     return {
       isselected: false,
+      seeModalToMe: false,
       toyslist: [],
       datatoy: {},
+      user: {},
+      delipoints: {},
+      toyId: '',
       oneName: '',
       oneImage: '',
       oneDescription: '',
       oneLocality: '',
       oneRecomendedAge: '',
       oneCategory: '',
+      idUserOfToy: '',
       searcher: '',
       orderer: '',
       directioner: '',
@@ -98,7 +131,7 @@ export default {
       if(this.myorderby === 'Edad recomendada'){
         this.orderer = 'recomended_age'
       }
-      console.log(this.orderer)
+      //console.log(this.orderer)
       this.getAllToys()
     },
     async getAllToys(){
@@ -120,6 +153,7 @@ export default {
     },
     notForMe(){
       this.isselected = false
+      this.seeModalToMe = false
     },
     recibirJugete(datosToys){
       //console.log('Desde función ' + datosToys.id)
@@ -127,6 +161,7 @@ export default {
       this.isselected = true
     },
      async getOneToy(myid){
+       this.toyId = myid
       try {
         const response = await axios.get('http://localhost:3050/entries/' + myid)
       .then((response) => {
@@ -138,9 +173,85 @@ export default {
         this.oneLocality = response.data.data.locality
         this.oneRecomendedAge = response.data.data.recomended_age
         this.oneCategory= response.data.data.category 
+        this.idUserOfToy = response.data.data.id_user
+        this.getProfile()
+        this.getMyDeliveryes()
       })
       } catch (error) {
         console.log(error)
+      }
+    },
+    async getProfile(){
+        let authtoken = localStorage.getItem('AUTH_TOKEN_KEY')
+        let userId = this.idUserOfToy
+                //console.log(authtoken);
+      try {
+        const response = await axios.get('http://localhost:3050/users/' + userId,{
+            headers: {
+                Authorization: authtoken
+            }
+        })
+        //console.log(response)      
+        this.user = response.data.data
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async getMyDeliveryes(){
+        let authtoken = localStorage.getItem('AUTH_TOKEN_KEY')
+        let iduser = this.idUserOfToy
+                //console.log(authtoken);
+        //console.log('id' + iduser)
+      try {
+        const response = await axios.get('http://localhost:3050/MyDeliveringPoint/' + iduser,{
+            headers: {
+                Authorization: authtoken
+            },
+            data: {
+              id_user: iduser
+            }
+        })
+        this.delipoints = response.data.data
+        //console.log(this.delipoints)      
+        this.deliveryes = response.data.data
+        //console.log(this.deliveryes)
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    willBeToMe() {
+      this.seeModalToMe = true
+    },
+    async itIsForMe(index) {
+      let deliveryPoint = this.delipoints[index].id
+      let userRecivedId = localStorage.getItem('USER_ID')
+      let mymail = localStorage.getItem('EMAIL')
+      console.log('User recived ' + userRecivedId + ' User Donated ' + this.idUserOfToy + ', Toy ' + this.toyId + ', Delivery point id' + deliveryPoint)
+      let authtoken = localStorage.getItem('AUTH_TOKEN_KEY')
+      //console.log(this.deliveryes[index].place);
+      try {
+        const response = await axios.post('http://localhost:3050/bookingentries',{
+          id_toy: this.toyId,
+          id_delivery_point: deliveryPoint,
+          id_user_donor: this.idUserOfToy,
+          id_user_recives: userRecivedId,
+          email_user_donor: this.user.email,
+          email_user_recives: mymail,
+          datetosend: this.deliveryes[index].date,
+          timetable: this.deliveryes[index].timetable,
+          place: this.deliveryes[index].place,
+          comments: this.deliveryes[index].comments,
+          toy_name: this.oneName,
+        }, {
+            headers: {
+                Authorization: authtoken
+            } 
+      })
+      .then((response)=>{
+        console.log(response)
+      })
+      } catch (error) {
+          console.log(error)
       }
     }
  },
@@ -156,8 +267,22 @@ export default {
   border: 1px solid rgba(14, 13, 13, .5);
   position:fixed;
   background: blanchedalmond;
+  left: 0;
+  top: 0;
+  padding: 1rem;
+  max-width: 100vh;
+  max-height: 100vh;
+  width: 100%;
+  /*height: 50rem;*/
+  object-fit: cover;
+  transition: all .4s;
+}
+.toMe {
+  border: 1px solid rgba(14, 13, 13, .5);
+  position:fixed;
+  background: blanchedalmond;
   left: 5%;
-  top: 3rem;
+  top: 5%;
   padding: 1rem;
   max-width: 100vh;
   max-height: 100vh;
@@ -169,6 +294,16 @@ export default {
 
 img {
     max-width: 45%;
+    max-height: 15rem;
+}
+.avatar {
+  max-height: 5rem;
+  position:fixed;
+  left: 10%;
+}
+li {
+  list-style-type: none;
+  border: 1px solid black;
 }
 
 </style>

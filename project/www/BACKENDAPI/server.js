@@ -35,6 +35,7 @@ const getDeliveringPointEntry = require("./controllers/deliverys_points/getEntry
 const newDeliveringPointEntry = require("./controllers/deliverys_points/newEntry");
 const editDeliveringPointEntry = require("./controllers/deliverys_points/editEntry");
 const deleteDeliveringPointEntry = require("./controllers/deliverys_points/deleteEntry");
+const getMyDeliverys = require("./controllers/deliverys_points/getMyDeliverys");
 
 // User controllers
 const newUser = require("./controllers/users/newUser");
@@ -81,7 +82,7 @@ app.get("/entries", listEntries);
 app.get("/entries/:id", entryExists, getEntry);
 
 // Mostrar todos los juguetes de un usuario
-// GET - /entries/?:id 
+// GET - /myentries/?:id 
 // Público
 app.get("/myentries/:id", isUser, entryExists, getMyToys);
 
@@ -114,6 +115,11 @@ app.get("/DeliveringPoint", listDeliveringPointEntries);
 // Público
 app.get("/DeliveringPoint/:id", entryPointsExists, getDeliveringPointEntry);
 
+// Mostrar todos los puntos de entrega de un usuario
+// GET - /MyDeliveringPoint/:id
+// Público
+app.get("/MyDeliveringPoint/:id", isUser, getMyDeliverys);
+
 // Crear una nueva entrada del diario
 // POST - /DeliveringPoint 
 // Sólo usuarios registrados
@@ -122,7 +128,7 @@ app.post("/DeliveringPoint", isUser, newDeliveringPointEntry);
 // Editar una entrada del diario
 // PUT - /DeliveringPoint/:id 
 // Sólo usuario que creara esta entrada o admin
-app.put("/DeliveringPoint/:id", isUser, entryPointsExists, editDeliveringPointEntry);
+app.put("/DeliveringPoint/:id", isUserForPut, entryPointsExists, editDeliveringPointEntry);
 
 // Borrar una entrada del diario
 // DELETE - /DeliveringPoint/:id 
@@ -146,7 +152,7 @@ app.get("/entries/:id", entryBookingExists, getbookingsEntry);
 // Crear una nueva entrada del diario
 // POST - /entries 
 // Sólo usuarios registrados
-app.post("/entries", isUser, newbookingsEntry);
+app.post("/bookingentries", isUser, newbookingsEntry);
 
 // Editar una entrada del diario
 // PUT - /entries/:id 

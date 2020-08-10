@@ -81,7 +81,6 @@ export default {
                 let authtoken = localStorage.getItem('AUTH_TOKEN_KEY')
                 console.log(authtoken);
                 try {
-                    
                     const response = await axios.post('http://localhost:3050/entries',
                     {
                             image: this.image,
@@ -94,7 +93,6 @@ export default {
                         headers: {
                             Authorization: authtoken
                         } 
-                    
             })
             .then((response)=>{
                 console.log(response)

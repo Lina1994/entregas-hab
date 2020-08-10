@@ -1,8 +1,6 @@
 <template>
   <div class="home">
-      <h1>
-          Perfil
-      </h1>
+
      <profileentrie :user="user"/>
      <button @click="startEditprofile()">
         Editar perfil
@@ -81,6 +79,32 @@
      </ul>
      <!-- // FIN PRINTEAR INFO DONACIONES // -->
 
+     <!-- //  PRINTEAR INFO PUNTOS ENTREGA // -->
+     <p>
+       Puntos de entrega:
+     </p>
+     <ul v-for="(deliveryes, index) in deliveryes" :key="deliveryes.id">
+       <li>
+         <p>
+         {{ deliveryes.date }}
+         </p>
+         <p>
+         {{ deliveryes.timetable }}
+         </p>
+         <p>
+         {{ deliveryes.place }}
+         </p>
+         <p>
+         {{ deliveryes.comments }}
+         </p>
+         <button @click="sendDeliveryUpdateIndex(index)">
+           Editar
+         </button>
+       </li>
+     </ul>
+     
+     <!-- // FIN PRINTEAR INFO PUNTOS ENTREGA // -->
+
      <!-- // EDITAR INFO DONACIONES // -->
      <div v-show="seeModal" class="modal">
        <p> URL imagen: </p>
@@ -106,6 +130,28 @@
        </button>
      </div>
      <!-- // FIN EDITAR INFO DONACIONES // -->
+
+     <!-- // EDITAR INFO PUNTOS DE ENTREGA // -->
+     <div v-show="seeModalEditDeliveries" class="modal">
+       <p> Día: </p>
+       <input type="text" placeholder="Día. Ej: 2020-08-15" v-model="deliveryDateUpdated">
+       <p> Horario: </p>
+       <input type="text" placeholder="Horario. Ej: De 9:00 a 11:00" v-model="deliveryTimetableUpdated">
+       <p> Lugar: </p>
+       <input type="text" placeholder="Lugar" v-model="deliveryPlaceUpdated">
+       <p> Comentario: </p>
+       <input type="text" placeholder="Comentario" v-model="deliveryCommentUpdated">
+       <p>
+         ¿Guardar cambios?
+       </p>
+       <button @click="seeModalEditDeliveries =! seeModalEditDeliveries">
+         Cancelar
+       </button>
+       <button @click="deliveryUpdate()">
+         Guardar
+       </button>
+     </div>
+     <!-- // FIN EDITAR INFO PUNTOS DE ENTREGA // -->
   </div>
 </template>
 
@@ -127,6 +173,7 @@ export default {
       toyslist: [],
       user: {},
       toys: {},
+      deliveryes: {},
       authtoken: '',
       toyImageUpdated: '',
       toyNameUpdated: '',
@@ -142,8 +189,14 @@ export default {
       userBirthDateUpdated: '',
       userDirectionUpdated: '',
       userPhoneUpdated: '',
+      iddeliveryUpdate: '',
+      deliveryDateUpdated: '',
+      deliveryTimetableUpdated: '',
+      deliveryPlaceUpdated: '',
+      deliveryCommentUpdated: '',
       seeModal: false,
-      seeModalEditUser: false
+      seeModalEditUser: false,
+      seeModalEditDeliveries: false
     }
   },
   methods:{
@@ -200,6 +253,17 @@ export default {
       this.toyRecomendedAgeUpdated = datosToys.recomended_age
       console.log(datosToys)
       //this.$emit('datos', datosToys)
+    },
+    sendDeliveryUpdateIndex(index){
+      let dataDelivery = this.deliveryes[index]
+      console.log(dataDelivery.id)
+      this.iddeliveryUpdate = dataDelivery.id
+      this.seeModalEditDeliveries = true;
+      this.deliveryDateUpdated = dataDelivery.date
+      this.deliveryTimetableUpdated = dataDelivery.timetable
+      this.deliveryPlaceUpdated = dataDelivery.place
+      this.deliveryCommentUpdated = dataDelivery.comments
+      console.log(dataDelivery)
     },
     async deleteToyquestion(index){
       let datosToys = this.toys[index]
@@ -260,11 +324,31 @@ export default {
         console.log(error)
       }
     },
-    recibirJugete(datosToys){
+    async getMyDeliveryes(){
+        let authtoken = localStorage.getItem('AUTH_TOKEN_KEY')
+        let iduser = localStorage.getItem('USER_ID')
+                //console.log(authtoken);
+        //console.log('id' + iduser)
+      try {
+        const response = await axios.get('http://localhost:3050/MyDeliveringPoint/' + iduser,{
+            headers: {
+                Authorization: authtoken
+            },
+            data: {
+              id_user: iduser
+            }
+        })
+        //console.log(response)      
+        this.deliveryes = response.data.data
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    /*recibirJugete(datosToys){
       //console.log('Desde función ' + datosToys.id)
       this.getOneToy(datosToys.id);
       this.isselected = true
-    },
+    },*/
     async donationUpdate(){
       let authtoken = localStorage.getItem('AUTH_TOKEN_KEY')
       let iduser = Number(localStorage.getItem('USER_ID'))
@@ -295,10 +379,39 @@ export default {
         console.log(error)
       }
     },
+    async deliveryUpdate(){
+      let authtoken = localStorage.getItem('AUTH_TOKEN_KEY')
+      let iduser = Number(localStorage.getItem('USER_ID'))
+      let idauth = this.iddeliveryUpdate
+      console.log(idauth)
+      console.log(authtoken)
+      console.log(iduser)
+      try {
+        const response = await axios.put('http://localhost:3050/DeliveringPoint/' + idauth,{
+          headers: {
+            Authorization: authtoken
+          },
+          data: {
+            id_user: iduser,
+            date: this.deliveryDateUpdated,
+            timetable: this.deliveryTimetableUpdated,
+            place: this.deliveryPlaceUpdated,
+            comments: this.deliveryCommentUpdated,
+          }
+      }) 
+        setTimeout( () => {
+           location.reload()
+        }, 250 );
+        console.log(response)
+      } catch (error) {
+        console.log(error)
+      }
+    },
  },
  created(){
    this.getProfile()
    this.getMyToys()
+   this.getMyDeliveryes()
  }
 }
 </script>

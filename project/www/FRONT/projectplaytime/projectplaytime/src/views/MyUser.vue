@@ -5,8 +5,8 @@
      <button @click="startEditprofile()">
         Editar perfil
     </button>
-    <!-- // EDITAR INFO USUARIO //-->
     <div v-show="seeModalEditUser">
+    <!-- // EDITAR INFO USUARIO //-->
       <p>
         Correo electrónico:
       </p>
@@ -66,16 +66,16 @@
        <p>
          Edad recomendada: {{toy.recomended_age}}
        </p>
-       </li>
-       <button>
+      <!-- <button>
          ¡Entregado!
-       </button>
+       </button> -->
        <button @click="sendUpdateIndex(index)">
          Editar
        </button>
        <button @click="deleteToyquestion(index)">
          Borrar
        </button>
+       </li>
      </ul>
      <!-- // FIN PRINTEAR INFO DONACIONES // -->
 
@@ -86,7 +86,7 @@
      <ul v-for="(deliveryes, index) in deliveryes" :key="deliveryes.id">
        <li>
          <p>
-         {{ deliveryes.date }}
+         {{ formatDate(new Date(deliveryes.date)) }}
          </p>
          <p>
          {{ deliveryes.timetable }}
@@ -107,6 +107,54 @@
      </ul>
      
      <!-- // FIN PRINTEAR INFO PUNTOS ENTREGA // -->
+
+     <!-- PRINTEAR INFO RESERVAS -->
+     <p>
+       Tus reservas:
+     </p>
+     <ul v-for="(bookings, index) in bookings" :key="bookings.id">
+        <li>
+            <p>
+              {{ bookings.toy_name_selected }}
+            </p>
+            <p>
+              Reserva hecha el: {{ formatDate(new Date(bookings.date)) }}
+            </p>
+            <p>
+              Reserva hecha para el: {{ formatDate(new Date(bookings.date_selected)) }} {{ bookings.timetable_selected }}
+            </p>
+            <p>
+              Código de reserva: {{ bookings.booking_code }}
+            </p>
+            <p>
+              Comentarios: {{ bookings.comments_selected }}
+            </p>
+            <p>
+              {{ bookings.vote }}
+            </p>
+            <p>
+              {{ voteMessage }}
+            </p>
+            
+              <input type="radio" name="vote" value="0" v-model="myvote">
+              <label for="0">0</label>
+              <input type="radio" name="vote" value="1" v-model="myvote">
+              <label for="1">1</label>
+              <input type="radio" name="vote" value="2" v-model="myvote">
+              <label for="2">2</label>
+              <input type="radio" name="vote" value="3" v-model="myvote">
+              <label for="3">3</label>
+              <input type="radio" name="vote" value="4" v-model="myvote">
+              <label for="4">4</label>
+              <input type="radio" name="vote" value="5" v-model="myvote">
+              <label for="5">5</label>
+              <button @click="startVote(index)">
+                Votar
+              </button> 
+        </li>
+     </ul>
+
+     <!-- FIN PRINTEAR INFO RESERVAS -->
 
      <!-- // EDITAR INFO DONACIONES // -->
      <div v-show="seeModal" class="modal">
@@ -200,6 +248,7 @@ export default {
       user: {},
       toys: {},
       deliveryes: {},
+      bookings: {},
       authtoken: '',
       toyImageUpdated: '',
       toyNameUpdated: '',
@@ -223,7 +272,9 @@ export default {
       seeModal: false,
       seeModalEditUser: false,
       seeModalEditDeliveries: false,
-      seeModalCreateDeliveries: false
+      seeModalCreateDeliveries: false,
+      voteMessage: '',
+      myvote: ''
     }
   },
   methods:{
@@ -364,9 +415,31 @@ export default {
             data: {
               id_user: iduser
             }
+        }) 
+        //console.log(response.data.data)     
+        this.deliveryes = response.data.data
+       
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async getMyBookings(){
+        let authtoken = localStorage.getItem('AUTH_TOKEN_KEY')
+        let iduser = localStorage.getItem('USER_ID')
+                //console.log(authtoken);
+        //console.log('id' + iduser)
+      try {
+        const response = await axios.get('http://localhost:3050/mybookings/' + iduser,{
+            headers: {
+                Authorization: authtoken
+            },
+            data: {
+              id_user: iduser,
+              id_user_recives: iduser
+            }
         })
         //console.log(response)      
-        this.deliveryes = response.data.data
+        this.bookings = response.data.data
       } catch (error) {
         console.log(error)
       }
@@ -473,12 +546,71 @@ export default {
       } catch (error) {
           console.log(error)
       }
+    },
+    startVote(index){
+      //console.log(this.bookings[index])
+      let dateSelected = this.bookings[index].date_selected;
+      let idBooking = this.bookings[index].id;
+    
+      let dateBooking = new Date(dateSelected)
+      let dateNow = new Date (Date.now())
+      let dateBookingYear = dateBooking.getFullYear()
+      let dateBookingMonth = dateBooking.getMonth() + 1;
+      let dateBookingDay = dateBooking.getDate()
+      let dateNowYear = dateNow.getFullYear()
+      let dateNowMonth = dateNow.getMonth() +1;
+      let dateNowDay = dateNow.getDate()
+      //console.log( 'FECHA ENTREGA' + dateBookingYear + dateBookingMonth + dateBookingDay )
+
+      if(dateBookingYear > dateNowYear){
+        console.log('Ha pasado el año')
+        this.voteUserDonorOfBooking(idBooking)
+      }else if (dateBookingMonth > dateNowMonth){
+        console.log('Ya a pasado el mes')
+        this.voteUserDonorOfBooking(idBooking)
+      }else if (dateBookingDay > dateNowDay){
+        console.log('Ya ha pasado el día')
+        this.voteUserDonorOfBooking(idBooking)
+      }else {
+        this.voteMessage = 'Aun no ha pasado la fecha de entrega'
+        console.log('Aun no ha pasado la fecha')
+      }
+    },
+    formatDate(current_datetime){
+      return current_datetime.getDate() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getFullYear()
+    },
+    async voteUserDonorOfBooking(idBooking){
+      console.log('A votar!!!')
+      console.log(this.myvote)
+      let authtoken = localStorage.getItem('AUTH_TOKEN_KEY')
+      //let iduser = Number(localStorage.getItem('USER_ID'))
+      let idauth = idBooking
+      console.log(idauth)
+      console.log(authtoken)
+      try {
+        const response = await axios.put('http://localhost:3050/myvotes/' + idauth,{
+          headers: {
+            Authorization: authtoken
+          },
+          data: {
+            id: idBooking,
+            vote: this.myvote,
+          }
+      }) 
+        setTimeout( () => {
+           location.reload()
+        }, 250 );
+        console.log(response)
+      } catch (error) {
+        console.log(error)
+      }
     }
  },
  created(){
    this.getProfile()
    this.getMyToys()
    this.getMyDeliveryes()
+   this.getMyBookings()
  }
 }
 </script>

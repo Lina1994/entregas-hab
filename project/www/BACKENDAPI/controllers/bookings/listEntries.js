@@ -24,6 +24,8 @@ async function listEntries(req, res, next) {
       case "state":
         orderBy = "state";
         break;
+      case "id_user_recives":
+        orderBy = "id_user_recives";
       default:
         orderBy = "date";
     }

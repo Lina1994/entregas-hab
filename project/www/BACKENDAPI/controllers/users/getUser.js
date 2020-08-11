@@ -26,18 +26,22 @@ async function getUser(req, res, next) {
     const [userData] = result;
 
     const responseData = {
-      registrationDate: userData.registrationDate,
+      registrationDate: formatDate(new Date(userData.registrationDate)),
       user_name: userData.user_name,
       surname: userData.surname,
       image: userData.image,
       direction: userData.direction, 
       phone: userData.phone, 
-      birth_date: userData.birth_date,
+      birth_date: formatDate(new Date(userData.birth_date)),
     };
 
     if (userData.id === req.auth.id || req.auth.role === "admin") {
       responseData.email = userData.email;
       responseData.role = userData.role;
+    }
+  
+    function formatDate(current_datetime){
+      return current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getDate()
     }
 
     res.send({

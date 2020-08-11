@@ -40,6 +40,9 @@
        <p>
          {{user.phone}}
        </p>
+       <p class="votes">
+         Media votos: {{votes}}
+       </p>
        <button @click="willBeToMe()">
          ¡Para mi!
        </button>
@@ -58,7 +61,7 @@
           <ul v-for="(delipoints, index) in delipoints" :key="delipoints.id">
             <li @click="itIsForMe(index)">
               <p>
-              {{ delipoints.date }}
+              {{ formatDate(new Date(delipoints.date)) }}
               </p>
               <p>
               {{ delipoints.timetable }}
@@ -101,6 +104,7 @@ export default {
       datatoy: {},
       user: {},
       delipoints: {},
+      votes: {},
       toyId: '',
       oneName: '',
       oneImage: '',
@@ -176,6 +180,7 @@ export default {
         this.idUserOfToy = response.data.data.id_user
         this.getProfile()
         this.getMyDeliveryes()
+        this.getMyVotes()
       })
       } catch (error) {
         console.log(error)
@@ -201,7 +206,7 @@ export default {
         let authtoken = localStorage.getItem('AUTH_TOKEN_KEY')
         let iduser = this.idUserOfToy
                 //console.log(authtoken);
-        //console.log('id' + iduser)
+        //console.log('id usuario donante: ' + iduser)
       try {
         const response = await axios.get('http://localhost:3050/MyDeliveringPoint/' + iduser,{
             headers: {
@@ -212,9 +217,29 @@ export default {
             }
         })
         this.delipoints = response.data.data
-        //console.log(this.delipoints)      
+        //console.log(this.delipoints)     
         this.deliveryes = response.data.data
         //console.log(this.deliveryes)
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async getMyVotes(){
+        let authtoken = localStorage.getItem('AUTH_TOKEN_KEY')
+        let iduser = this.idUserOfToy
+                //console.log(authtoken);
+        //console.log('id' + iduser)
+      try {
+        const response = await axios.get('http://localhost:3050/myvotes/' + iduser,{
+            headers: {
+                Authorization: authtoken
+            },
+            data: {
+              id_user: iduser
+            }
+        })
+        this.votes = response.data.data
+        //console.log(this.votes)      
       } catch (error) {
         console.log(error)
       }
@@ -253,6 +278,9 @@ export default {
       } catch (error) {
           console.log(error)
       }
+    },
+    formatDate(current_datetime){
+      return current_datetime.getDate() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getFullYear()
     }
  },
  created(){

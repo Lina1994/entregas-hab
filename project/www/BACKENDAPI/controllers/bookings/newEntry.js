@@ -72,13 +72,18 @@ async function newEntry(req, res, next) {
       throw emailError;
     }
 
+    let toy_name_selected = toy_name;
+    let date_selected = datetosend;
+    let timetable_selected = timetable;
+    let place_selected = place;
+    let comments_selected = comments;
     // Ejecutar la query
     const [result] = await connection.query(
       `
-      INSERT INTO bookings(booking_code, state, date, lastUpdate, id_user_donor, id_user_recives, id_toy, id_delivery_point)
-      VALUES(?,?, UTC_TIMESTAMP(),UTC_TIMESTAMP(), ?, ?, ?, ?)
+      INSERT INTO bookings(booking_code, state, date, lastUpdate, id_user_donor, id_user_recives, id_toy, id_delivery_point, toy_name_selected, date_selected, timetable_selected, place_selected, comments_selected)
+      VALUES(?,?, UTC_TIMESTAMP(),UTC_TIMESTAMP(), ?, ?, ?, ?, ?, ?, ?, ?, ?)
       `,
-      [booking_code, state, id_user_donor, id_user_recives, id_toy, id_delivery_point]
+      [booking_code, state, id_user_donor, id_user_recives, id_toy, id_delivery_point, toy_name_selected, date_selected, timetable_selected, place_selected, comments_selected]
     );
     // Seleccionar datos actuales de la entrada toys
     const [current] = await connection.query(

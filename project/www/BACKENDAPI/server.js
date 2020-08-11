@@ -29,6 +29,9 @@ const getbookingsEntry = require("./controllers/bookings/getEntry");
 const newbookingsEntry = require("./controllers/bookings/newEntry");
 const editbookingsEntry = require("./controllers/bookings/editEntry");
 const deletebookingsEntry = require("./controllers/bookings/deleteEntry");
+const getMyBokkings = require("./controllers/bookings/getMyBookings")
+const getMyVotes = require("./controllers/bookings/getMyVotes")
+const editToVote = require("./controllers/bookings/editToVote")
 
 // my deliverys_points controllers
 const listDeliveringPointEntries = require("./controllers/deliverys_points/listEntries");
@@ -150,6 +153,21 @@ app.get("/entries", listbookingsEntries);
 // GET - /entries/:id 
 // Público
 app.get("/entries/:id", entryBookingExists, getbookingsEntry);
+
+// Mostrar las entradas de un usuario
+// GET - /entries/:id 
+// Público
+app.get("/mybookings/:id", isUser, getMyBokkings);
+
+// Mostrar los votos de un usuario
+// GET - /myvotes/:id 
+// Público
+app.get("/myvotes/:id", isUser, getMyVotes);
+
+// Votar
+// GET - /entries/:id 
+// Público
+app.put("/myvotes/:id", isUserForPut, editToVote);
 
 // Crear una nueva entrada del diario
 // POST - /entries 

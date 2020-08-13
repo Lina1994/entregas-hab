@@ -1,10 +1,5 @@
 <template>
-  <div>
-      <!--<ul v-for="(user, index) in user" :key="user.id">
-          <li>
-              {{user}}
-          </li>
-      </ul>-->
+  <div class="profile">
               <img :src="user.image">
               <p>
                   Email: {{user.email}}
@@ -53,6 +48,26 @@ li {
 
 img {
     max-width: 40%;
+    border-radius: 50%;
+}
+/* DEFINE COMPORTAMIENTO PARA ANCHO MAYOR QUE 1500px */
+@media (min-width: 760px) {
+
+}
+/* DEFINE COMPORTAMIENTO PARA ANCHO MAYOR QUE 1500px */
+@media (min-width: 1000px) {
+
+}
+/* DEFINE COMPORTAMIENTO PARA ANCHO MAYOR QUE 1500px */
+@media (min-width: 1700px) {
+img {
+    position: fixed;
+    left: 30rem;
+    height: 15rem;
+}
+.profile{
+    margin-top: 10rem;
+}
 }
 
 </style>

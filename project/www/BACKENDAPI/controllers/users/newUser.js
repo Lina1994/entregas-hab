@@ -49,7 +49,7 @@ async function newUser(req, res, next) {
       await sendMail({
         email,
         title: "Valida tu cuenta de usuario en la web playtime",
-        content: `Para validar tu cuenta de usuario en la web playtime haz click aquí: ${validationURL}`,
+        content: `Tu código de validación es: ${registrationCode}, para validar tu cuenta de usuario en la web playtime haz click aquí: ${validationURL}`,
       });
       console.log('Correo enviado a ' + email)
     } catch (error) {

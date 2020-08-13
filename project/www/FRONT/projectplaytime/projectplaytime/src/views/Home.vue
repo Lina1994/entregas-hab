@@ -1,18 +1,20 @@
 <template>
   <div class="home">
     <div class="thebody">
-        <label>Buscar por: </label> 
-        <input list="orderBy" v-model="myorderby"> 
-        <datalist id="orderBy"> 
-            <option value="Nombre" />
-            <option value="Localidad" /> 
-            <option value="Categoría" /> 
-            <option value="Edad recomendada" /> 
-        </datalist> 
-     <input type="search" placeholder="Buscar" v-model="mysearcher">
-     <button @click="sendSearch()">
-       Buscar
-     </button>
+      <div class="searcher">
+            <label>Buscar por: </label> 
+            <input list="orderBy" v-model="myorderby"> 
+            <datalist id="orderBy"> 
+                <option value="Nombre" />
+                <option value="Localidad" /> 
+                <option value="Categoría" /> 
+                <option value="Edad recomendada" /> 
+            </datalist> 
+        <input type="search" placeholder="Buscar" v-model="mysearcher">
+        <button @click="sendSearch()">
+          Buscar
+        </button>
+      </div>
      <toyslistentries v-on:datos="recibirJugete" :toys="toyslist"/>
     </div>
     <div class="oneToy" v-show="isselected">
@@ -58,6 +60,9 @@
           <p>
        Puntos de entrega:
           </p>
+          <button @click="notForMe()">
+            Cancelar
+          </button>
           <ul v-for="(delipoints, index) in delipoints" :key="delipoints.id">
             <li @click="itIsForMe(index)">
               <p>
@@ -74,13 +79,11 @@
               </p>
             </li>
           </ul>
-          <button @click="notForMe()">
-            Cancelar
-          </button>
         </div>
      <!-- // FIN PRINTEAR INFO PUNTOS ENTREGA // -->
     </div>
     <!-- /FIN ITS FOR ME! --> 
+    <myfooter class="foote"/>
   </div>
 </template>
 
@@ -89,12 +92,14 @@
 import axios from 'axios';
 // import { listEntries } from '../../../../../BACKENDAPI/controllers/toys/listEntries';
 import toyslistentries from '@/components/ToysListEntries.vue';
+import myfooter from '@/components/MyFooter.vue'
 
 
 export default {
   name: 'Home',
   components: {
-    toyslistentries
+    toyslistentries,
+    myfooter
     },
   data(){
     return {
@@ -150,7 +155,7 @@ export default {
           }
         })
         this.toyslist = response.data.data
-        //console.log(response.data.data)
+        console.log(response.data.data)
       } catch (error) {
         console.log(error)
       }
@@ -290,7 +295,9 @@ export default {
 </script>
 
 <style scoped>
-
+.searcher{
+  margin-bottom: 1rem;
+}
 .oneToy {
   border: 1px solid rgba(14, 13, 13, .5);
   position:fixed;
@@ -298,9 +305,9 @@ export default {
   left: 0;
   top: 0;
   padding: 1rem;
-  max-width: 100vh;
+  max-width: 100vw;
   max-height: 100vh;
-  width: 100%;
+  width: 290px;
   /*height: 50rem;*/
   object-fit: cover;
   transition: all .4s;
@@ -309,12 +316,12 @@ export default {
   border: 1px solid rgba(14, 13, 13, .5);
   position:fixed;
   background: blanchedalmond;
-  left: 5%;
-  top: 5%;
+  left: 2.5%;
+  top: 2%;
   padding: 1rem;
-  max-width: 100vh;
+  max-width: 100vw;
   max-height: 100vh;
-  width: 100%;
+  width: 270px;
   /*height: 50rem;*/
   object-fit: cover;
   transition: all .4s;
@@ -327,11 +334,48 @@ img {
 .avatar {
   max-height: 5rem;
   position:fixed;
-  left: 10%;
+  left: 1%;
+  border-radius: 50%;
 }
-li {
+ul{
   list-style-type: none;
-  border: 1px solid black;
 }
-
+li{
+  margin-left: -2rem;
+  border: 1px solid black;
+  border-radius: 20px;
+}
+/* DEFINE COMPORTAMIENTO PARA ANCHO MAYOR QUE 1500px */
+@media (min-width: 760px) {
+.oneToy{
+  left: 2rem;
+  top: 2rem;
+  width: 500px;
+}
+.avatar {
+  left: 5%;
+}
+}
+/* DEFINE COMPORTAMIENTO PARA ANCHO MAYOR QUE 1500px */
+@media (min-width: 1000px) {
+.oneToy{
+  width: 600px;
+}
+}
+/* DEFINE COMPORTAMIENTO PARA ANCHO MAYOR QUE 1500px */
+@media (min-width: 1700px) {
+.oneToy{
+  left: 37.5rem;
+  top: 3rem;
+  width: 700px;
+}
+.avatar {
+  left: 40%;
+}
+.toMe {
+  left: 58%;
+  top: 9%;
+  width: 400px;
+}
+}
 </style>

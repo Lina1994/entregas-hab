@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import { isLoggedIn } from '../utils/utils.js'
 
 Vue.use(VueRouter)
 
@@ -8,7 +9,18 @@ Vue.use(VueRouter)
   {
     path: '/Home',
     name: 'Home',
-    component: Home
+    component: Home,
+    meta: {
+      allowAnon: true
+     }
+  },
+  {
+    path: '*',
+    name: 'Error',
+    component: () => import('../views/Error.vue'),
+    meta: {
+      allowAnon: true
+     }
   },
   {
     path: '/about',
@@ -16,14 +28,17 @@ Vue.use(VueRouter)
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+    meta: {
+      allowAnon: true
+     }
   },
   {
     path: '/Register',
     name: 'Register',
     component: () => import('../views/Register.vue'),
     meta: {
-     /* allowAnon: true*/
+     allowAnon: true
     }
   },
   {
@@ -31,7 +46,7 @@ Vue.use(VueRouter)
     name: 'Login',
     component: () => import('../views/Login.vue'),
     meta: {
-     /* allowAnon: true*/
+     allowAnon: true
     },
   },
   {
@@ -39,7 +54,7 @@ Vue.use(VueRouter)
     name: 'Donate',
     component: () => import('../views/Donate.vue'),
     meta: {
-     /* allowAnon: true*/
+     allowAnon: false
     },
   },
   {
@@ -47,7 +62,7 @@ Vue.use(VueRouter)
     name: 'Validate',
     component: () => import('../views/ValidateUser.vue'),
     meta: {
-     /* allowAnon: true*/
+     allowAnon: true
     },
   },
   {
@@ -55,7 +70,7 @@ Vue.use(VueRouter)
     name: 'MyUser',
     component: () => import('../views/MyUser.vue'),
     meta: {
-     /* allowAnon: true*/
+     allowAnon: false
     },
   },
 
@@ -64,8 +79,15 @@ Vue.use(VueRouter)
 const router = new VueRouter({
   routes
 })
+/*
+/// FUNCIÓN QUE COMPRUEBA SI LA PERSONA ESTA LOGUEADA Y SU TOKEN ES VÁLIDO
+export function isLoggedIn() {
+  let authToken = getAuthToken()
+  return !!authToken && !isExpired(authToken)
+}*/
+
 //// COMPROBACIÓN PREVIA A ENTRADA EN LA RUTA URL
-/*router.beforeEach( (to, from, next) => {
+router.beforeEach( (to, from, next) => {
   if(!to.meta.allowAnon && !isLoggedIn()) {
     next( {
       path: '/',
@@ -74,6 +96,6 @@ const router = new VueRouter({
   } else {
     next()
   }
-} )*/
+} )
 
 export default router

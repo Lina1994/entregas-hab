@@ -1,10 +1,19 @@
 <template>
   <div class="home">
 
+    <div class="internalNav">
+      <button class="internalNav" @click="navProfile()">Datos</button>
+      <button class="internalNav" @click="navDonate()">Donaciones</button>
+      <button class="internalNav" @click="navDelivery()">Disponibilidad</button>
+      <button class="internalNav" @click="navBooking()">Reservas</button>
+    </div>
+
+     <div v-show="seeModalProfile">
      <profileentrie :user="user"/>
      <button @click="startEditprofile()">
         Editar perfil
-    </button>
+      </button>
+     </div>
     <div v-show="seeModalEditUser">
     <!-- // EDITAR INFO USUARIO //-->
       <p>
@@ -48,111 +57,114 @@
     <!-- // FIN EDITAR INFO USUARIO //-->
 
     <!-- // PRINTEAR INFO DONACIONES // -->
-     <ul v-for="(toy, index) in toys" :key="toy.id">
+     <ul class="donate" v-show="seeModalDonate" v-for="(toy, index) in toys" :key="toy.id">
        <li>
        <img :src="toy.image">
-       <p>
-         {{toy.toy_name}}
-       </p>
-       <p>
-         {{toy.category}}
-       </p>
-       <p>
-         {{toy.description}}
-       </p>
-       <p>
-         {{toy.locality}}
-       </p>
-       <p>
-         Edad recomendada: {{toy.recomended_age}}
-       </p>
-      <!-- <button>
-         ¡Entregado!
-       </button> -->
-       <button @click="sendUpdateIndex(index)">
-         Editar
-       </button>
-       <button @click="deleteToyquestion(index)">
-         Borrar
-       </button>
+       <div class="donateinfo">
+          <p>
+            {{toy.toy_name}}
+          </p>
+          <p>
+            {{toy.category}}
+          </p>
+          <p>
+            {{toy.description}}
+          </p>
+          <p>
+            {{toy.locality}}
+          </p>
+          <p>
+            Edad recomendada: {{toy.recomended_age}}
+          </p>
+          <button @click="sendUpdateIndex(index)">
+            Editar
+          </button>
+          <button @click="deleteToyquestion(index)">
+            Borrar
+          </button>
+       </div>
        </li>
      </ul>
      <!-- // FIN PRINTEAR INFO DONACIONES // -->
 
      <!-- //  PRINTEAR INFO PUNTOS ENTREGA // -->
-     <p>
-       Puntos de entrega:
-     </p>
-     <ul v-for="(deliveryes, index) in deliveryes" :key="deliveryes.id">
-       <li>
-         <p>
-         {{ formatDate(new Date(deliveryes.date)) }}
-         </p>
-         <p>
-         {{ deliveryes.timetable }}
-         </p>
-         <p>
-         {{ deliveryes.place }}
-         </p>
-         <p>
-         {{ deliveryes.comments }}
-         </p>
-         <button @click="sendDeliveryUpdateIndex(index)">
-           Editar
-         </button>
-       </li>
-       <button @click="createDeliPoint()">
-           Nuevo punto de entrega
-         </button>
-     </ul>
+     <div v-show="seeModalDelivery">
+        <p>
+          Puntos de entrega:
+        </p>
+        <ul v-for="(deliveryes, index) in deliveryes" :key="deliveryes.id">
+          <li>
+            <p>
+            {{ formatDate(new Date(deliveryes.date)) }}
+            </p>
+            <p>
+            {{ deliveryes.timetable }}
+            </p>
+            <p>
+            {{ deliveryes.place }}
+            </p>
+            <p>
+            {{ deliveryes.comments }}
+            </p>
+            <button @click="sendDeliveryUpdateIndex(index)">
+              Editar
+            </button>
+          </li>
+          <button @click="createDeliPoint()">
+              Nuevo punto de entrega
+            </button>
+        </ul>
+     </div>
      
      <!-- // FIN PRINTEAR INFO PUNTOS ENTREGA // -->
 
      <!-- PRINTEAR INFO RESERVAS -->
-     <p>
-       Tus reservas:
-     </p>
-     <ul v-for="(bookings, index) in bookings" :key="bookings.id">
-        <li>
-            <p>
-              {{ bookings.toy_name_selected }}
-            </p>
-            <p>
-              Reserva hecha el: {{ formatDate(new Date(bookings.date)) }}
-            </p>
-            <p>
-              Reserva hecha para el: {{ formatDate(new Date(bookings.date_selected)) }} {{ bookings.timetable_selected }}
-            </p>
-            <p>
-              Código de reserva: {{ bookings.booking_code }}
-            </p>
-            <p>
-              Comentarios: {{ bookings.comments_selected }}
-            </p>
-            <p>
-              {{ bookings.vote }}
-            </p>
-            <p>
-              {{ voteMessage }}
-            </p>
-            
-              <input type="radio" name="vote" value="0" v-model="myvote">
-              <label for="0">0</label>
-              <input type="radio" name="vote" value="1" v-model="myvote">
-              <label for="1">1</label>
-              <input type="radio" name="vote" value="2" v-model="myvote">
-              <label for="2">2</label>
-              <input type="radio" name="vote" value="3" v-model="myvote">
-              <label for="3">3</label>
-              <input type="radio" name="vote" value="4" v-model="myvote">
-              <label for="4">4</label>
-              <input type="radio" name="vote" value="5" v-model="myvote">
-              <label for="5">5</label>
-              <button @click="startVote(index)">
-                Votar
-              </button> 
-        </li>
-     </ul>
+     <div v-show="seeModalBooking">
+        <p>
+          Tus reservas:
+        </p>
+        <ul v-for="(bookings, index) in bookings" :key="bookings.id">
+            <li>
+                <p>
+                  {{ bookings.toy_name_selected }}
+                </p>
+                <p>
+                  Reserva hecha el: {{ formatDate(new Date(bookings.date)) }}
+                </p>
+                <p>
+                  Reserva hecha para el: {{ formatDate(new Date(bookings.date_selected)) }} {{ bookings.timetable_selected }}
+                </p>
+                <p>
+                  Código de reserva: {{ bookings.booking_code }}
+                </p>
+                <p>
+                  Comentarios: {{ bookings.comments_selected }}
+                </p>
+                <p>
+                  {{ bookings.vote }}
+                </p>
+                <p>
+                  {{ voteMessage }}
+                </p>
+                
+                  <input type="radio" name="vote" value="0" v-model="myvote">
+                  <label for="0">0</label>
+                  <input type="radio" name="vote" value="1" v-model="myvote">
+                  <label for="1">1</label>
+                  <input type="radio" name="vote" value="2" v-model="myvote">
+                  <label for="2">2</label>
+                  <input type="radio" name="vote" value="3" v-model="myvote">
+                  <label for="3">3</label>
+                  <input type="radio" name="vote" value="4" v-model="myvote">
+                  <label for="4">4</label>
+                  <input type="radio" name="vote" value="5" v-model="myvote">
+                  <label for="5">5</label>
+                  <button @click="startVote(index)">
+                    Votar
+                  </button> 
+            </li>
+        </ul>
+     </div>
 
      <!-- FIN PRINTEAR INFO RESERVAS -->
 
@@ -225,6 +237,7 @@
        </button>
      </div>
      <!-- // FIN CREAR PUNTOS DE ENTREGA // -->
+     <myfooter class="foote"/>
   </div>
 </template>
 
@@ -233,6 +246,7 @@
 import axios from 'axios';
 import { isUser } from '../../../../../BACKENDAPI/middlewares/isUser.js';
 import profileentrie from '@/components/ProfileEntrie.vue';
+import myfooter from '@/components/MyFooter.vue'
 //import Swal from 'sweetalert2';
 
 
@@ -240,7 +254,8 @@ import profileentrie from '@/components/ProfileEntrie.vue';
 export default {
   name: 'MyUser',
   components: {
-    profileentrie
+    profileentrie,
+    myfooter
     },
   data(){
     return {
@@ -273,11 +288,39 @@ export default {
       seeModalEditUser: false,
       seeModalEditDeliveries: false,
       seeModalCreateDeliveries: false,
+      seeModalProfile: true,
+      seeModalDonate: false,
+      seeModalDelivery: false,
+      seeModalBooking: false,
       voteMessage: '',
       myvote: ''
     }
   },
   methods:{
+    navProfile(){
+      this.seeModalProfile = true
+      this.seeModalDonate = false
+      this.seeModalDelivery = false
+      this.seeModalBooking = false
+    },
+    navDonate(){
+      this.seeModalProfile = false
+      this.seeModalDonate = true
+      this.seeModalDelivery = false
+      this.seeModalBooking = false
+    },
+    navDelivery(){
+      this.seeModalProfile = false
+      this.seeModalDonate = false
+      this.seeModalDelivery = true
+      this.seeModalBooking = false
+    },
+    navBooking(){
+      this.seeModalProfile = false
+      this.seeModalDonate = false
+      this.seeModalDelivery = false
+      this.seeModalBooking = true
+    },
     startEditprofile(){
       this.userEmailUpdated = this.user.email
       this.userimageUpdated = this.user.image
@@ -337,7 +380,7 @@ export default {
       console.log(dataDelivery.id)
       this.iddeliveryUpdate = dataDelivery.id
       this.seeModalEditDeliveries = true;
-      this.deliveryDateUpdated = dataDelivery.date
+      this.deliveryDateUpdated = this.formatDate(new Date(dataDelivery.date))
       this.deliveryTimetableUpdated = dataDelivery.timetable
       this.deliveryPlaceUpdated = dataDelivery.place
       this.deliveryCommentUpdated = dataDelivery.comments
@@ -577,7 +620,7 @@ export default {
       }
     },
     formatDate(current_datetime){
-      return current_datetime.getDate() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getFullYear()
+      return current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getDate()
     },
     async voteUserDonorOfBooking(idBooking){
       console.log('A votar!!!')
@@ -622,5 +665,62 @@ li {
 }
 img {
   max-width: 40%;
+}
+.internalNav{
+  text-align: center;
+}
+button.internalNav{
+  margin: 0;
+  padding: 0;
+  border: 1px solid rgb(17, 16, 16);
+  border-radius: 15px;
+  padding: .3rem;
+  margin-right: .5rem;
+  margin-right: .5rem;
+  margin-bottom: .5rem;
+  max-width: 100vw;
+}
+li {
+  margin-left: -2.5rem;
+  border-radius: 20px;
+}
+/* DEFINE COMPORTAMIENTO PARA ANCHO MAYOR QUE 1500px */
+@media (min-width: 760px) {
+
+}
+/* DEFINE COMPORTAMIENTO PARA ANCHO MAYOR QUE 1500px */
+@media (min-width: 1000px) {
+
+}
+/* DEFINE COMPORTAMIENTO PARA ANCHO MAYOR QUE 1500px */
+@media (min-width: 1700px) {
+.foote{
+  position: fixed;
+  bottom: -.2rem;
+  width: 100%;
+}
+img{
+  max-height: 15rem;
+}
+li{
+  margin-left: 1rem;
+  margin-right: 1rem;
+  columns: 2;
+}
+.donateinfo{
+  display: flex;
+  position:relative;
+  margin-right: -14rem;
+  padding-top: 1rem;
+  flex-direction: column;
+  padding-bottom: 1rem;
+}
+.donateinfo button{
+  width: 5rem;
+  margin: .5rem;
+}
+ul{
+  margin-bottom: 2.5rem;
+}
 }
 </style>

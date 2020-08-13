@@ -14,15 +14,20 @@
           Loging
       </button>
       <router-link :to="{ name: 'Register'} ">¿No eres usuario?</router-link>
+      <myfooter class="foote"/>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import myfooter from '@/components/MyFooter.vue'
 
 
 export default {
     name: 'ValidateUser',
+    components:{
+        myfooter
+    },
     data(){
         return {
             email: '',
@@ -78,5 +83,22 @@ export default {
 <style scoped>
 h1 {
     margin-top: 10rem;
+}
+.foote{
+  position: fixed;
+  bottom: -.2rem;
+  width: 100%;
+}
+/* DEFINE COMPORTAMIENTO PARA ANCHO MAYOR QUE 1500px */
+@media (min-width: 760px) {
+
+}
+/* DEFINE COMPORTAMIENTO PARA ANCHO MAYOR QUE 1500px */
+@media (min-width: 1000px) {
+
+}
+/* DEFINE COMPORTAMIENTO PARA ANCHO MAYOR QUE 1500px */
+@media (min-width: 1700px) {
+
 }
 </style>

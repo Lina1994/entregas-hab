@@ -40,9 +40,9 @@ async function listEntries(req, res, next) {
     if (search) {
       queryResults = await connection.query(
         `
-        SELECT id, toy_name, id_user, date, image, recomended_age, category, locality
+        SELECT id, toy_name, id_user, date, image, recomended_age, category, locality, state
         FROM toys 
-        WHERE toy_name LIKE ? OR recomended_age LIKE ? OR locality LIKE ? OR category LIKE ?
+        WHERE toy_name LIKE ? OR recomended_age LIKE ? OR locality LIKE ? OR category LIKE ? 
         ORDER BY ${orderBy} ${orderDirection}
         `,
         [`%${search}%`, `%${search}%`, `%${search}%`, `%${search}%`]

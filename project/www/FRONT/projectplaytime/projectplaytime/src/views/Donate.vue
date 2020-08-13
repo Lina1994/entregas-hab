@@ -25,7 +25,7 @@
       <button @click="validatingData()">
           Donar
       </button>
-      
+      <myfooter class="foote"/>
   </div>
 </template>
 
@@ -33,10 +33,14 @@
 import axios from 'axios';
 import { isUser } from '../../../../../BACKENDAPI/middlewares/isUser.js';
 import { newEntry } from '../../../../../BACKENDAPI/controllers/toys/newEntry.js';
+import myfooter from '@/components/MyFooter.vue'
 //import swal from 'sweetalert';
 
 export default {
     name: 'Donate',
+    components:{
+        myfooter
+    },
     data() {
         return {
             image: '',
@@ -157,5 +161,21 @@ export default {
 </script>
 
 <style scopede>
+.foote{
+  position: fixed;
+  bottom: -.2rem;
+  width: 100%;
+}
+/* DEFINE COMPORTAMIENTO PARA ANCHO MAYOR QUE 1500px */
+@media (min-width: 760px) {
 
+}
+/* DEFINE COMPORTAMIENTO PARA ANCHO MAYOR QUE 1500px */
+@media (min-width: 1000px) {
+
+}
+/* DEFINE COMPORTAMIENTO PARA ANCHO MAYOR QUE 1500px */
+@media (min-width: 1700px) {
+
+}
 </style>

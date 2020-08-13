@@ -302,24 +302,40 @@ export default {
       this.seeModalDonate = false
       this.seeModalDelivery = false
       this.seeModalBooking = false
+      this.seeModalEditUser = false
+      this.seeModalEditDeliveries = false
+      this.seeModalCreateDeliveries = false
+      this.seeModal = false
     },
     navDonate(){
       this.seeModalProfile = false
       this.seeModalDonate = true
       this.seeModalDelivery = false
       this.seeModalBooking = false
+      this.seeModalEditUser = false
+      this.seeModalEditDeliveries = false
+      this.seeModalCreateDeliveries = false
+      this.seeModal = false
     },
     navDelivery(){
       this.seeModalProfile = false
       this.seeModalDonate = false
       this.seeModalDelivery = true
       this.seeModalBooking = false
+      this.seeModalEditUser = false
+      this.seeModalEditDeliveries = false
+      this.seeModalCreateDeliveries = false
+      this.seeModal = false
     },
     navBooking(){
       this.seeModalProfile = false
       this.seeModalDonate = false
       this.seeModalDelivery = false
       this.seeModalBooking = true
+      this.seeModalEditUser = false
+      this.seeModalEditDeliveries = false
+      this.seeModalCreateDeliveries = false
+      this.seeModal = false
     },
     startEditprofile(){
       this.userEmailUpdated = this.user.email
@@ -662,6 +678,8 @@ export default {
 li {
   list-style-type: none;
   border: 1px solid black;
+  margin-left: -2.5rem;
+  border-radius: 20px;
 }
 img {
   max-width: 40%;
@@ -680,9 +698,8 @@ button.internalNav{
   margin-bottom: .5rem;
   max-width: 100vw;
 }
-li {
-  margin-left: -2.5rem;
-  border-radius: 20px;
+ul , button{
+  margin-bottom: 2.5rem;
 }
 /* DEFINE COMPORTAMIENTO PARA ANCHO MAYOR QUE 1500px */
 @media (min-width: 760px) {

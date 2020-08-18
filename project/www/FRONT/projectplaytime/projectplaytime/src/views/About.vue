@@ -75,6 +75,7 @@ export default {
   text-align: left;
 }
 .project{
-  margin-top: -8rem;
+  margin-top: 1rem;
+  margin-bottom: 3rem;
 }
 </style>

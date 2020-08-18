@@ -71,6 +71,12 @@ li {
     margin-left: 1%;
     border-radius: 20px;
     max-width: 87%;
+    break-inside: avoid; 
+    box-shadow: 2px 2px 2px #aaaaaa;
+}
+ul{
+    margin-bottom: 1.5rem;
+    max-width: 100%;
 }
 /* DEFINE COMPORTAMIENTO PARA ANCHO MAYOR QUE 1500px */
 @media (min-width: 760px) {

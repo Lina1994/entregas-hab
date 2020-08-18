@@ -156,6 +156,7 @@ export default {
         })
         this.toyslist = response.data.data
         console.log(response.data.data)
+
       } catch (error) {
         console.log(error)
       }
@@ -279,6 +280,7 @@ export default {
       })
       .then((response)=>{
         console.log(response)
+        alert("¡Hecho! Se ha enviado un email de confirmación.")
       })
       } catch (error) {
           console.log(error)
@@ -301,7 +303,7 @@ export default {
 .oneToy {
   border: 1px solid rgba(14, 13, 13, .5);
   position:fixed;
-  background: blanchedalmond;
+  background: rgb(250, 249, 247);
   left: 0;
   top: 0;
   padding: 1rem;
@@ -311,11 +313,12 @@ export default {
   /*height: 50rem;*/
   object-fit: cover;
   transition: all .4s;
+  box-shadow: 10px 10px 5px #aaaaaa;
 }
 .toMe {
   border: 1px solid rgba(14, 13, 13, .5);
   position:fixed;
-  background: blanchedalmond;
+  background: rgb(250, 249, 247);
   left: 2.5%;
   top: 2%;
   padding: 1rem;
@@ -325,6 +328,7 @@ export default {
   /*height: 50rem;*/
   object-fit: cover;
   transition: all .4s;
+  box-shadow: 10px 10px 5px #aaaaaa;
 }
 
 img {
@@ -339,11 +343,13 @@ img {
 }
 ul{
   list-style-type: none;
+  max-width: 100%;
 }
 li{
   margin-left: -2rem;
   border: 1px solid black;
   border-radius: 20px;
+  max-width: 100%;
 }
 /* DEFINE COMPORTAMIENTO PARA ANCHO MAYOR QUE 1500px */
 @media (min-width: 760px) {
@@ -376,6 +382,10 @@ li{
   left: 58%;
   top: 9%;
   width: 400px;
+}.foote{
+  position: fixed;
+  bottom: -.2rem;
+  width: 100%;
 }
 }
 </style>

@@ -2,19 +2,6 @@ const { getConnection } = require("../../db");
 //const { processAndSaveImage } = require("../../helpers");
 const { randomString, sendMail } = require("../../helpers");
 
-/*
-id_toy: this.toyId,
-id_delivery_point: deliveryPoint,
-id_user_donor: this.idUserOfToy,
-id_user_recives: userRecivedId,
-email_user_donor: this.user.email,
-email_user_recives: mymail,
-datetosend: this.delipoints.date,
-timetable: this.delipoints.timetable,
-place: this.delipoints.place,
-comments: this.delipoints.comments,
-*/
-
 async function newEntry(req, res, next) {
   let connection;
   try {
@@ -22,6 +9,8 @@ async function newEntry(req, res, next) {
 
     // Sacar de req.body los datos que necesitio
     const { id_toy, id_delivery_point, id_user_donor, id_user_recives, email_user_donor, email_user_recives, datetosend, timetable, place, comments, toy_name } = req.body;
+    let datetomail = formatDate(new Date(datetosend))
+    let commentstomail = formatecomment(comments)
     console.log(req.body)
     let state = 'confirmed';
     const  id = id_toy;
@@ -44,14 +33,30 @@ async function newEntry(req, res, next) {
       error.httpStatus = 409;
       throw error;
     }
+
+    //COMPROBAR SI HAY COMMENTS
+    function formatecomment(comments){
+      if(comments === null){
+        let commentstomail = 'No se han dejado comentarios para esta reserva';
+        return commentstomail
+      } else {
+        let commentstomail = comments
+        return commentstomail
+      }
+    }
     
+    //DAMOS FORMA A DATE
+    function formatDate(current_datetime){
+      return  current_datetime.getDate()+ "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getFullYear()
+    }
+
     //Enviamos confirmación reserva por mail al usuario donante
     try {
       let email = email_user_donor;
       await sendMail({
         email,
         title: "Confirmación de la reserva en la web playtime",
-        content: `Se ha confirmado la entrega de ${toy_name} el día ${datetosend} en el horario ${timetable} en ${place}. Los comentarios que dejaste para ese punto de entrega: ${comments}`,
+        content: `Se ha confirmado la entrega de ${toy_name} el día ${datetomail} en el horario ${timetable} en ${place}. Los comentarios que dejaste para ese punto de entrega: ${commentstomail}`,
       });
       console.log('Correo enviado a ' + email)
     } catch (error) {
@@ -64,7 +69,7 @@ async function newEntry(req, res, next) {
       await sendMail({
         email,
         title: "Confirmación de la reserva en la web playtime",
-        content: `Se ha confirmado la entrega de ${toy_name} el día ${datetosend} en el horario ${timetable} en ${place}. Los comentarios que dejó el donante para ese punto de entrega: ${comments}`,
+        content: `Se ha confirmado la entrega de ${toy_name} el día ${datetomail} en el horario ${timetable} en ${place}. Los comentarios que dejó el donante para ese punto de entrega: ${commentstomail}`,
       });
       console.log('Correo enviado a ' + email)
     } catch (error) {

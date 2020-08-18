@@ -57,8 +57,8 @@
     <!-- // FIN EDITAR INFO USUARIO //-->
 
     <!-- // PRINTEAR INFO DONACIONES // -->
-     <ul class="donate" v-show="seeModalDonate" v-for="(toy, index) in toys" :key="toy.id">
-       <li>
+     <ul class="donated" v-show="seeModalDonate" v-for="(toy, index) in toys" :key="toy.id">
+       <li :class="toy.state">
        <img :src="toy.image">
        <div class="donateinfo">
           <p>
@@ -88,20 +88,20 @@
      <!-- // FIN PRINTEAR INFO DONACIONES // -->
 
      <!-- //  PRINTEAR INFO PUNTOS ENTREGA // -->
-     <div v-show="seeModalDelivery">
+     <div class="delivery" v-show="seeModalDelivery">
         <p>
           Puntos de entrega:
         </p>
         <ul v-for="(deliveryes, index) in deliveryes" :key="deliveryes.id">
-          <li>
+          <li class="delivery">
             <p>
-            {{ formatDate(new Date(deliveryes.date)) }}
+            Día: {{ formatDate(new Date(deliveryes.date)) }}
             </p>
             <p>
-            {{ deliveryes.timetable }}
+            Horario: {{ deliveryes.timetable }}
             </p>
             <p>
-            {{ deliveryes.place }}
+            Lugar: {{ deliveryes.place }}
             </p>
             <p>
             {{ deliveryes.comments }}
@@ -141,27 +141,28 @@
                   Comentarios: {{ bookings.comments_selected }}
                 </p>
                 <p>
-                  {{ bookings.vote }}
+                  Voto: {{ bookings.vote }}
                 </p>
                 <p>
                   {{ voteMessage }}
                 </p>
-                
-                  <input type="radio" name="vote" value="0" v-model="myvote">
-                  <label for="0">0</label>
-                  <input type="radio" name="vote" value="1" v-model="myvote">
-                  <label for="1">1</label>
-                  <input type="radio" name="vote" value="2" v-model="myvote">
-                  <label for="2">2</label>
-                  <input type="radio" name="vote" value="3" v-model="myvote">
-                  <label for="3">3</label>
-                  <input type="radio" name="vote" value="4" v-model="myvote">
-                  <label for="4">4</label>
-                  <input type="radio" name="vote" value="5" v-model="myvote">
-                  <label for="5">5</label>
-                  <button @click="startVote(index)">
-                    Votar
-                  </button> 
+                <div v-show="voted(bookings.vote)">
+                    <input type="radio" name="vote" value="0" v-model="myvote">
+                    <label for="0">0</label>
+                    <input type="radio" name="vote" value="1" v-model="myvote">
+                    <label for="1">1</label>
+                    <input type="radio" name="vote" value="2" v-model="myvote">
+                    <label for="2">2</label>
+                    <input type="radio" name="vote" value="3" v-model="myvote">
+                    <label for="3">3</label>
+                    <input type="radio" name="vote" value="4" v-model="myvote">
+                    <label for="4">4</label>
+                    <input type="radio" name="vote" value="5" v-model="myvote">
+                    <label for="5">5</label>
+                    <button @click="startVote(index)">
+                      Votar
+                    </button> 
+                </div>
             </li>
         </ul>
      </div>
@@ -663,6 +664,21 @@ export default {
       } catch (error) {
         console.log(error)
       }
+    },
+    state(i){
+    if(i === 'sold'){
+      return 'sold'
+    }
+    if(i === 'forsale'){
+      return 'forsale'
+    }
+  },
+    voted(i){
+      if(i === null){
+      return true
+    } else {
+      return false
+    }
     }
  },
  created(){
@@ -675,6 +691,11 @@ export default {
 </script>
 
 <style scoped>
+.sold {
+  background-image: url("https://www.onlygfx.com/wp-content/uploads/2017/12/sold-stamp-3.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
 li {
   list-style-type: none;
   border: 1px solid black;
@@ -690,8 +711,12 @@ img {
 button.internalNav{
   margin: 0;
   padding: 0;
-  border: 1px solid rgb(17, 16, 16);
-  border-radius: 15px;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  border-bottom: 1px solid rgb(17, 16, 16);
+  background-color: rgba(244, 250, 250, 0);
+  /*border-radius: 15px;*/
   padding: .3rem;
   margin-right: .5rem;
   margin-right: .5rem;
@@ -723,6 +748,9 @@ li{
   margin-left: 1rem;
   margin-right: 1rem;
   columns: 2;
+}
+.delivery{
+  columns: 1;
 }
 .donateinfo{
   display: flex;

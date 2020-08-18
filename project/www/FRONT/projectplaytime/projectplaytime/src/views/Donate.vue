@@ -1,5 +1,6 @@
 <template>
   <div>
+      <div class="donation">
       <h1>
           Donaciones
       </h1>
@@ -25,6 +26,14 @@
       <button @click="validatingData()">
           Donar
       </button>
+      </div>
+      <div class="motto">
+          <h2>
+              UN VIEJO RECUERDO
+          </h2>
+          <h2>PUEDE SER</h2>
+          <h2>UN NUEVO AMIGO</h2>
+      </div>
       <myfooter class="foote"/>
   </div>
 </template>
@@ -117,44 +126,6 @@ export default {
                 console.log('Yo no debería estar aquí.')
             } 
         }
-        /*
-        async goLogin() {
-            const ENDPOINT = 'http://localhost:3050'
-
-            if(this.email === '' || this.password === '') {
-                alert('Te faltan datos.')
-                this.error = true;
-                this.message = 'Faltan campos';
-            } else {
-                try {
-                    const response = await axios.post(`${ENDPOINT}/users/login`, {
-                        //.post('http://localhost:3050/users/login', {
-                        email: this.email,
-                        password: this.password
-                })
-                .then((response) => {
-                    console.log(this.email);
-                    console.log(this.password);
-                    console.log('Loging OK');
-                } )
-                /setTimeout( () => {
-                    this.$router.push('/home')
-                    location.reload()
-                }, 500 );
-
-                } 
-                 catch (error) {
-                     console.log(this.email, this.password)
-                     console.log('Loging incorrecto')
-                     console.log(error.response.data.message);
-                     this.error = true;
-                     this.message = error.response.data.message;
-                    
-                }
-                
-            }
-            
-        }*/
         
     }
 }
@@ -176,6 +147,14 @@ export default {
 }
 /* DEFINE COMPORTAMIENTO PARA ANCHO MAYOR QUE 1500px */
 @media (min-width: 1700px) {
-
+.motto{
+    position: fixed;
+    right: 23rem;
+    top: 17rem;
+    font-size: 150%;
+}
+.donation{
+    margin-top: 10rem;
+}
 }
 </style>

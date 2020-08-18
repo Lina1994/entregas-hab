@@ -14,7 +14,7 @@ async function listEntries(req, res, next) {
 
     // Proceso la dirección de orden
     const orderDirection =
-      (direction && direction.toLowerCase()) === "desc" ? "DESC" : "ASC";
+      (direction && direction.toLowerCase()) === "asc" ? "ASC" : "DESC";
 
     // Proceso el campo de orden
     let orderBy;

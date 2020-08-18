@@ -27,7 +27,7 @@ export default {
     bottom: -10px;
     width: 100%;
     text-align: center;
-    background-color: rgb(245, 242, 239);
+    background-color: rgb(254, 254, 254);
     height: 3rem;
 }
 

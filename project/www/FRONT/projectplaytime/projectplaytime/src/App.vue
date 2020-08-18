@@ -1,8 +1,10 @@
 <template>
   <div id="app">
     <div id="nav">
-      <!-- <router-link v-show="logged" :to="{ name: 'Home'} ">| Home |</router-link> -->
-      <router-link :to="{ name: 'Home' }"> Donaciones </router-link>
+      <div class="homie">
+      <router-link :to="{ name: 'Home' }"> PLAYTIME </router-link>
+      </div>
+      <div class="others">
       <!--<router-link :to="{ name: 'About' }">| About |</router-link>-->
       <router-link v-show="logged" :to="{ name: 'MyUser'} "> Perfil </router-link> 
       <router-link v-show="logged" :to="{ name: 'Donate' }"> Donar </router-link>
@@ -12,6 +14,7 @@
       <button class="logout" v-show="logged" @click="logoutUser()">
         LOGOUT
       </button>
+      </div>
     </div>
     <router-view/>
   </div>
@@ -66,9 +69,26 @@ export default {
 }
 
 #nav {
-  padding: 3px 30px 30px 30px ;
+  max-width: 100%;
+  /*flex-flow: row wrap;*/
+  align-items: flex-end;
+  padding: 1rem;
+  background: deepskyblue;
+  margin-bottom: 1rem;
 }
-
+#nav div {
+  flex: auto;
+}
+.homie {
+  display: flex;
+  margin-bottom: -1rem;
+  font-size: 150%;
+}
+.others {
+  display: flex;
+  margin-right: 1rem;
+  justify-content: flex-end;
+}
 #nav a {
   font-weight: bold;
   color: #2c3e50;
@@ -76,11 +96,22 @@ export default {
 }
 
 #nav a.router-link-exact-active {
-  color: #42b983;
+  color: #0a1825;
 }
 .logout{
+  padding: 0;
   margin-left: 1rem;
   margin-right: 1rem;
+  margin-top: 0rem;
+  background-color: rgba(0, 191, 255, 0);
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  border-bottom: 1px solid rgb(17, 16, 16);
+  font-size: 100%;
+}
+li{
+  box-shadow:dimgray;
 }
 
 </style>

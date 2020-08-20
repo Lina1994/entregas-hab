@@ -18,7 +18,8 @@
      <toyslistentries v-on:datos="recibirJugete" :toys="toyslist"/>
     </div>
     <div class="oneToy" v-show="isselected">
-       <img :src="oneImage">
+       <!--<img :src="oneImage">-->
+       <img :src= "getImageName(oneImage)">
        <p>
         {{oneName}}
        </p>
@@ -35,7 +36,8 @@
          {{oneCategory}}
        </p>
        <hr>
-       <img class="avatar" :src="user.image">
+       <!--<img class="avatar" :src="user.image">-->
+       <img class="avatar" :src= "getImageName(user.image)">
        <p>
          {{user.user_name}}
        </p>
@@ -126,6 +128,11 @@ export default {
     }
   },
   methods:{
+    getImageName(name){
+      if(name){
+        return process.env.VUE_APP_STATIC + name;
+      }
+    },
     sendSearch(){
       this.searcher = this.mysearcher
       if(this.myorderby === 'Nombre'){
@@ -155,7 +162,7 @@ export default {
           }
         })
         this.toyslist = response.data.data
-        console.log(response.data.data)
+        //console.log(response.data.data)
 
       } catch (error) {
         console.log(error)
@@ -279,7 +286,7 @@ export default {
             } 
       })
       .then((response)=>{
-        console.log(response)
+        //console.log(response)
         alert("¡Hecho! Se ha enviado un email de confirmación.")
       })
       } catch (error) {
@@ -351,6 +358,11 @@ li{
   border-radius: 20px;
   max-width: 100%;
 }
+.foote{
+  position: fixed;
+  bottom: -.2rem;
+  width: 100%;
+}
 /* DEFINE COMPORTAMIENTO PARA ANCHO MAYOR QUE 1500px */
 @media (min-width: 760px) {
 .oneToy{
@@ -382,10 +394,7 @@ li{
   left: 58%;
   top: 9%;
   width: 400px;
-}.foote{
-  position: fixed;
-  bottom: -.2rem;
-  width: 100%;
 }
+
 }
 </style>

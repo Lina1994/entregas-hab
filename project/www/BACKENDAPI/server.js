@@ -67,6 +67,7 @@ app.use(bodyParser.json());
 // Procesado de body tipo form-data
 app.use(fileUpload());
 app.use(cors())
+app.use(express.static("static"));
 
 
 // imagen uploads app.use(express())
@@ -99,7 +100,7 @@ app.post("/entries", isUser, newEntry);
 // Editar una entrada del diario
 // PUT - /entries/:id 
 // Sólo usuario que creara esta entrada o admin
-app.put("/entries/:id", isUserForPut, entryExists, editEntry);
+app.put("/entries/:id", isUser, entryExists, editEntry);
 
 // Borrar una entrada del diario
 // DELETE - /entries/:id 
@@ -222,7 +223,7 @@ app.get("/users/:id", isUser, getUser);
 // Editar datos de usuario: email, name, avatar
 // PUT - /users/:id 
 // Sólo el propio usuario o el usuario admin
-app.put("/users/:id", isUserForPut, editUser);
+app.put("/users/:id", isUser, editUser);
 
 // Borrar un usuario
 // DELETE- /users/:id 

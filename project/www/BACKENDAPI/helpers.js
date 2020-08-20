@@ -1,6 +1,6 @@
 const fs = require("fs").promises;
 const path = require("path");
-//const sharp = require("sharp");
+const sharp = require("sharp");
 const uuid = require("uuid");
 const crypto = require("crypto");
 
@@ -20,21 +20,35 @@ function formatDateToDBDay(date) {
 }
 
 async function processAndSaveImage(uploadedImage) {
+  console.log('Empezando procesado de imagen')
+  console.log(uploadedImage)
+
+  // DEFINIMOS DIRECTORIO DE SUBIDA
+  console.log('test');
+  const imageUploadPath = path.join(__dirname, process.env.UPLOADS_DIR);
+  console.log('Dirección de subida definida');
+  console.log(imageUploadPath)
+
   // Creamos el directorio (con recursive: true por si hay subdirectorios y así no da error)
   await fs.mkdir(imageUploadPath, { recursive: true });
+  console.log("Creado directorio");
 
   // Leer la imagen que se subio
-  const image = /*sharp(*/uploadedImage.data;
+  console.log("Leyendo la imagen");
+  const image = sharp(uploadedImage.data);
 
   // Saco información de la imagen
+  console.log("Sacando información");
   const imageInfo = await image.metadata();
 
   // Cambiarle el tamaño si es necesario
   if (imageInfo.width > 1000) {
+    console.log("Cambiando tamaño imagen")
     image.resize(1000);
   }
 
   // Guardar la imagen en el directorio de subidas
+  console.log("Guardando imagen")
   const imageFileName = `${uuid.v4()}.jpg`;
   await image.toFile(path.join(imageUploadPath, imageFileName));
 

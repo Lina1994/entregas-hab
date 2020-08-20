@@ -12,9 +12,11 @@ async function editUser(req, res, next) {
     connection = await getConnection();
 
     const { id } = req.params;
-    const { email, user_name, birth_date, direction, image, phone, surname } = req.body.data;
-    //console.log(req.body.data)
-
+    const { email, user_name, birth_date, direction, image, phone, surname } = req.body;
+    console.log("////   ¡¡¡EDITANDO USUARIO!!!  //////")
+    console.log(req.files)
+    console.log(req.body)
+ 
     // Comprobar que el id de usuario que queremos cambiar es
     // el mismo que firma la petición o bien es admin
     if (req.auth.id !== Number(id) && req.auth.role !== "admin") {
@@ -39,25 +41,6 @@ async function editUser(req, res, next) {
       throw error;
     }
 
-    // Si mandamos imagen guardar avatar
-    /*
-    let savedFileName;
-
-    if (req.files && req.files.avatar) {
-      try {
-        // Procesar y guardar imagen
-        savedFileName = await processAndSaveImage(req.files.avatar);
-      } catch (error) {
-        const imageError = new Error(
-          "No se pudo procesar la imagen. Inténtalo de nuevo"
-        );
-        imageError.httpStatus = 400;
-        throw imageError;
-      }
-    } else {
-      savedFileName = currentUser[0].image;
-    }
-    */
     // Si el email es diferente al actual comprobar que no existe en la base de datos
     console.log(email)
     if (email !== currentUser[0].email) {
@@ -88,22 +71,51 @@ async function editUser(req, res, next) {
         await sendMail({
           email,
           title:
-            "Cambiaste tu email en la aplicación diario de viajes. Por favor valida de nuevo",
+          "Cambiaste tu email en la aplicación diario de viajes. Por favor valida de nuevo",
           content: `Para validar tu nuevo email en la app diario de viajes haz click aquí: ${validationURL}`,
         });
       } catch (error) {
         const emailError = new Error("Error en el envío de mail");
         throw emailError;
       }
+      
+      let savedImageFileName;
 
-      await connection.query(
-        `
-        UPDATE users 
-        SET surname=?, phone=?, direction=?, birth_date=?, user_name=?, email=?, lastUpdate=UTC_TIMESTAMP(), lastAuthUpdate=UTC_TIMESTAMP(), active=false, registrationCode=?, image=?
-        WHERE id=?
-      `,
-        [surname, phone, direction, birth_date, user_name, email, registrationCode, image, id]
-      );
+      // Procesar la imagen si está en el body
+      if (req.files && req.files.image) {
+        try {
+          // Procesar y guardar imagen
+          //console.log(req.body.image)
+          savedImageFileName = await processAndSaveImage(req.files.image);
+        } catch (error) {
+          const imageError = new Error(
+            "No se pudo procesar la imagen. Inténtalo de nuevo"
+          );
+          imageError.httpStatus = 400;
+          throw imageError;
+        }
+        
+        console.log('Edito usuario con distinto mail con imagen')
+        await connection.query(
+          `
+          UPDATE users 
+          SET surname=?, phone=?, direction=?, birth_date=?, user_name=?, email=?, lastUpdate=UTC_TIMESTAMP(), lastAuthUpdate=UTC_TIMESTAMP(), active=false, registrationCode=?, image=?
+          WHERE id=?
+        `,
+          [surname, phone, direction, birth_date, user_name, email, registrationCode, savedImageFileName, id]
+        );
+
+      } else {
+        console.log('Edito usuario con distinto mail sin imagen')
+        await connection.query(
+          `
+          UPDATE users 
+          SET surname=?, phone=?, direction=?, birth_date=?, user_name=?, email=?, lastUpdate=UTC_TIMESTAMP(), lastAuthUpdate=UTC_TIMESTAMP(), active=false, registrationCode=?
+          WHERE id=?
+        `,
+          [surname, phone, direction, birth_date, user_name, email, registrationCode, id]
+        );
+      }
 
       // Dar una respuesta
       res.send({
@@ -111,15 +123,48 @@ async function editUser(req, res, next) {
         message: "Usuario actualizado. Mira tu email para activarlo de nuevo.",
       });
     } else {
-      // Actualizar usuario en la base de datos
-      await connection.query(
-        `
-      UPDATE users 
-      SET surname=?, phone=?, direction=?, birth_date=?, user_name=?, email=?, image=?, lastUpdate=UTC_TIMESTAMP()
-      WHERE id=?
-    `,
-        [surname, phone, direction, birth_date, user_name, email, image, id]
-      );
+
+      let savedImageFileName;
+
+      // Procesar la imagen si está en el body
+      if (req.files && req.files.image) {
+        try {
+          console.log('Empieza procesado mismo mail con imagen')
+          // Procesar y guardar imagen
+          //console.log(req.body.image)
+          savedImageFileName = await processAndSaveImage(req.files.image);
+        } catch (error) {
+          const imageError = new Error(
+            "No se pudo procesar la imagen. Inténtalo de nuevo"
+          );
+          imageError.httpStatus = 400;
+          throw imageError;
+        }
+
+        // Actualizar usuario en la base de datos
+        console.log('Edito usuario con mismo mail con imagen')
+        await connection.query(
+          `
+        UPDATE users 
+        SET surname=?, phone=?, direction=?, birth_date=?, user_name=?, email=?, image=?, lastUpdate=UTC_TIMESTAMP()
+        WHERE id=?
+        `,
+          [surname, phone, direction, birth_date, user_name, email, savedImageFileName, id]
+        );
+
+      } else {
+        // Actualizar usuario en la base de datos
+        console.log('Edito usuario con mismo mail sin imagen')
+        await connection.query(
+          `
+        UPDATE users 
+        SET surname=?, phone=?, direction=?, birth_date=?, user_name=?, email=?, lastUpdate=UTC_TIMESTAMP()
+        WHERE id=?
+      `,
+          [surname, phone, direction, birth_date, user_name, email, id]
+        );
+      }
+
 
       // Dar una respuesta
       res.send({

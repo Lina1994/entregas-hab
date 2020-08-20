@@ -56,14 +56,14 @@ async function newUser(req, res, next) {
       const emailError = new Error("Error en el envío de mail");
       throw emailError;
     }
-
+    let image = '48433ece-3fab-4cef-9433-1c6bab5f5475.jpg';
     // meter el nuevo usuario en la base de datos sin activar
     await connection.query(
       `
-      INSERT INTO users(registrationDate, user_name, surname, direction, email, password, registrationCode, lastUpdate)
-      VALUES(UTC_TIMESTAMP(), ?, ?, ?, ?, SHA2(?, 512), ?, UTC_TIMESTAMP())
+      INSERT INTO users(registrationDate, user_name, surname, direction, email, password, registrationCode, lastUpdate, image)
+      VALUES(UTC_TIMESTAMP(), ?, ?, ?, ?, SHA2(?, 512), ?, UTC_TIMESTAMP(), ?)
     `,
-      [user_name, surname, direction, email, password, registrationCode]
+      [user_name, surname, direction, email, password, registrationCode, image]
     );
 
     res.send({

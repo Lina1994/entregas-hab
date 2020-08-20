@@ -13,8 +13,10 @@ async function editEntry(req, res, next) {
 
     // Sacamos los datos
     //console.log(req.body.data)
-    const { image, description, locality, recomended_age, category, toy_name, date } = req.body.data;
+    const { image, description, locality, recomended_age, category, toy_name, date } = req.body;
     const { id } = req.params;
+    console.log(req.body)
+    console.log(req.params)
 
     // Seleccionar datos actuales de la entrada
     const [current] = await connection.query(
@@ -55,14 +57,48 @@ async function editEntry(req, res, next) {
       savedImageFileName = currentEntry.image;
     }
 */
-    // Ejecutar la query de edición de la entrada
-    await connection.query(
+
+
+    let savedImageFileName;
+
+    // Procesar la imagen si está en el body
+    if (req.files && req.files.image) {
+      try {
+        // Procesar y guardar imagen
+        //console.log(req.body.image)
+        savedImageFileName = await processAndSaveImage(req.files.image);
+      } catch (error) {
+        const imageError = new Error(
+          "No se pudo procesar la imagen. Inténtalo de nuevo"
+        );
+        imageError.httpStatus = 400;
+        throw imageError;
+      }
+      // Ejecutar la query
+      await connection.query(
       `
       UPDATE toys SET image=?, description=?, locality=?, recomended_age=?, category=?, toy_name=?, lastUpdate=UTC_TIMESTAMP()
       WHERE id=?
-    `,
-      [image, description, locality, recomended_age, category, toy_name, id]
+      `,
+      [savedImageFileName, description, locality, recomended_age, category, toy_name, id]
     );
+    }else {
+      
+      // Ejecutar la query de edición de la entrada
+      await connection.query(
+      `
+      UPDATE toys SET description=?, locality=?, recomended_age=?, category=?, toy_name=?, lastUpdate=UTC_TIMESTAMP()
+      WHERE id=?
+    `,
+      [description, locality, recomended_age, category, toy_name, id]
+    );
+
+    }
+
+
+
+
+    
     /*
     // Ejecutar la query de edición de la entrada
     await connection.query(

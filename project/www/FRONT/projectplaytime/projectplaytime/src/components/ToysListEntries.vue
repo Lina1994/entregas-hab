@@ -3,7 +3,8 @@
       <ul>
           <li v-show="state(toy.state)" v-for="(toy, index) in toys" :key="toy.id" 
           @click="sendIndex(index)">
-              <img :src="toy.image">
+              <!--<img :src="toy.image">-->
+              <img :src= "getImageName(toy.image)">
               <div class="description">
                     <p>
                         {{ toy.toy_name }}
@@ -56,6 +57,11 @@ import { isLoggedIn } from '../utils/utils.js'
                 } else {
                     console.log('No estas logueado')
                 }
+            },
+            getImageName(name){
+                if(name){
+                    return process.env.VUE_APP_STATIC + name;
+                }
             }
         }
     }
@@ -66,12 +72,13 @@ import { isLoggedIn } from '../utils/utils.js'
 li {
     list-style-type: none;
     border: 1px solid rgb(14, 13, 13);
-    margin-top: 0;
+    margin-top: -.07rem;
     margin-bottom: 1rem;
     margin-left: 1%;
     border-radius: 20px;
     max-width: 87%;
     break-inside: avoid; 
+    break-after: avoid;
     box-shadow: 2px 2px 2px #aaaaaa;
 }
 ul{
@@ -81,9 +88,9 @@ ul{
 /* DEFINE COMPORTAMIENTO PARA ANCHO MAYOR QUE 1500px */
 @media (min-width: 760px) {
     li{
-    width: 47rem;
-    height: 20rem;
-    margin-left: 2.5rem;
+        width: 47rem;
+        height: 20rem;
+        margin-left: 2.5rem;
     }
     li img {
         display: flex;
@@ -96,9 +103,10 @@ ul{
         
     }
     li p{
+        text-align: start;
         display: flex;
         position:relative;
-        margin-right: -14rem;
+        margin-left: 20rem;
         padding-top: 1rem;
         flex-direction: column;
         padding-bottom: 1rem;
@@ -110,7 +118,7 @@ ul{
 /* DEFINE COMPORTAMIENTO PARA ANCHO MAYOR QUE 1500px */
 @media (min-width: 1000px) {
 li p{
-    margin-right: -10rem;
+    margin-left: 15rem;
     padding-bottom: 1rem;
 }
 

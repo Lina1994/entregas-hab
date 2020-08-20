@@ -1,6 +1,6 @@
 <template>
   <div class="profile">
-              <img :src="user.image">
+              <img :src="getImageName(user.image)">
               <p>
                   Email: {{user.email}}
               </p>
@@ -34,6 +34,11 @@
             user: Object
         },
         methods: {
+            getImageName(name){
+                if(name){
+                    return process.env.VUE_APP_STATIC + name;
+                }
+            }
         }
     }
     

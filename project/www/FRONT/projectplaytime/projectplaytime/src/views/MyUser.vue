@@ -20,10 +20,12 @@
         Correo electrónico:
       </p>
       <input type="text" placeholder="Correo electrónico" v-model="userEmailUpdated">
-      <p>
+      <p> Imagen nueva: </p>
+      <input type="file" @change="onFileSelectedUserImage">
+      <!--<p>
         URL imagen:
       </p>
-      <input type="text" placeholder="URL imagen" v-model="userimageUpdated">
+      <input type="text" placeholder="URL imagen" v-model="userimageUpdated">-->
       <p>
         Nombre:
       </p>
@@ -59,7 +61,7 @@
     <!-- // PRINTEAR INFO DONACIONES // -->
      <ul class="donated" v-show="seeModalDonate" v-for="(toy, index) in toys" :key="toy.id">
        <li :class="toy.state">
-       <img :src="toy.image">
+       <img :src="getImageName(toy.image)">
        <div class="donateinfo">
           <p>
             {{toy.toy_name}}
@@ -171,8 +173,11 @@
 
      <!-- // EDITAR INFO DONACIONES // -->
      <div v-show="seeModal" class="modal">
-       <p> URL imagen: </p>
-       <input type="text" placeholder="URL imagen" v-model="toyImageUpdated">
+       <p> Imagen actual: </p>
+       <img :src="getImageName(selectedFile)">
+       <p> Imagen nueva: </p>
+       <input type="file" @change="onFileSelected">
+       <!--<input type="text" placeholder="URL imagen" v-model="toyImageUpdated">-->
        <p> Nombre: </p>
        <input type="text" placeholder="Nombre" v-model="toyNameUpdated">
        <p> Categoría: </p>
@@ -294,10 +299,19 @@ export default {
       seeModalDelivery: false,
       seeModalBooking: false,
       voteMessage: '',
-      myvote: ''
+      myvote: '',
+      selectedFile: null
     }
   },
   methods:{
+    onFileSelectedUserImage(event){
+            this.userimageUpdated = event.target.files[0]
+            //console.log(this.userimageUpdated)
+    },
+    onFileSelected(event){
+            this.selectedFile = event.target.files[0]
+            console.log(this.selectedFile)
+        },
     navProfile(){
       this.seeModalProfile = true
       this.seeModalDonate = false
@@ -340,7 +354,7 @@ export default {
     },
     startEditprofile(){
       this.userEmailUpdated = this.user.email
-      this.userimageUpdated = this.user.image
+      //this.userimageUpdated = this.user.image
       this.userNameUpdated = this.user.user_name
       this.userSurnameUpdated = this.user.surname
       this.userBirthDateUpdated = this.user.birth_date
@@ -350,12 +364,27 @@ export default {
       this.seeModalEditUser = true;
     },
     async userUpdate(){
-      let authtoken = localStorage.getItem('AUTH_TOKEN_KEY')
+      let token = localStorage.getItem('AUTH_TOKEN_KEY');
+      axios.defaults.headers.common["Authorization"] = token;
       let iduser = Number(localStorage.getItem('USER_ID'))
-      console.log(authtoken)
+
+      let formData = new FormData();
+      formData.append('image', this.userimageUpdated)
+      formData.append('user_name', this.userNameUpdated)
+      formData.append('surname', this.userSurnameUpdated)
+      formData.append('email', this.userEmailUpdated)
+      formData.append('birth_date', this.userBirthDateUpdated)
+      formData.append('direction', this.userDirectionUpdated)
+      formData.append('phone', this.userPhoneUpdated)
+      formData.append('id', iduser)
+
+      console.log(token)
       console.log(iduser)
+
       try {
-        const response = await axios.put('http://localhost:3050/users/' + iduser,{
+        const response = await axios.put('http://localhost:3050/users/' + iduser,
+        formData, { headers: { "Content-Type": "multipart/form-data" }
+        /*{
           headers: {
             Authorization: authtoken
           },
@@ -368,7 +397,7 @@ export default {
             birth_date: this.userBirthDateUpdated,
             direction: this.userDirectionUpdated,
             phone: this.userPhoneUpdated
-          }
+          }*/
       }) 
         setTimeout( () => {
            location.reload()
@@ -384,6 +413,7 @@ export default {
       this.idToyTuUpdate = datosToys.id
       this.seeModal = true;
       this.toyImageUpdated = datosToys.image
+      this.selectedFile = datosToys.image
       this.toyNameUpdated = datosToys.toy_name
       this.toyCategoryUpdated = datosToys.category
       this.toyDescriptionUpdated = datosToys.description
@@ -505,26 +535,26 @@ export default {
       }
     },
     async donationUpdate(){
-      let authtoken = localStorage.getItem('AUTH_TOKEN_KEY')
+      let token = localStorage.getItem('AUTH_TOKEN_KEY');
+      axios.defaults.headers.common["Authorization"] = token;
       let iduser = Number(localStorage.getItem('USER_ID'))
       let idauth = this.idToyTuUpdate
+
+      let formData = new FormData();
+      formData.append('image', this.selectedFile)
+      formData.append('description', this.toyDescriptionUpdated)
+      formData.append('locality', this.toyLocalityUpdated)
+      formData.append('recomended_age', this.toyRecomendedAgeUpdated)
+      formData.append('category', this.toyCategoryUpdated)
+      formData.append('toy_name', this.toyNameUpdated)
+      formData.append('id_user', iduser)
+
       console.log(idauth)
-      console.log(authtoken)
+      //console.log(authtoken)
       console.log(iduser)
       try {
-        const response = await axios.put('http://localhost:3050/entries/' + idauth,{
-          headers: {
-            Authorization: authtoken
-          },
-          data: {
-            id_user: iduser,
-            image: this.toyImageUpdated,
-            toy_name: this.toyNameUpdated,
-            category: this.toyCategoryUpdated,
-            description: this.toyDescriptionUpdated,
-            locality: this.toyLocalityUpdated,
-            recomended_age: this.toyRecomendedAgeUpdated
-          }
+        const response = await axios.put('http://localhost:3050/entries/' + idauth,
+        formData, { headers: { "Content-Type": "multipart/form-data" }
       }) 
         setTimeout( () => {
            location.reload()
@@ -665,6 +695,11 @@ export default {
         console.log(error)
       }
     },
+    getImageName(name){
+      if(name){
+        return process.env.VUE_APP_STATIC + name;
+      }
+    },
     state(i){
     if(i === 'sold'){
       return 'sold'
@@ -695,6 +730,11 @@ export default {
   background-image: url("https://www.onlygfx.com/wp-content/uploads/2017/12/sold-stamp-3.png");
   background-size: contain;
   background-repeat: no-repeat;
+}
+.foote{
+  position: fixed;
+  bottom: -.2rem;
+  width: 100%;
 }
 li {
   list-style-type: none;

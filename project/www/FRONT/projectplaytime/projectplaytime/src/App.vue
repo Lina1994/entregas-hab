@@ -72,7 +72,7 @@ export default {
   max-width: 100%;
   /*flex-flow: row wrap;*/
   align-items: flex-end;
-  padding: 1rem;
+  padding: .8rem;
   background: deepskyblue;
   margin-bottom: 1rem;
 }
@@ -96,22 +96,20 @@ export default {
 }
 
 #nav a.router-link-exact-active {
-  color: #0a1825;
+  color: #e8ecf0;
 }
 .logout{
   padding: 0;
   margin-left: 1rem;
-  margin-right: 1rem;
-  margin-top: 0rem;
+  margin-right: -2rem;
+  margin-top: -.6rem;
   background-color: rgba(0, 191, 255, 0);
   border-top: none;
   border-right: none;
   border-left: none;
   border-bottom: 1px solid rgb(17, 16, 16);
-  font-size: 100%;
-}
-li{
-  box-shadow:dimgray;
+  font-size: 70%;
+  transform: rotate(90deg);
 }
 
 </style>

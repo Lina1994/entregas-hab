@@ -37,7 +37,7 @@
        <p>
         Cumpleaños:
       </p>
-      <input type="text" placeholder="Cumpleaños" v-model="userBirthDateUpdated">
+      <input type="date" placeholder="Cumpleaños" v-model="userBirthDateUpdated">
        <p>
         Dirección:
       </p>
@@ -61,7 +61,7 @@
     <!-- // PRINTEAR INFO DONACIONES // -->
      <ul class="donated" v-show="seeModalDonate" v-for="(toy, index) in toys" :key="toy.id">
        <li :class="toy.state">
-       <img :src="getImageName(toy.image)">
+       <img class="imgDonated" :src="getImageName(toy.image)">
        <div class="donateinfo">
           <p>
             {{toy.toy_name}}
@@ -78,10 +78,12 @@
           <p>
             Edad recomendada: {{toy.recomended_age}}
           </p>
-          <button @click="sendUpdateIndex(index)">
+       </div>
+       <div class="butDonates">
+          <button class="butEdit" @click="sendUpdateIndex(index)">
             Editar
           </button>
-          <button @click="deleteToyquestion(index)">
+          <button class="butCancel" @click="deleteToyquestion(index)">
             Borrar
           </button>
        </div>
@@ -94,6 +96,9 @@
         <p>
           Puntos de entrega:
         </p>
+          <button @click="createDeliPoint()">
+              Nuevo punto de entrega
+            </button>
         <ul v-for="(deliveryes, index) in deliveryes" :key="deliveryes.id">
           <li class="delivery">
             <p>
@@ -112,9 +117,6 @@
               Editar
             </button>
           </li>
-          <button @click="createDeliPoint()">
-              Nuevo punto de entrega
-            </button>
         </ul>
      </div>
      
@@ -126,7 +128,7 @@
           Tus reservas:
         </p>
         <ul v-for="(bookings, index) in bookings" :key="bookings.id">
-            <li>
+            <li class="liBooking">
                 <p>
                   {{ bookings.toy_name_selected }}
                 </p>
@@ -203,7 +205,7 @@
      <!-- // EDITAR INFO PUNTOS DE ENTREGA // -->
      <div v-show="seeModalEditDeliveries" class="modal">
        <p> Día: </p>
-       <input type="text" placeholder="Día. Ej: 2020-08-15" v-model="deliveryDateUpdated">
+       <input type="date" placeholder="Día. Ej: 2020-08-15" v-model="deliveryDateUpdated">
        <p> Horario: </p>
        <input type="text" placeholder="Horario. Ej: De 9:00 a 11:00" v-model="deliveryTimetableUpdated">
        <p> Lugar: </p>
@@ -225,7 +227,7 @@
      <!-- // CREAR PUNTOS DE ENTREGA // -->
      <div v-show="seeModalCreateDeliveries" class="modal">
        <p> Día: </p>
-       <input type="text" placeholder="Día. Ej: 2020-08-15" v-model="deliveryDateUpdated">
+       <input type="date" placeholder="Día. Ej: 2020-08-15" v-model="deliveryDateUpdated">
        <p> Horario: </p>
        <input type="text" placeholder="Horario. Ej: De 9:00 a 11:00" v-model="deliveryTimetableUpdated">
        <p> Lugar: </p>
@@ -568,6 +570,7 @@ export default {
       let authtoken = localStorage.getItem('AUTH_TOKEN_KEY')
       let iduser = Number(localStorage.getItem('USER_ID'))
       let idauth = this.iddeliveryUpdate
+      let datetosend = this.formatDate(new Date(this.deliveryDateUpdated))
       console.log(idauth)
       console.log(authtoken)
       console.log(iduser)
@@ -578,7 +581,7 @@ export default {
           },
           data: {
             id_user: iduser,
-            date: this.deliveryDateUpdated,
+            date: datetosend,
             timetable: this.deliveryTimetableUpdated,
             place: this.deliveryPlaceUpdated,
             comments: this.deliveryCommentUpdated,
@@ -726,9 +729,29 @@ export default {
 </script>
 
 <style scoped>
+.modal{
+  padding: 1rem;
+  position: fixed;
+  left: 3.5rem;
+  top: 6.5rem;
+  max-width: 100vw;
+  background-color: rgb(254, 254, 254);
+  border: 1px solid black;
+  border-radius: 20px;
+}
+.sold, .forsale{
+  padding-top: 1rem;
+}
+.liBooking{
+  padding-top: 1rem;
+}
+.delivery{
+  padding-top: 1rem;
+}
 .sold {
   background-image: url("https://www.onlygfx.com/wp-content/uploads/2017/12/sold-stamp-3.png");
   background-size: contain;
+  background-position:right;
   background-repeat: no-repeat;
 }
 .foote{
@@ -787,16 +810,19 @@ img{
 li{
   margin-left: 1rem;
   margin-right: 1rem;
-  columns: 2;
+  /*columns: 2;*/
 }
 .delivery{
+  width: 85%;
   columns: 1;
 }
 .donateinfo{
   display: flex;
-  position:relative;
-  margin-right: -14rem;
-  padding-top: 1rem;
+  position: relative;;
+  text-align: start;
+  /*margin-right: -14rem;*/
+  margin-left: 22rem;
+  padding-top: 0rem;
   flex-direction: column;
   padding-bottom: 1rem;
 }
@@ -806,6 +832,28 @@ li{
 }
 ul{
   margin-bottom: 2.5rem;
+}
+.modal{
+  left: 77%;
+  top: 6.5rem;
+}
+.sold, .forsale{
+  width: 75%;
+}
+.butEdit{
+  position: relative;
+  left:-.5rem;
+}
+.butcancel{
+  position: relative;
+}
+.butDonates{
+  position: relative;
+  left:1rem;
+}
+.imgDonated{
+  position: absolute;
+  left: 5rem;
 }
 }
 </style>

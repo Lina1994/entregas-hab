@@ -9,7 +9,7 @@
       </p>
 
       <p v-show="errorMsg">
-         ** Tienes campos vacíos.
+         ** Tienes campos vacíos o incorrectos.
       </p>
       <!--<label for="img">Select image:</label>
       <input type="file" id="img" name="img" accept="image/*">
@@ -77,6 +77,10 @@ export default {
             this.selectedFile = event.target.files[0]
             console.log(this.selectedFile)
         },
+        isNumeric(value) {
+            console.log(!isNaN(parseFloat(value)) && isFinite(value))
+	       return !isNaN(parseFloat(value)) && isFinite(value);
+        },
         validatingData(){
             console.log(this.toy_name)
             console.log(this.selectedFile)
@@ -89,6 +93,7 @@ export default {
             this.description === '' ||
             this.locality === '' ||
             this.recomended_age === '' ||
+            this.isNumeric(this.recomended_age) === false||
             this.category === ''){
                 console.log('Validating ko')
                 //alert('No puedes dejar campos vacíos')

@@ -57,18 +57,20 @@
     </div>
     <div class="toMe" v-show="seeModalToMe">
       <!-- //  PRINTEAR INFO PUNTOS ENTREGA // -->
-        <hr>
         <div>
           <p>
-       Puntos de entrega:
+       Selecciona un unto de entrega:
           </p>
-          <button @click="notForMe()">
+          <button class="butNotForMe" @click="notForMe()">
             Cancelar
           </button>
-          <ul v-for="(delipoints, index) in delipoints" :key="delipoints.id">
-            <li @click="itIsForMe(index)">
+              <p v-show="errorMsgDelivModal">
+                {{ errorMsgDeliv }}
+              </p>
+          <ul class="ulForMe" v-for="(delipoints, index) in delipoints" :key="delipoints.id">
+            <li class="liForMe" @click="itIsForMe(index)">
               <p>
-              {{ formatDate(new Date(delipoints.date)) }}
+              Día: {{ formatDate(new Date(delipoints.date)) }}
               </p>
               <p>
               {{ delipoints.timetable }}
@@ -124,7 +126,9 @@ export default {
       orderer: '',
       directioner: '',
       mysearcher: '',
-      myorderby: ''
+      myorderby: '',
+      errorMsgDeliv: '',
+      errorMsgDelivModal: false
     }
   },
   methods:{
@@ -230,8 +234,17 @@ export default {
             }
         })
         this.delipoints = response.data.data
+        console.log(response.data.data)
+        if(response.data.data.length === 0){
+          console.log('El usuario aun no ha añadido puntos de entrega.')
+          this.errorMsgDeliv = 'El usuario aun no ha añadido puntos de entrega.'
+          this.errorMsgDelivModal = true
+        }else {
+          this.errorMsgDeliv = ''
+          this.errorMsgDelivModal = false
+        }
         //console.log(this.delipoints)     
-        this.deliveryes = response.data.data
+        //this.deliveryes = response.data.data
         //console.log(this.deliveryes)
       } catch (error) {
         console.log(error)
@@ -304,6 +317,18 @@ export default {
 </script>
 
 <style scoped>
+.butNotForMe{
+  position: fixed;
+  left: 6%; 
+  top: 2rem;
+  border-radius: 20px;
+}
+.ulForMe{
+  margin-top: .5rem;
+}
+.liForMe{
+  padding-top: .5rem;
+}
 .searcher{
   margin-bottom: 1rem;
 }
@@ -373,10 +398,22 @@ li{
 .avatar {
   left: 5%;
 }
+.butNotForMe{
+  left: 4rem; 
+  top: 3rem;
+}
+.toMe {
+  left: 2rem;
+  top: 2rem;
+  width: 500px;
+}
 }
 /* DEFINE COMPORTAMIENTO PARA ANCHO MAYOR QUE 1500px */
 @media (min-width: 1000px) {
 .oneToy{
+  width: 600px;
+}
+.toMe {
   width: 600px;
 }
 }
@@ -394,6 +431,10 @@ li{
   left: 58%;
   top: 9%;
   width: 400px;
+}
+.butNotForMe{
+  left: 59%; 
+  top: 6rem;
 }
 
 }

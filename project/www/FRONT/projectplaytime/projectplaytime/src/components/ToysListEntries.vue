@@ -55,6 +55,7 @@ import { isLoggedIn } from '../utils/utils.js'
                     console.log(datosToys.id)
                     this.$emit('datos', datosToys)
                 } else {
+                    alert('Tienes que registrarte para acceder aquí.')
                     console.log('No estas logueado')
                 }
             },
@@ -71,7 +72,7 @@ import { isLoggedIn } from '../utils/utils.js'
 
 li {
     list-style-type: none;
-    border: 1px solid rgb(14, 13, 13);
+    border: 1px solid rgba(80, 66, 66, 0.849);
     margin-top: -.07rem;
     margin-bottom: 1rem;
     margin-left: 1%;
@@ -82,7 +83,7 @@ li {
     box-shadow: 2px 2px 2px #aaaaaa;
 }
 ul{
-    margin-bottom: 1.5rem;
+    margin-bottom: 3rem;
     max-width: 100%;
 }
 /* DEFINE COMPORTAMIENTO PARA ANCHO MAYOR QUE 1500px */
@@ -129,10 +130,20 @@ ul{
 
 }
 /* DEFINE COMPORTAMIENTO PARA ANCHO MAYOR QUE 1500px */
+@media (min-width: 1400px) {
+    li p{
+        margin-left: 16.7rem;
+    }
+}
+
+/* DEFINE COMPORTAMIENTO PARA ANCHO MAYOR QUE 1500px */
 @media (min-width: 1700px) {
 ul {
   column-count: 3;
 }
+li p{
+        margin-left: 15rem;
+    }
 }
 
 img {

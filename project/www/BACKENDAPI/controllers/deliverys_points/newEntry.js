@@ -15,12 +15,12 @@ async function newEntry(req, res, next) {
     connection = await getConnection();
 
     // Sacar de req.body los datos que necesitio
-    const { timetable, place, date} = req.body;
+    const { timetable, place, date, comments} = req.body;
     console.log(req.body)
     console.log(timetable)
 
     // Comprobar que están todos los datos necesarios
-    if (!timetable || !place ) {
+    if (!timetable || !place || !date) {
       const error = new Error(
         "Faltan datos en la petición. El campo timetable y place son obligatorios"
       );
@@ -31,10 +31,10 @@ async function newEntry(req, res, next) {
     // Ejecutar la query
     const [result] = await connection.query(
       `
-      INSERT INTO deliverys_points(timetable, place, date, lastUpdate, id_user)
-      VALUES(?,?,?, UTC_TIMESTAMP(), ?)
+      INSERT INTO deliverys_points(timetable, place, date, lastUpdate, comments, id_user)
+      VALUES(?,?,?, UTC_TIMESTAMP(), ?, ?)
       `,
-      [timetable, place, date, req.auth.id]
+      [timetable, place, date, comments, req.auth.id]
     );
 
     // Devolver el resultado
@@ -46,6 +46,7 @@ async function newEntry(req, res, next) {
         timetable,
         place,
         date,
+        comments,
       },
     });
   } catch (error) {

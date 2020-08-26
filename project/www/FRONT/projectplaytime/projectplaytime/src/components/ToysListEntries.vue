@@ -1,53 +1,96 @@
 <template>
   <div>
       <ul>
-          <li v-show="state(toy.state)" v-for="(toy, index) in toys" :key="toy.id" 
-          @click="sendIndex(index)">
-              <!--<img :src="toy.image">-->
-              <img :src= "getImageName(toy.image)">
-              <div class="description">
-                    <p>
-                        {{ toy.toy_name }}
-                    </p>
-                    <p>
-                        Edad recomendada:
-                        {{ toy.recomended_age }}
-                    </p>
-                    <p>
-                        Categoría:
-                        {{ toy.category }}
-                    </p>
-                    <p>
-                        Localidad:
-                        {{ toy.locality }}
-                    </p>
-              </div>
-          </li>
+            <li v-show="state(toy.state, toy.id_user)" 
+            v-for="(toy, index) in toys" :key="toy.id" 
+            @click="sendIndex(index)">
+                <!--<img :src="toy.image">-->
+                <img :src= "getImageName(toy.image)">
+                <div class="description">
+                        <p>
+                            {{ toy.toy_name }}
+                        </p>
+                        <p>
+                            Edad recomendada:
+                            {{ toy.recomended_age }}
+                        </p>
+                        <p>
+                            Categoría:
+                            {{ toy.category }}
+                        </p>
+                        <p>
+                            Localidad:
+                            {{ toy.locality }}
+                        </p>
+                </div>
+            </li>
       </ul>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
 import { isLoggedIn } from '../utils/utils.js'
     export default {
         name: 'ToysListEntries',
         data(){
             return{
                 sold: false,
-                forsale: true
+                forsale: true,
             }
         },
         props:{
-            toys: Array
+            toys: Array,
         },
         methods: {
-            state(i){
+            async getMyDeliveryes(a){
+                let authtoken = localStorage.getItem('AUTH_TOKEN_KEY')
+                let iduser = a
+                try {
+                    const response = await axios.get('http://localhost:3050/MyDeliveringPoint/' + iduser,{
+                        headers: {
+                        Authorization: authtoken
+                        },
+                        data: {
+                            id_user: iduser
+                        }
+                    })
+                if(response.data.data.length === 0){
+                    console.log('false')
+                    return  false;
+                }else {
+                    console.log('true')
+                    return  true;
+                }
+      } catch (error) {
+        console.log(error)
+      }
+    },
+            /*async state(i,a){
                 if(i === 'sold'){
+                    console.log('Vendido!!!')
+                    return 'sold'
+                }
+                let haveDelivery = await this.getMyDeliveryes(a)
+                if(i === 'forsale' && haveDelivery === true){
+                    console.log('A la venta')
+                    return 'forsale'
+                }
+                if(i === 'forsale' && haveDelivery === false){
+                    console.log('A la espera')
+                    return 'sold'
+                }
+            },*/
+            state(i,a){
+                if(i === 'sold'){
+                    console.log('Vendido!!!')
                     return false
                 }
                 if(i === 'forsale'){
+                    console.log('A la venta')
                     return true
                 }
+                
             },
             sendIndex(index){
                 if(isLoggedIn()){
@@ -140,10 +183,12 @@ ul{
 @media (min-width: 1700px) {
 ul {
   column-count: 3;
+  /*display: flex;
+  flex-flow: row wrap;*/
 }
 li p{
-        margin-left: 15rem;
-    }
+    margin-left: 15rem;
+}
 }
 
 img {

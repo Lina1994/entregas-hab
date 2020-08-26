@@ -2,7 +2,8 @@
   <div id="app">
     <div id="nav">
       <div class="homie">
-      <router-link :to="{ name: 'Home' }"> PLAYTIME </router-link>
+      <!--<router-link :to="{ name: 'Home' } "> PLAYTIME </router-link>-->
+      <img :src= "getImageName('logoplaytime.png')" @click="goHome()" class="mylogo">
       </div>
       <div class="others">
       <!--<router-link :to="{ name: 'About' }">| About |</router-link>-->
@@ -44,9 +45,17 @@ export default {
         location.reload()
       }, 250 );
   },
-  getLogin() {
+    goHome(){
+      this.$router.push('/home')
+    },
+    getLogin() {
       this.logged = isLoggedIn()
       this.unlogged = !this.logged
+    },
+    getImageName(name){
+      if(name){
+        return process.env.VUE_APP_STATIC + name;
+      }
     }
   },
   created(){
@@ -56,6 +65,19 @@ export default {
 </script>
 
 <style>
+p{
+  word-wrap: break-word;
+}
+.mylogo{
+  position:relative;
+  height: 6rem;
+  margin-top: -.8rem;
+  margin-bottom: -3rem;
+}
+input{
+  margin-bottom: 1rem;
+
+}
 *{
   margin-top: 0;
   margin-left: 0;
@@ -74,7 +96,7 @@ export default {
   align-items: flex-end;
   padding: .8rem;
   background: deepskyblue;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 }
 #nav div {
   flex: auto;

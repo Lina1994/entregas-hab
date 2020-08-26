@@ -93,31 +93,57 @@
 
      <!-- //  PRINTEAR INFO PUNTOS ENTREGA // -->
      <div class="delivery" v-show="seeModalDelivery">
-        <p>
+        <p class="deliverypheader">
           Puntos de entrega:
         </p>
-          <button @click="createDeliPoint()">
-              Nuevo punto de entrega
-            </button>
-        <ul v-for="(deliveryes, index) in deliveryes" :key="deliveryes.id">
-          <li class="delivery">
-            <p>
-            Día: {{ formatDate(new Date(deliveryes.date)) }}
+        <button @click="createDeliPoint()" class="deliverypheader">
+          Nuevo punto de entrega
+        </button>
+        <p v-show="areDelipoint" class="deliverypheader">
+          **No tienes ningún punto de entrega, añade uno para poder entregar tus donaciones.**
+        </p>
+        <div class="table">
+        <ul class="uldelivery">
+          <div class="table-row">
+          <li class="lideliveryheader">
+            <p class="table-col">
+            Día
             </p>
-            <p>
-            Horario: {{ deliveryes.timetable }}
+            <p class="table-col">
+            Horario
             </p>
-            <p>
-            Lugar: {{ deliveryes.place }}
+            <p class="table-col">
+            Lugar
             </p>
-            <p>
+            <p class="table-col">
+            Comentarios
+            </p>
+          </li>
+          </div>
+        </ul>
+        <div class="table-row">
+        <ul v-for="(deliveryes, index) in deliveryes" :key="deliveryes.id" class="uldelivery">
+          <li class="lidelivery" @click="sendDeliveryUpdateIndex(index)">
+            <p class="table-col">
+            {{ formatDate(new Date(deliveryes.date)) }}
+            </p>
+            <p class="table-col">
+            {{ deliveryes.timetable }}
+            </p>
+            <p class="table-col">
+            {{ deliveryes.place }}
+            </p>
+            <p class="table-col">
             {{ deliveryes.comments }}
             </p>
-            <button @click="sendDeliveryUpdateIndex(index)">
+            <!--<button @click="sendDeliveryUpdateIndex(index)">
               Editar
-            </button>
+            </button>-->
           </li>
         </ul>
+        </div>
+
+        </div>
      </div>
      
      <!-- // FIN PRINTEAR INFO PUNTOS ENTREGA // -->
@@ -127,48 +153,52 @@
         <p>
           Tus reservas:
         </p>
-        <ul v-for="(bookings, index) in bookings" :key="bookings.id">
-            <li class="liBooking">
-                <p>
-                  {{ bookings.toy_name_selected }}
-                </p>
-                <p>
-                  Reserva hecha el: {{ formatDate(new Date(bookings.date)) }}
-                </p>
-                <p>
-                  Reserva hecha para el: {{ formatDate(new Date(bookings.date_selected)) }} {{ bookings.timetable_selected }}
-                </p>
-                <p>
-                  Código de reserva: {{ bookings.booking_code }}
-                </p>
-                <p>
-                  Comentarios: {{ bookings.comments_selected }}
-                </p>
-                <p>
-                  Voto: {{ bookings.vote }}
-                </p>
-                <p>
-                  {{ voteMessage }}
-                </p>
-                <div v-show="voted(bookings.vote)">
-                    <input type="radio" name="vote" value="0" v-model="myvote">
-                    <label for="0">0</label>
-                    <input type="radio" name="vote" value="1" v-model="myvote">
-                    <label for="1">1</label>
-                    <input type="radio" name="vote" value="2" v-model="myvote">
-                    <label for="2">2</label>
-                    <input type="radio" name="vote" value="3" v-model="myvote">
-                    <label for="3">3</label>
-                    <input type="radio" name="vote" value="4" v-model="myvote">
-                    <label for="4">4</label>
-                    <input type="radio" name="vote" value="5" v-model="myvote">
-                    <label for="5">5</label>
-                    <button @click="startVote(index)">
-                      Votar
-                    </button> 
-                </div>
-            </li>
-        </ul>
+        <div class="myBookingList">
+          <ul v-for="(bookings, index) in bookings" :key="bookings.id">
+              <li class="liBookingheader">
+                  <p>
+                    {{ bookings.toy_name_selected }}
+                  </p>
+              </li>
+              <li class="liBooking">
+                  <p>
+                    Reserva hecha el: {{ formatDate(new Date(bookings.date)) }}
+                  </p>
+                  <p>
+                    Reserva hecha para el: {{ formatDate(new Date(bookings.date_selected)) }} {{ bookings.timetable_selected }}
+                  </p>
+                  <p>
+                    Código de reserva: {{ bookings.booking_code }}
+                  </p>
+                  <p>
+                    Comentarios: {{ bookings.comments_selected }}
+                  </p>
+                  <p>
+                    Voto: {{ bookings.vote }}
+                  </p>
+                  <p>
+                    {{ voteMessage }}
+                  </p>
+                  <div v-show="voted(bookings.vote)">
+                      <input type="radio" name="vote" value="0" v-model="myvote">
+                      <label for="0">0</label>
+                      <input type="radio" name="vote" value="1" v-model="myvote">
+                      <label for="1">1</label>
+                      <input type="radio" name="vote" value="2" v-model="myvote">
+                      <label for="2">2</label>
+                      <input type="radio" name="vote" value="3" v-model="myvote">
+                      <label for="3">3</label>
+                      <input type="radio" name="vote" value="4" v-model="myvote">
+                      <label for="4">4</label>
+                      <input type="radio" name="vote" value="5" v-model="myvote">
+                      <label for="5">5</label>
+                      <button @click="startVote(index)">
+                        Votar
+                      </button> 
+                  </div>
+              </li>
+          </ul>
+        </div>
      </div>
 
      <!-- FIN PRINTEAR INFO RESERVAS -->
@@ -203,7 +233,7 @@
      <!-- // FIN EDITAR INFO DONACIONES // -->
 
      <!-- // EDITAR INFO PUNTOS DE ENTREGA // -->
-     <div v-show="seeModalEditDeliveries" class="modal">
+     <div v-show="seeModalEditDeliveries" class="modaldeliedit">
        <p> Día: </p>
        <input type="date" placeholder="Día. Ej: 2020-08-15" v-model="deliveryDateUpdated">
        <p> Horario: </p>
@@ -225,7 +255,7 @@
      <!-- // FIN EDITAR INFO PUNTOS DE ENTREGA // -->
 
      <!-- // CREAR PUNTOS DE ENTREGA // -->
-     <div v-show="seeModalCreateDeliveries" class="modal">
+     <div v-show="seeModalCreateDeliveries" class="modaldeliedit">
        <p> Día: </p>
        <input type="date" placeholder="Día. Ej: 2020-08-15" v-model="deliveryDateUpdated">
        <p> Horario: </p>
@@ -300,6 +330,7 @@ export default {
       seeModalDonate: false,
       seeModalDelivery: false,
       seeModalBooking: false,
+      areDelipoint: false,
       voteMessage: '',
       myvote: '',
       selectedFile: null
@@ -510,6 +541,11 @@ export default {
         }) 
         //console.log(response.data.data)     
         this.deliveryes = response.data.data
+        if(this.deliveryes.length === 0){
+          this.areDelipoint = true
+        } else {
+          this.areDelipoint = false
+        }
        
       } catch (error) {
         console.log(error)
@@ -635,6 +671,9 @@ export default {
       })
       .then((response)=>{
         console.log(response)
+        setTimeout( () => {
+          location.reload()
+        }, 1 );
       })
       } catch (error) {
           console.log(error)
@@ -732,6 +771,17 @@ export default {
 .modal{
   padding: 1rem;
   position: fixed;
+  left: 0rem;
+  top: 0rem;
+  max-width: 100vw;
+  max-height: 92.7vh;
+  background-color: rgb(254, 254, 254);
+  border: 1px solid black;
+  border-radius: 20px;
+}
+.modaldeliedit{
+  padding: 1rem;
+  position: fixed;
   left: 3.5rem;
   top: 6.5rem;
   max-width: 100vw;
@@ -744,16 +794,21 @@ export default {
 }
 .liBooking{
   padding-top: 1rem;
+  border-radius: 0 0 15px 15px;
+}
+.liBookingheader{
+  border-radius: 15px 15px 0 0;
+  background-color: deepskyblue;;
+}
+.liBookingheader p{
+  margin-top: 1rem;
+  font-size: large;
+  color: rgb(1, 1, 1);
 }
 .delivery{
   padding-top: 1rem;
 }
-.sold {
-  background-image: url("https://www.onlygfx.com/wp-content/uploads/2017/12/sold-stamp-3.png");
-  background-size: contain;
-  background-position:right;
-  background-repeat: no-repeat;
-}
+
 .foote{
   position: fixed;
   bottom: -.2rem;
@@ -770,6 +825,7 @@ img {
 }
 .internalNav{
   text-align: center;
+  font-size: 17px;
 }
 button.internalNav{
   margin: 0;
@@ -789,6 +845,35 @@ button.internalNav{
 ul , button{
   margin-bottom: 2.5rem;
 }
+
+/*  PRINT DE DONACIONES  */
+.sold {
+  background-image: url("https://www.onlygfx.com/wp-content/uploads/2017/12/sold-stamp-3.png");
+  background-size: contain;
+  background-size: 100px 100px;
+  background-position:left 0rem;
+  background-repeat: no-repeat;
+}
+.donateinfo{
+  display: flex;
+  position: relative;;
+  text-align: start;
+  margin-left: 1rem;
+  padding-top: 0rem;
+  flex-direction: column;
+  padding-bottom: 1rem;
+}
+.donateinfo button{
+  max-width: 100%;
+  width: 5rem;
+  margin: .5rem;
+}
+.imgDonated{
+  position: relative;
+  left: 0rem;
+}
+/*  FIN PRINT DE DONACIONES  */
+
 /* DEFINE COMPORTAMIENTO PARA ANCHO MAYOR QUE 1500px */
 @media (min-width: 760px) {
 
@@ -817,25 +902,16 @@ li{
   columns: 1;
 }
 .donateinfo{
-  display: flex;
-  position: relative;;
-  text-align: start;
-  /*margin-right: -14rem;*/
   margin-left: 22rem;
-  padding-top: 0rem;
-  flex-direction: column;
-  padding-bottom: 1rem;
-}
-.donateinfo button{
-  width: 5rem;
-  margin: .5rem;
-}
-ul{
-  margin-bottom: 2.5rem;
 }
 .modal{
   left: 77%;
   top: 6.5rem;
+  max-height: 81vh;
+}
+.modaldeliedit{
+  left: 55%;
+  top: 13.5rem;
 }
 .sold, .forsale{
   width: 75%;
@@ -854,6 +930,66 @@ ul{
 .imgDonated{
   position: absolute;
   left: 5rem;
+}
+.deliverypheader{
+  position: relative;
+  left: 9%;
+}
+.sold {
+  background-position-y: 1rem;
+  background-position-x: 99%;
+  background-size: 225px 225px;
+}
+.myBookingList {
+  column-count: 3;
+}
+.liBooking{
+  break-inside: avoid; 
+  break-after: avoid;
+}
+.lidelivery{
+  display: flex;
+  border: none;
+  border-radius: 0;
+  margin-top: 0rem;
+  margin-bottom: 0rem;
+  padding: 0;
+}
+.lidelivery p{
+  margin-right: 0rem;
+  margin-bottom: 0;
+}
+.lideliveryheader{
+  display: flex;
+  border: none;
+  border-radius: 0;
+  margin-top: 0rem;
+  margin-bottom: 0rem;
+  padding: 0;
+  background-color: rgba(100, 148, 237, 0.301);
+}
+.lideliveryheader p{
+  margin-left: 0rem;
+  margin-right: 0rem;
+  margin-bottom: 0;
+}
+.uldelivery{
+  margin: 0;
+}
+.table-row{
+  display:table-row;
+  width:auto;
+  clear:both;
+}
+.table-col{
+  float:left;
+  display:table-column;         
+  width:200px;         
+  border:1px solid  #ccc;
+  padding: .6rem;
+}
+.table{
+  margin-left: 3rem;
 }
 }
 </style>

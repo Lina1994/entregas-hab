@@ -1,19 +1,43 @@
 <template>
-  <div class="home">
+  <div class="home" @click="cancelForMe()">
     <div class="thebody">
       <div class="searcher">
-            <label>Buscar por: </label> 
-            <input list="orderBy" v-model="myorderby"> 
+            <!--<label>Buscar por: </label> -->
+            <!--<input list="orderBy" v-model="myorderby"> 
             <datalist id="orderBy"> 
                 <option value="Nombre" />
                 <option value="Localidad" /> 
                 <option value="Categoría" /> 
                 <option value="Edad recomendada" /> 
-            </datalist> 
+            </datalist>-->
         <input type="search" placeholder="Buscar" v-model="mysearcher">
-        <button @click="sendSearch()">
+        <img :src= "getImageName('searchv2.png')" class="searchlogo" @click="sendSearch()">
+        <button class="searchButton" @click="sendSearch()">
           Buscar
         </button>
+        <button @click="advanceSearch = !advanceSearch" class="searchButton">
+          Buequeda avanzada
+        </button>
+        <transition name="fade">
+            <div v-if="advanceSearch" class="searchSelects">
+              <div class="searchSelects">
+                <input type="radio" name="vote" value="Nombre" v-model="myorderby">
+                <label for="Nombre" >Nombre</label>
+              </div>
+              <div class="searchSelects">
+                <input type="radio" name="vote" value="Localidad" v-model="myorderby">
+                <label for="Localidad">Localidad</label>
+              </div>
+              <div class="searchSelects">
+                <input type="radio" name="vote" value="Categoría" v-model="myorderby">
+                <label for="Categoría">Categoría</label>              
+              </div>
+              <div class="searchSelects">
+                <input type="radio" name="vote" value="Edad recomendada" v-model="myorderby">
+                <label for="Edad recomendada">Edad recomendada</label>               
+              </div>             
+            </div> 
+        </transition>
       </div>
      <toyslistentries v-on:datos="recibirJugete" :toys="toyslist"/>
     </div>
@@ -109,6 +133,7 @@ export default {
     return {
       isselected: false,
       seeModalToMe: false,
+      advanceSearch: false,
       toyslist: [],
       datatoy: {},
       user: {},
@@ -132,6 +157,10 @@ export default {
     }
   },
   methods:{
+    cancelForMe(){
+      if(this.isselected === true || this.seeModalToMe === true ){
+      }
+    },
     getImageName(name){
       if(name){
         return process.env.VUE_APP_STATIC + name;
@@ -317,6 +346,25 @@ export default {
 </script>
 
 <style scoped>
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+.searchButton{
+  margin-right: 1rem;
+  margin-left: 1rem;
+  margin-bottom: 1rem;
+}
+.searchlogo{
+  position: relative;
+  top: .5rem;
+  height: 1.6rem;
+}
+.searchSelects{
+  display: block;
+}
 .butNotForMe{
   position: fixed;
   left: 6%; 
@@ -330,7 +378,16 @@ export default {
   padding-top: .5rem;
 }
 .searcher{
+  text-align: left;
+  border: 1px solid rgba(14, 13, 13, .5);
+  border-radius: 15px;
+  padding-top: .5rem;
+  padding-left: 1rem;
   margin-bottom: 1rem;
+  margin-left: 3rem;
+  margin-right: 3rem;
+  background-color: rgb(93, 211, 250);
+  box-shadow: 2px 2px 1px #aaaaaa;
 }
 .oneToy {
   border: 1px solid rgba(14, 13, 13, .5);
@@ -416,6 +473,10 @@ li{
 .toMe {
   width: 600px;
 }
+.searcher{
+  margin-right: 15rem;
+  margin-left: 15rem;
+}
 }
 /* DEFINE COMPORTAMIENTO PARA ANCHO MAYOR QUE 1500px */
 @media (min-width: 1700px) {
@@ -435,6 +496,13 @@ li{
 .butNotForMe{
   left: 59%; 
   top: 6rem;
+}
+.searchSelects{
+  margin-left: 10rem;
+}
+.searcher{
+  margin-right: 42rem;
+  margin-left: 42rem;
 }
 
 }

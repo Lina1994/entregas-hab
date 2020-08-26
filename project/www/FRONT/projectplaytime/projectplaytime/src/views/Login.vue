@@ -66,11 +66,13 @@ export default {
                     console.log('Token guardado en localstorage')
                     console.log(response)
                     console.log(userid)
-                } )
-                setTimeout( () => {
+
+                    setTimeout( () => {
                     this.$router.push('/home')
                     location.reload()
-                }, 250 );
+                    }, 1 );
+
+                } )
 
                 } 
                  catch (error) {

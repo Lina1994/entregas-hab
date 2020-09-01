@@ -6,15 +6,16 @@ async function newEntry(req, res, next) {
   let connection;
   try {
     connection = await getConnection();
+    console.log('Tramitando reserva')
 
     // Sacar de req.body los datos que necesitio
     const { id_toy, id_delivery_point, id_user_donor, id_user_recives, email_user_donor, email_user_recives, datetosend, timetable, place, comments, toy_name } = req.body;
     let datetomail = formatDate(new Date(datetosend))
     let commentstomail = formatecomment(comments)
-    console.log(req.body)
     let state = 'confirmed';
     const  id = id_toy;
     let booking_code = randomString(10);
+    console.log(req.body)
    
     // Comprobar que no no existe una entrada con el mismo id_toy
     const [existingEntry] = await connection.query(

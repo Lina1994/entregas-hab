@@ -273,7 +273,7 @@ export default {
           this.errorMsgDelivModal = false
         }
         //console.log(this.delipoints)     
-        //this.deliveryes = response.data.data
+        this.deliveryes = response.data.data
         //console.log(this.deliveryes)
       } catch (error) {
         console.log(error)
@@ -304,13 +304,18 @@ export default {
     },
     async itIsForMe(index) {
       let deliveryPoint = this.delipoints[index].id
+      //console.log(deliveryPoint)
       let userRecivedId = localStorage.getItem('USER_ID')
+      //console.log(userRecivedId)
       let mymail = localStorage.getItem('EMAIL')
-      console.log('User recived ' + userRecivedId + ' User Donated ' + this.idUserOfToy + ', Toy ' + this.toyId + ', Delivery point id' + deliveryPoint)
+      //console.log(mymail)
+      console.log('User recived ' + userRecivedId + ' User Donated ' + this.idUserOfToy + ', Toy ' + this.toyId + ', Delivery point id ' + deliveryPoint)
       let authtoken = localStorage.getItem('AUTH_TOKEN_KEY')
+      //console.log(authtoken)
       //console.log(this.deliveryes[index].place);
+
       try {
-        const response = await axios.post('http://localhost:3050/bookingentries',{
+        const response = await axios.post('http://localhost:3050/bookingentries', {
           id_toy: this.toyId,
           id_delivery_point: deliveryPoint,
           id_user_donor: this.idUserOfToy,

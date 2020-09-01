@@ -155,6 +155,7 @@
         </p>
         <div class="myBookingList">
           <ul v-for="(bookings, index) in bookings" :key="bookings.id">
+            <div class="bookingContainer">
               <li class="liBookingheader">
                   <p>
                     {{ bookings.toy_name_selected }}
@@ -197,6 +198,8 @@
                       </button> 
                   </div>
               </li>
+
+            </div>
           </ul>
         </div>
      </div>
@@ -692,15 +695,19 @@ export default {
       let dateNowYear = dateNow.getFullYear()
       let dateNowMonth = dateNow.getMonth() +1;
       let dateNowDay = dateNow.getDate()
-      //console.log( 'FECHA ENTREGA' + dateBookingYear + dateBookingMonth + dateBookingDay )
+      console.log( 'FECHA ENTREGA' + dateBookingYear + dateBookingMonth + dateBookingDay )
+      console.log( 'FECHA ACTUAL' + dateNowYear + dateNowMonth + dateNowDay )
 
-      if(dateBookingYear > dateNowYear){
+      if(dateBookingYear < dateNowYear){
         console.log('Ha pasado el año')
+        console.log(dateBookingYear, dateNowYear)
         this.voteUserDonorOfBooking(idBooking)
-      }else if (dateBookingMonth > dateNowMonth){
+      }else if (dateBookingMonth < dateNowMonth){
+        console.log(dateBookingMonth, dateNowMonth)
         console.log('Ya a pasado el mes')
         this.voteUserDonorOfBooking(idBooking)
-      }else if (dateBookingDay > dateNowDay){
+      }else if (dateBookingDay < dateNowDay){
+        console.log(dateBookingDay, dateNowDay)
         console.log('Ya ha pasado el día')
         this.voteUserDonorOfBooking(idBooking)
       }else {
@@ -729,9 +736,9 @@ export default {
             vote: this.myvote,
           }
       }) 
-        setTimeout( () => {
+        /*setTimeout( () => {
            location.reload()
-        }, 250 );
+        }, 1 );*/
         console.log(response)
       } catch (error) {
         console.log(error)
@@ -768,6 +775,10 @@ export default {
 </script>
 
 <style scoped>
+.bookingContainer{
+  break-inside: avoid; 
+  break-after: avoid;
+}
 .modal{
   padding: 1rem;
   position: fixed;
@@ -875,8 +886,53 @@ ul , button{
 /*  FIN PRINT DE DONACIONES  */
 
 /* DEFINE COMPORTAMIENTO PARA ANCHO MAYOR QUE 1500px */
-@media (min-width: 760px) {
-
+@media (min-width: 890px) {
+.lidelivery{
+  display: flex;
+  border: none;
+  border-radius: 0;
+  margin-top: 0rem;
+  margin-bottom: 0rem;
+  padding: 0;
+}
+.lidelivery p{
+  margin-right: 0rem;
+  margin-bottom: 0;
+}
+.lideliveryheader{
+  display: flex;
+  border: none;
+  border-radius: 0;
+  margin-top: 0rem;
+  margin-bottom: 0rem;
+  padding: 0;
+  background-color: rgba(100, 148, 237, 0.301);
+}
+.lideliveryheader p{
+  margin-left: 0rem;
+  margin-right: 0rem;
+  margin-bottom: 0;
+}
+.uldelivery{
+  display: contents;
+  margin: 0;
+  margin-left: 0;
+}
+.table-row{
+  display:table-row;
+  width:auto;
+  clear:both;
+}
+.table-col{
+  float:left;
+  display:table-column;         
+  width:200px;         
+  border:1px solid  #ccc;
+  padding: .6rem;
+}
+.table{
+  margin-left: 3rem;
+}
 }
 /* DEFINE COMPORTAMIENTO PARA ANCHO MAYOR QUE 1500px */
 @media (min-width: 1000px) {
@@ -947,49 +1003,6 @@ li{
   break-inside: avoid; 
   break-after: avoid;
 }
-.lidelivery{
-  display: flex;
-  border: none;
-  border-radius: 0;
-  margin-top: 0rem;
-  margin-bottom: 0rem;
-  padding: 0;
-}
-.lidelivery p{
-  margin-right: 0rem;
-  margin-bottom: 0;
-}
-.lideliveryheader{
-  display: flex;
-  border: none;
-  border-radius: 0;
-  margin-top: 0rem;
-  margin-bottom: 0rem;
-  padding: 0;
-  background-color: rgba(100, 148, 237, 0.301);
-}
-.lideliveryheader p{
-  margin-left: 0rem;
-  margin-right: 0rem;
-  margin-bottom: 0;
-}
-.uldelivery{
-  margin: 0;
-}
-.table-row{
-  display:table-row;
-  width:auto;
-  clear:both;
-}
-.table-col{
-  float:left;
-  display:table-column;         
-  width:200px;         
-  border:1px solid  #ccc;
-  padding: .6rem;
-}
-.table{
-  margin-left: 3rem;
-}
+
 }
 </style>
